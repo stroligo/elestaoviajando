@@ -9,11 +9,16 @@
     "lint": "eslint .",
     "preview": "vite preview"
   },
+  "env": {
+    "GOOGLE_MAPS_API_KEY": "AIzaSyCHT_DQUhRKEr3eKVvdDUIdxIIc1LvSR0o"
+  },
   "dependencies": {
     "@react-google-maps/api": "^2.20.3",
     "@react-google-maps/marker-clusterer": "^2.20.0",
+    "dotenv": "^16.4.5",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "react-dotenv": "^0.1.3"
   },
   "devDependencies": {
     "@eslint/js": "^9.13.0",

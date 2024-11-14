@@ -1,14 +1,69 @@
-import DetailsMap from './components/DetailsMap';
+import { useState, useEffect } from 'react';
 import Map from './components/Map';
+import DetailsMap from './components/DetailsMap';
 
 export function App() {
-  const placeId = 'ChIJr8BrlrypGA0RWAx8iySpTEg';
+  const [selectedMarker, setSelectedMarker] = useState(null);
+  const [year, setYear] = useState(2024);
+  const [data, setData] = useState(null);
+
+  const handleYearChange = (newYear) => {
+    setYear(newYear);
+    setSelectedMarker(null);
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await import(`./database/${year}.json`);
+        setData(response.default);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchData();
+  }, [year]);
 
   return (
-    <div>
-      <h1>Aplicação</h1>
-      <Map />
-      <DetailsMap placeId={placeId} />
-    </div>
+    <section>
+      <div className="container mx-auto px-5">
+        <h1>Aplicação</h1>
+        <div>Ano selecionado: {year}</div>
+        <div className="flex gap-2">
+          <button
+            className={year === 2021 ? 'active' : ''}
+            onClick={() => handleYearChange(2021)}
+          >
+            2021
+          </button>
+          <button
+            className={year === 2022 ? 'active' : ''}
+            onClick={() => handleYearChange(2022)}
+          >
+            2022
+          </button>
+          <button
+            className={year === 2023 ? 'active' : ''}
+            onClick={() => handleYearChange(2023)}
+          >
+            2023
+          </button>
+          <button
+            className={year === 2024 ? 'active' : ''}
+            onClick={() => handleYearChange(2024)}
+          >
+            2024
+          </button>
+        </div>
+        <div className="flex flex-col">
+          <div className="">
+            <DetailsMap selectedMarker={selectedMarker} />
+          </div>
+          <div className="">
+            {data && <Map Data={data} setSelectedMarker={setSelectedMarker} />}
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }

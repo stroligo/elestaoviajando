@@ -1,56 +1,78 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+
 import {
   GoogleMap,
   useJsApiLoader,
   Marker,
   InfoWindow,
 } from '@react-google-maps/api';
+import PropTypes from 'prop-types';
 
-import Data from '../database/2024.json';
+import { fetchPlaceDetails } from '../services/googleMapsService';
 
-export default function Map() {
+const googleMapsApiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+
+export default function Map({ Data, setSelectedMarker }) {
+  // Funções auxiliares
+  const getPlaceId = (marker) => {
+    const data = Data.find((data) => {
+      if (
+        data &&
+        data.visit &&
+        data.visit.topCandidate &&
+        data.visit.topCandidate.placeLocation
+      ) {
+        const [lat, lng] = data.visit.topCandidate.placeLocation
+          .split(':')[1]
+          .split(',');
+        return lat === marker.lat.toString() && lng === marker.lng.toString();
+      }
+      return false;
+    });
+
+    if (data && data.visit && data.visit.topCandidate) {
+      return data.visit.topCandidate.placeID;
+    }
+
+    return null;
+  };
+
+  // Estilos e configurações
   const containerStyle = {
     width: '100%',
-    height: '600px',
+    height: '500px',
   };
 
   const center = {
     lat: 55.919807614455316,
     lng: 9.50815253234697,
   };
-  const [selectedMarker, setSelectedMarker] = useState(null);
+
+  // Estados
+  const [selectedMarkerLocal, setSelectedMarkerLocal] = useState(null);
   const [placeDetails, setPlaceDetails] = useState(null);
+  const [infoWindowOpen, setInfoWindowOpen] = useState(false);
 
+  // Funções de manipulação
   const handleMarkerClick = (marker) => {
-    const placeId = Data.find((data) => {
-      const [lat, lng] = data.visit.topCandidate.placeLocation
-        .split(':')[1]
-        .split(',');
-      return lat === marker.lat.toString() && lng === marker.lng.toString();
-    }).visit.topCandidate.placeID;
-
-    const url = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&key=AIzaSyCHT_DQUhRKEr3eKVvdDUIdxIIc1LvSR0o`;
-
-    fetch(url)
-      .then((response) => response.json())
-      .then((data) => {
-        const placeDetails = data.result;
-        setSelectedMarker({ lat: marker.lat, lng: marker.lng });
-        setPlaceDetails(placeDetails);
-      });
+    const placeId = getPlaceId(marker);
+    setSelectedMarker({ placeId, lat: marker.lat, lng: marker.lng });
+    setSelectedMarkerLocal({ lat: marker.lat, lng: marker.lng });
+    setInfoWindowOpen(true);
   };
 
+  // Hooks
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
-    googleMapsApiKey: 'AIzaSyCHT_DQUhRKEr3eKVvdDUIdxIIc1LvSR0o',
+    googleMapsApiKey: googleMapsApiKey,
   });
 
   const mapRef = useRef(null);
 
   const onLoad = React.useCallback(function callback(map) {
-    console.log('Zoom:', map.getZoom());
+    /*    console.log('Zoom:', map.getZoom());
     console.log('Latitude:', map.getCenter().lat());
-    console.log('Longitude:', map.getCenter().lng());
+    console.log('Longitude:', map.getCenter().lng()); */
     mapRef.current = map;
   }, []);
 
@@ -58,13 +80,29 @@ export default function Map() {
     mapRef.current = null;
   }, []);
 
-  const locations = Data.map((data) => {
-    const [lat, lng] = data.visit.topCandidate.placeLocation
-      .split(':')[1]
-      .split(',');
-    return { lat: parseFloat(lat), lng: parseFloat(lng) };
-  });
+  const locations = useMemo(
+    () =>
+      Data.map((data) => {
+        const [lat, lng] = data.visit.topCandidate.placeLocation
+          .split(':')[1]
+          .split(',');
+        return { lat: parseFloat(lat), lng: parseFloat(lng) };
+      }),
+    [Data],
+  );
 
+  useEffect(() => {
+    if (selectedMarkerLocal && infoWindowOpen) {
+      const placeId = getPlaceId(selectedMarkerLocal);
+      fetchPlaceDetails(placeId)
+        .then((placeDetails) => setPlaceDetails(placeDetails))
+        .catch((error) =>
+          console.error('Error fetching place details:', error),
+        );
+    }
+  }, [selectedMarkerLocal, infoWindowOpen]);
+
+  // Renderização
   return isLoaded ? (
     <GoogleMap
       mapContainerStyle={containerStyle}
@@ -82,20 +120,26 @@ export default function Map() {
           }}
         />
       ))}
-      {selectedMarker && placeDetails && (
+      {infoWindowOpen && placeDetails && (
         <InfoWindow
-          position={selectedMarker}
-          onCloseClick={() => setSelectedMarker(null)}
+          position={selectedMarkerLocal}
+          onCloseClick={() => setSelectedMarkerLocal(null)}
           disableAutoPan={true}
-          pixelOffset={{ x: 0, y: -20 }}
+          /*         pixelOffset={{ x: 0, y: -20 }} */
         >
           <div>
             <h2>{placeDetails.name}</h2>
             <p>{placeDetails.formatted_address}</p>
-            {placeDetails.formatted_phone_number && (
-              <p>{placeDetails.formatted_phone_number}</p>
+            <p>{placeDetails.formatted_phone_number}</p>
+            {/*        <p>Avaliação: {placeDetails.rating} estrelas</p>
+            <p>{placeDetails.reviews}</p> */}
+            <a href={placeDetails.website}>Site</a>
+            {placeDetails.photos && placeDetails.photos[0] && (
+              <img
+                src={`https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${placeDetails.photos[0].photo_reference}&key=${googleMapsApiKey}{}`}
+                className="h-32"
+              />
             )}
-            {placeDetails.website && <p>{placeDetails.website}</p>}
           </div>
         </InfoWindow>
       )}
@@ -104,3 +148,6 @@ export default function Map() {
     <></>
   );
 }
+Map.propTypes = {
+  setSelectedMarker: PropTypes.func.isRequired,
+};
