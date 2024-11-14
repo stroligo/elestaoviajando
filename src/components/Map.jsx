@@ -14,28 +14,31 @@ const googleMapsApiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
 export default function Map({ Data, setSelectedMarker }) {
   // Funções auxiliares
-  const getPlaceId = (marker) => {
-    const data = Data.find((data) => {
-      if (
-        data &&
-        data.visit &&
-        data.visit.topCandidate &&
-        data.visit.topCandidate.placeLocation
-      ) {
-        const [lat, lng] = data.visit.topCandidate.placeLocation
-          .split(':')[1]
-          .split(',');
-        return lat === marker.lat.toString() && lng === marker.lng.toString();
+  const getPlaceId = React.useCallback(
+    (marker) => {
+      const data = Data.find((data) => {
+        if (
+          data &&
+          data.visit &&
+          data.visit.topCandidate &&
+          data.visit.topCandidate.placeLocation
+        ) {
+          const [lat, lng] = data.visit.topCandidate.placeLocation
+            .split(':')[1]
+            .split(',');
+          return lat === marker.lat.toString() && lng === marker.lng.toString();
+        }
+        return false;
+      });
+
+      if (data && data.visit && data.visit.topCandidate) {
+        return data.visit.topCandidate.placeID;
       }
-      return false;
-    });
 
-    if (data && data.visit && data.visit.topCandidate) {
-      return data.visit.topCandidate.placeID;
-    }
-
-    return null;
-  };
+      return null;
+    },
+    [Data],
+  );
 
   // Estilos e configurações
   const containerStyle = {
@@ -100,7 +103,7 @@ export default function Map({ Data, setSelectedMarker }) {
           console.error('Error fetching place details:', error),
         );
     }
-  }, [selectedMarkerLocal, infoWindowOpen]);
+  }, [selectedMarkerLocal, infoWindowOpen, getPlaceId]);
 
   // Renderização
   return isLoaded ? (
@@ -150,4 +153,5 @@ export default function Map({ Data, setSelectedMarker }) {
 }
 Map.propTypes = {
   setSelectedMarker: PropTypes.func.isRequired,
+  Data: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
