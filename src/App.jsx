@@ -27,7 +27,7 @@ export function App() {
   return (
     <section>
       <div className="container mx-auto px-5">
-        <h1>Aplicação</h1>
+        <h1>APP</h1>
         <div>Ano selecionado: {year}</div>
         <div className="flex gap-2">
           <button
