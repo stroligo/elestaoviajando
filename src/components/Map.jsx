@@ -139,7 +139,7 @@ export default function Map({ Data, setSelectedMarker }) {
             <a href={placeDetails.website}>Site</a>
             {placeDetails.photos && placeDetails.photos[0] && (
               <img
-                src={`https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${placeDetails.photos[0].photo_reference}&key=${googleMapsApiKey}{}`}
+                src={`https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${placeDetails.photos[0].photo_reference}&key=${googleMapsApiKey}`}
                 className="h-32"
               />
             )}
