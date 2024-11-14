@@ -1,4 +1,5 @@
 const googleMapsApiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+
 const fetchPlaceDetails = async (placeId) => {
   const url = `/maps/api/place/details/json?place_id=${placeId}&key=${googleMapsApiKey}`;
 

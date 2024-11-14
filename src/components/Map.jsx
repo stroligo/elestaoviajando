@@ -113,6 +113,7 @@ export default function Map({ Data, setSelectedMarker }) {
       zoom={3}
       onLoad={onLoad}
       onUnmount={onUnmount}
+      apiKey={googleMapsApiKey}
     >
       {locations.map((location, index) => (
         <Marker
