@@ -1,6 +1,6 @@
-const googleMapsApiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
-
 const fetchPlaceDetails = async (placeId) => {
+  const googleMapsApiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+
   const url = `/maps/api/place/details/json?place_id=${placeId}&key=${googleMapsApiKey}`;
 
   try {
@@ -14,6 +14,8 @@ const fetchPlaceDetails = async (placeId) => {
 };
 
 const fetchPlaceData = async (placeId) => {
+  const googleMapsApiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+
   const url = `/maps/api/place/details/json?place_id=${placeId}&key=${googleMapsApiKey}`;
 
   try {
