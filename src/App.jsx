@@ -15,7 +15,7 @@ export function App() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await import(`../public/database/${year}.json`);
+        const response = await import(`./database/${year}.json`);
         setData(response.default);
       } catch (error) {
         console.error(error);

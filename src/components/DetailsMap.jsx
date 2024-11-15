@@ -24,18 +24,19 @@ export default function DetailsMap({ selectedMarker }) {
       ) : (
         <div>
           {dados && dados.result && (
-            <div>
-              <h1>Dados</h1>
-              <h2>Nome:</h2>
-              <p>{dados.result.name}</p>
-              <h2>Foto:</h2>
-
-              <h2>Endereço:</h2>
-              <p>{dados.result.formatted_address}</p>
-              <h2>Telefone:</h2>
-              <p>{dados.result.formatted_phone_number}</p>
-              <h2>Avaliação:</h2>
-              <p>{dados.result.rating} estrelas</p>
+            <div className="bg-gray-100 w-[400px] p-6 rounded-md">
+              <div className="flex gap-2">
+                <span className="font-bold">Nome:</span>
+                <span>{dados.result.name}</span>
+              </div>
+              <div className="flex gap-2">
+                <span className="font-bold">Endereço:</span>
+                <span>{dados.result.formatted_address}</span>
+              </div>
+              <div className="flex gap-2">
+                <span className="font-bold">Telefone:</span>
+                <span>{dados.result.formatted_phone_number}</span>
+              </div>
               {/*    <pre>{JSON.stringify(dados, null, 2)}</pre> */}
             </div>
           )}
