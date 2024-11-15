@@ -7,7 +7,7 @@ import { Travel } from '../pages/Travel';
 
 export function Main() {
   return (
-    <main className="flex-1 flex bg-beige   ">
+    <main className="flex-1 flex bg-beige">
       <article className="container mx-auto flex-1  flex flex-col bg-white px-5 py-10">
         <Switch>
           <Route path="/" component={Home} />
