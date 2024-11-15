@@ -1,4 +1,5 @@
 import { Link } from 'wouter';
+
 import Logo from '/assets/img/logo.png';
 import { Button } from '../ui/Button';
 export function Footer() {
