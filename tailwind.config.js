@@ -17,6 +17,10 @@ export default {
         yellow: '#ECA95B',
         orange: '#EB9658',
       },
+      fontFamily: {
+        sans: ['BreveSans', 'sans-serif'],
+        serif: ['BreveSlab', 'serif'],
+      },
     },
   },
   plugins: [],
