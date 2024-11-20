@@ -11,8 +11,6 @@ export function Home() {
           <p>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum
             accusamus quasi est voluptates minus. Minima iusto, tempora vero et
-            voluptate labore sapiente. Saepe, fuga reiciendis. Possimus sit
-            labore minus odio?
           </p>
         </div>
       </section>
