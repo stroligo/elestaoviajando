@@ -1,4 +1,5 @@
-import { Hero } from '../features/Hero';
+import { Trips } from '../components/features/Trips';
+import { Hero } from '../components/features/Hero';
 
 export function Home() {
   return (
@@ -21,6 +22,7 @@ export function Home() {
         nisi excepturi enim eum, labore voluptate quasi necessitatibus velit
         maxime! Recusandae, quis!
       </section>
+      <Trips />
     </article>
   );
 }

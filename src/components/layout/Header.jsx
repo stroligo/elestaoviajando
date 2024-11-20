@@ -13,14 +13,12 @@ export function Header() {
             <Button>
               <Link href="/">Home</Link>
             </Button>
-            <Button>
-              <Link href="/about">About</Link>
-            </Button>
+
             <Button>
               <Link href="/trips">Trips</Link>
             </Button>
             <Button>
-              <Link href="/trips/travel">Travel1</Link>
+              <Link href="/about">About</Link>
             </Button>
           </ul>
         </div>

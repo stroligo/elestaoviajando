@@ -1,4 +1,4 @@
-import { Hero } from '../features/Hero';
+import { Hero } from '../components/features/Hero';
 
 export function About() {
   return (

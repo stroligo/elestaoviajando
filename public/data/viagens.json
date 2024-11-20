@@ -1,0 +1,184 @@
+{
+  "locations": [
+    {
+      "id": 1,
+      "city": "Rio de Janeiro",
+      "country": "Brasil",
+      "date": "2022-01-01",
+      "thumbnail": "../locations/rio.jpg",
+      "coordinates": {
+        "lat": -22.9068,
+        "lng": -43.1729
+      },
+      "images": [
+        "../locations/rio.jpg",
+        "../locations/rio.jpg",
+        "../locations/rio.jpg"
+      ],
+      "description": "Lipsum..."
+    },
+    {
+      "id": 2,
+      "city": "São Paulo",
+      "country": "Brasil",
+      "date": "2022-02-01",
+      "thumbnail": "../locations/rio.jpg",
+      "coordinates": {
+        "lat": -23.5505,
+        "lng": -46.6333
+      },
+      "images": [
+        "../locations/rio.jpg",
+        "../locations/rio.jpg",
+        "../locations/rio.jpg"
+      ],
+      "description": "Lipsum..."
+    },
+    {
+      "id": 3,
+      "city": "Buenos Aires",
+      "country": "Argentina",
+      "date": "2022-03-01",
+      "thumbnail": "../locations/rio.jpg",
+      "coordinates": {
+        "lat": -34.6037,
+        "lng": -58.3816
+      },
+      "images": [
+        "../locations/rio.jpg",
+        "../locations/rio.jpg",
+        "../locations/rio.jpg"
+      ],
+      "description": "Lipsum..."
+    },
+    {
+      "id": 4,
+      "city": "Lima",
+      "country": "Peru",
+      "date": "2022-04-01",
+      "thumbnail": "../locations/rio.jpg",
+      "coordinates": {
+        "lat": -12.0464,
+        "lng": -77.0428
+      },
+      "images": [
+        "../locations/rio.jpg",
+        "../locations/rio.jpg",
+        "../locations/rio.jpg"
+      ],
+      "description": "Lipsum..."
+    },
+    {
+      "id": 5,
+      "city": "Santiago",
+      "country": "Chile",
+      "date": "2022-05-01",
+      "thumbnail": "../locations/rio.jpg",
+      "coordinates": {
+        "lat": -33.4372,
+        "lng": -70.6736
+      },
+      "images": [
+        "../locations/rio.jpg",
+        "../locations/rio.jpg",
+        "../locations/rio.jpg"
+      ],
+      "description": "Lipsum..."
+    },
+    {
+      "id": 6,
+      "city": "Quito",
+      "country": "Equador",
+      "date": "2022-06-01",
+      "thumbnail": "../locations/rio.jpg",
+      "coordinates": {
+        "lat": -0.2167,
+        "lng": -78.5
+      },
+      "images": [
+        "../locations/rio.jpg",
+        "../locations/rio.jpg",
+        "../locations/rio.jpg"
+      ],
+      "description": "Lipsum..."
+    },
+    {
+      "id": 7,
+      "city": "Bogotá",
+      "country": "Colômbia",
+      "date": "2022-07-01",
+      "thumbnail": "../locations/rio.jpg",
+      "coordinates": {
+        "lat": 4.6097,
+        "lng": -74.0817
+      },
+      "images": [
+        "../locations/rio.jpg",
+        "../locations/rio.jpg",
+        "../locations/rio.jpg"
+      ],
+      "description": "Lipsum..."
+    },
+    {
+      "id": 8,
+      "city": "Caracas",
+      "country": "Venezuela",
+      "date": "2022-08-01",
+      "thumbnail": "../locations/rio.jpg",
+      "coordinates": {
+        "lat": 10.4884,
+        "lng": -66.8794
+      },
+      "images": [
+        "../locations/rio.jpg",
+        "../locations/rio.jpg",
+        "../locations/rio.jpg"
+      ],
+      "description": "Lipsum..."
+    },
+    {
+      "id": 9,
+      "city": "Montevideu",
+      "country": "Uruguai",
+      "date": "2022-09-01",
+      "thumbnail": "../locations/rio.jpg",
+      "coordinates": {
+        "lat": -34.8944,
+        "lng": -56.1645
+      },
+      "images": [
+        "../locations/rio.jpg",
+        "../locations/rio.jpg",
+        "../locations/rio.jpg"
+      ],
+      "description": "Lipsum..."
+    },
+    {
+      "id": 10,
+      "city": "Assunção",
+      "country": "Paraguai",
+      "date": "2022-10-01",
+      "thumbnail": "../locations/rio.jpg",
+      "coordinates": {
+        "lat": -25.2769,
+        "lng": -57.6353
+      },
+      "images": [
+        "../locations/rio.jpg",
+        "../locations/rio.jpg",
+        "../locations/rio.jpg"
+      ],
+      "description": "Lipsum..."
+    }
+  ],
+  "weather": {
+    "rio": {
+      "temperature": 25,
+      "icon": "https://example.com/sun.png"
+    },
+    "sp": {
+      "temperature": 20,
+      "icon": "https://example.com/cloud.png"
+    }
+  }
+}

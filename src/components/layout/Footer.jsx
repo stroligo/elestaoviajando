@@ -20,9 +20,6 @@ export function Footer() {
             <Button>
               <Link href="/trips">Trips</Link>
             </Button>
-            <Button>
-              <Link href="/trips/travel">Travel1</Link>
-            </Button>
           </ul>
         </div>
       </div>
