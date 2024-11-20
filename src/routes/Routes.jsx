@@ -1,8 +1,8 @@
 import { Route, Switch } from 'wouter';
-import { Home } from '../pages/home';
-import { About } from '../pages/about';
-import { Travel } from '../pages/travel';
-import { AllTravels } from '../pages/allTravels';
+import { Home } from '../pages/Home';
+import { About } from '../pages/About';
+import { Travel } from '../pages/Travel';
+import { AllTravels } from '../pages/AllTravels';
 export function Routes() {
   return (
     <Switch>
