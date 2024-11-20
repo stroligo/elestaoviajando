@@ -1,0 +1,36 @@
+.card {
+  @apply border border-beige rounded-xl overflow-hidden;
+  figure {
+    @apply relative h-[300px] md:h-[260px] lg:h-[350px] overflow-clip;
+    img {
+      @apply object-cover w-full h-full transition-all duration-300 ease-in-out  filter grayscale;
+    }
+  }
+  .card-content {
+    @apply absolute bottom-0 font-serif w-full  right-0 bg-black bg-opacity-60 font-bold text-white p-5 text-right  duration-300 ease-in-out;
+    .date {
+      @apply text-xs transition-all duration-300 ease-in-out;
+    }
+    .title {
+      @apply text-4xl text-beige leading-none  drop-shadow-md;
+    }
+    .country {
+      @apply text-teal;
+    }
+  }
+  &:hover {
+    @apply shadow-lg;
+    img {
+      @apply scale-110  transition-all duration-300 ease-in-out   filter-none;
+    }
+    .card-content {
+      @apply bg-opacity-90 bg-white transition-all duration-300 ease-in-out;
+      .date {
+        @apply text-teal transition-all duration-300 ease-in-out;
+      }
+      .title {
+        @apply text-blue-dark transition-all duration-300 ease-in-out;
+      }
+    }
+  }
+}

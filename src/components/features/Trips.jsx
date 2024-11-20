@@ -15,21 +15,19 @@ export function Trips() {
   }, []);
 
   return (
-    <section>
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-8">
-        {locations.map((location) => (
-          <Link
-            to={`/trips/${location.id}/${location.city
-              .toLowerCase()
-              .normalize('NFD')
-              .replace(/[\u0300-\u036f]/g, '')
-              .replace(/ /g, '-')}`}
-            key={location.id}
-          >
-            <Card location={location} />
-          </Link>
-        ))}
-      </div>
-    </section>
+    <div className="grid  md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-8">
+      {locations.map((location) => (
+        <Link
+          to={`/trips/${location.id}/${location.city
+            .toLowerCase()
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '')
+            .replace(/ /g, '-')}`}
+          key={location.id}
+        >
+          <Card location={location} />
+        </Link>
+      ))}
+    </div>
   );
 }

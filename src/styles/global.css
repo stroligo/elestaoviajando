@@ -5,3 +5,6 @@
 body {
   @apply antialiased font-sans;
 }
+h2 {
+  @apply font-extrabold text-blue-dark font-serif text-4xl leading-none pb-1  mb-6 pr-4 border-b-4 border-blue-dark w-fit;
+}

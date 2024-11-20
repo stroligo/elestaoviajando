@@ -1,22 +1,17 @@
 import PropTypes from 'prop-types';
+import './card.modules.css';
 
 export function Card({ location }) {
   return (
-    <div className="border border-beige rounded-md overflow-hidden">
-      <figure className="relative h-[150px] overflow-clip">
-        <img
-          src={location.thumbnail}
-          alt={location.city}
-          className=" object-cover w-full h-full"
-        />
-        <div className="absolute bottom-0 right-0 bg-black text-white p-2">
-          {location.city}, {location.country}
+    <div className="card">
+      <figure>
+        <img src={location.thumbnail} alt={location.city} />
+        <div className="card-content ">
+          <div className="date">{location.date}</div>
+          <div className="title">{location.city}</div>
+          <div className="country"> {location.country}</div>
         </div>
       </figure>
-      <div className="px-2 py-2">
-        <div>Visitado em:{location.date}</div>
-        <div>{location.description}</div>
-      </div>
     </div>
   );
 }

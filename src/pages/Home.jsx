@@ -7,7 +7,7 @@ export function Home() {
       <Hero />
       <section>
         <div>
-          <div className="text-4xl">Lorem ipsum dolor sit amet</div>
+          <h2>Destaque 1</h2>
           <p>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum
             accusamus quasi est voluptates minus. Minima iusto, tempora vero et
@@ -20,7 +20,12 @@ export function Home() {
         nisi excepturi enim eum, labore voluptate quasi necessitatibus velit
         maxime! Recusandae, quis!
       </section>
-      <Trips />
+      <section>
+        <div className="flex  flex-col">
+          <h2>Ultimas Viagens</h2>
+          <Trips />
+        </div>
+      </section>
     </article>
   );
 }
