@@ -21,7 +21,7 @@
   &:hover {
     @apply shadow-lg;
     img {
-      @apply scale-110  transition-all duration-300 ease-in-out   filter-none;
+      @apply scale-105 transition-all duration-300 ease-in-out   filter-none;
     }
     .card-content {
       @apply bg-opacity-90 bg-white transition-all duration-300 ease-in-out;
