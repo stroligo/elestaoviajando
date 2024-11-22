@@ -1,16 +1,16 @@
 import { useState, useEffect } from 'react';
-import { getViagemById } from '../services/api';
+import { getTripByCity } from '../services/api';
 import { useParams } from 'wouter';
 
 export function Travel() {
   const [location, setLocation] = useState({});
-  const { id } = useParams();
+  const { city } = useParams();
 
   useEffect(() => {
     async function loadViagem() {
-      if (id) {
+      if (city) {
         try {
-          const location = await getViagemById(id);
+          const location = await getTripByCity(city);
           setLocation(location);
         } catch (error) {
           console.error('Error:', error);
@@ -18,7 +18,7 @@ export function Travel() {
       }
     }
     loadViagem();
-  }, [id]);
+  }, [city]);
 
   return (
     <div>

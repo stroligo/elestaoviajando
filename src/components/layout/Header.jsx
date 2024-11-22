@@ -16,14 +16,16 @@ export function Header() {
           </div>
           <ul className="flex gap-4">
             <Button>
-              <Link href="/">Home</Link>
-            </Button>
-
-            <Button>
-              <Link href="/trips">Trips</Link>
+              <Link href="/trips">Viagens</Link>
             </Button>
             <Button>
-              <Link href="/about">About</Link>
+              <Link href="/blog">Blog</Link>
+            </Button>
+            <Button>
+              <Link href="/about">Sobre Nós</Link>
+            </Button>
+            <Button>
+              <Link href="/newlocation">New Location</Link>
             </Button>
           </ul>
         </div>

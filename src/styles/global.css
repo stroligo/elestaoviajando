@@ -3,8 +3,20 @@
 @tailwind utilities;
 
 body {
-  @apply antialiased font-sans;
+  @apply antialiased font-sans text-gray;
 }
 h2 {
   @apply font-extrabold text-blue-dark font-serif text-4xl leading-none pb-1  mb-6 pr-4 border-b-4 border-blue-dark w-fit;
+}
+h6 {
+  @apply font-serif text-xl text-gray leading-none mb-3;
+}
+p {
+  @apply font-sans text-gray-light mb-3;
+}
+.hero {
+  @apply text-4xl md:text-5xl lg:text-7xl font-extrabold drop-shadow-lg font-serif leading-none;
+}
+section {
+  @apply py-10;
 }
