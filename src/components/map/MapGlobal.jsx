@@ -3,12 +3,13 @@ import { useState, useEffect } from 'react';
 import 'leaflet/dist/leaflet.css';
 import { Link } from 'wouter';
 import { Slugify } from '../../utils/stringUtils';
+import { Button } from '../ui/Button';
 
-export function Map() {
+export function MapGlobal() {
   const [data, setData] = useState(null);
 
   useEffect(() => {
-    fetch('/data/viagens.json')
+    fetch('/data/trips.json')
       .then((response) => response.json())
       .then((data) => setData(data));
   }, []);
@@ -17,7 +18,7 @@ export function Map() {
 
   return (
     <MapContainer
-      center={[-22.9068, -43.1729]}
+      center={[55.426616, 14.119192]}
       zoom={3}
       scrollWheelZoom={false}
       style={{ height: '500px', width: '100%' }}
@@ -32,9 +33,13 @@ export function Map() {
           position={[location.coordinates.lat, location.coordinates.lng]}
         >
           <Popup>
-            <h2>{location.city}</h2>
+            <div className="font-extrabold text-blue-dark font-serif text-xl leading-none pb-1   pr-4 border-b-2 border-orange w-fit">
+              {location.city}
+            </div>
             <p>{location.description}</p>
-            <Link to={`/trips/${Slugify(location.city)}`}>Ver mais</Link>
+            <Link to={`/trips/${Slugify(location.city)}`}>
+              <Button> Ver Viagem </Button>
+            </Link>
           </Popup>
         </Marker>
       ))}

@@ -1,6 +1,6 @@
 import { Trips } from '../components/features/Trips';
 import { Hero } from '../components/features/Hero';
-import { Map } from '../components/features/Map';
+import { MapGlobal } from '../components/map/MapGlobal';
 import HomeIntro from '/assets/img/home/intro.jpg';
 import { IntroSection } from '../components/features/IntroSection';
 import { BigNumber } from '../components/features/BigNumber';
@@ -109,7 +109,7 @@ export function Home() {
             subtitle="já passamos"
             customCss="md:items-center"
           />
-          <Map />
+          <MapGlobal />
         </div>
       </section>
       <section>
