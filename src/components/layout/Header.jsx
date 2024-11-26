@@ -14,7 +14,7 @@ export function Header() {
               </figure>
             </Link>
           </div>
-          <ul className="flex gap-4">
+          <ul className=" gap-4 md:flex hidden">
             <Button>
               <Link href="/trips">Viagens</Link>
             </Button>

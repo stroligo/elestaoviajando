@@ -1,20 +1,45 @@
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import style from './style.module.css';
+import { Svg } from '../../../utils/Svg';
 
 export function Select(props) {
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleFocus = () => {
+  const handleFocus = useCallback(() => {
     setIsOpen(true);
-  };
+  }, []);
 
-  const handleBlur = () => {
+  const handleBlur = useCallback(() => {
     setIsOpen(false);
-  };
+  }, []);
+
+  const handleClickOutside = useMemo(
+    () => (event) => {
+      if (!event.target.closest(`.${style.selectContainer}`)) {
+        setIsOpen(false);
+      }
+    },
+    [],
+  );
+
+  const handleMouseDown = useCallback(
+    (event) => {
+      event.preventDefault();
+      handleFocus();
+    },
+    [handleFocus],
+  );
+
+  useEffect(() => {
+    document.addEventListener('click', handleClickOutside);
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, [handleClickOutside]);
 
   return (
-    <div className="relative">
+    <div className={`${style.selectContainer} relative`}>
       <select
         {...props}
         className={style.select}
@@ -23,18 +48,18 @@ export function Select(props) {
       >
         {props.children}
       </select>
-      <div className={`${style.icon} ${isOpen ? style.rotate : ''}`}>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-        >
-          <path
-            fillRule="evenodd"
-            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-            clipRule="evenodd"
-          />
-        </svg>
+      <div
+        className={`${style.icon} ${isOpen ? style.rotate : ''}`}
+        onClick={handleFocus}
+        onMouseDown={handleMouseDown}
+        tabIndex={0}
+        onKeyDown={(event) => {
+          if (event.key === 'Enter' || event.key === ' ') {
+            handleFocus();
+          }
+        }}
+      >
+        <Svg type="ChevronDown" color="#fff" width={24} height={24} />
       </div>
     </div>
   );

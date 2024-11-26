@@ -1,18 +1,12 @@
+.selectContainer {
+  @apply md:w-fit w-full;
+}
 .select {
-  @apply px-3 py-1 text-lg  hover:bg-teal h-fit bg-blue-dark  font-semibold text-white hover:shadow-lg hover:text-white rounded-lg transition-all duration-150 ease-in-out appearance-none;
-  padding-right: 30px;
+  @apply px-3 py-1 text-lg  hover:bg-teal h-fit bg-blue-dark  font-semibold text-white hover:shadow-lg hover:text-white rounded-lg transition-all duration-150 ease-in-out appearance-none pr-8 md:w-fit w-full;
 }
-
 .icon {
-  position: absolute;
-  top: 50%;
-  right: 0.75rem;
-  transform: translateY(-50%);
-  width: 1.25rem;
-  height: 1.25rem;
-  color: #6b7280;
+  @apply absolute top-1/2 right-1 -translate-y-1/2 transition-all duration-300 ease-in-out;
 }
-
 .rotate {
-  transform: translateY(-50%) rotate(180deg);
+  @apply rotate-180 -translate-y-1/2;
 }

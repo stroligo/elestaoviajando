@@ -1,0 +1,14 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M33.2249 7.64844H45.5092V20.8757M35.1876 58.8499H2.67773V7.64844H15.0577" stroke="#0083CA" stroke-width="2" stroke-miterlimit="2.6131" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M22.4385 22.4121H31.8561" stroke="#0083CA" stroke-width="2" stroke-miterlimit="2.6131" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M22.4385 35.1621H28.387" stroke="#0083CA" stroke-width="2" stroke-miterlimit="2.6131" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M22.4385 47.9102H31.8561" stroke="#0083CA" stroke-width="2" stroke-miterlimit="2.6131" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M61.3231 55.7695H35.8252V62.7233H61.3231V55.7695Z" stroke="#0083CA" stroke-width="2" stroke-miterlimit="2.6131" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M58.0079 54.4946V36.5879C58.0079 30.4409 53.1927 25.3646 47.1482 24.9429C46.9461 21.8472 44.3511 19.377 41.2064 19.377V27.0263L32 38.8199L37.1633 44.9394L40.7974 42.1989C44.4548 42.1989 47.5867 39.8338 48.7392 36.5577" stroke="#0083CA" stroke-width="2" stroke-miterlimit="2.6131" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M43.9843 41.793V46.4075C43.9843 49.2118 41.6895 51.507 38.8848 51.507V55.1335" stroke="#0083CA" stroke-width="2" stroke-miterlimit="2.6131" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M44.373 31.5195H44.3743" stroke="#0083CA" stroke-width="2" stroke-miterlimit="2.6131" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M17.3388 18.5898H9.68945V26.2392H17.3388V18.5898Z" fill="#DADADA"/>
+<path d="M17.3388 31.3379H9.68945V38.9873H17.3388V31.3379Z" fill="#DADADA"/>
+<path d="M17.3388 44.0859H9.68945V51.7353H17.3388V44.0859Z" fill="#DADADA"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M17.145 11.4741H31.0415C33.1451 11.4741 34.8662 9.75295 34.8662 7.64937C34.8662 5.54579 33.1451 3.82469 31.0415 3.82469H28.5093C28.1976 1.6696 26.331 0 24.0932 0C21.8554 0 19.9888 1.6696 19.6771 3.82469H17.145C15.0414 3.82469 13.3203 5.54579 13.3203 7.64937C13.3203 9.75295 15.0414 11.4741 17.145 11.4741Z" fill="#DADADA"/>
+</svg>

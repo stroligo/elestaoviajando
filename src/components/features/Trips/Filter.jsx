@@ -2,8 +2,10 @@ import { useState } from 'react';
 import { Select } from '../../ui/Select';
 import { SearchInput } from '../../ui/SearchInput';
 import PropTypes from 'prop-types';
+import { Svg } from '../../../utils/Svg';
 
 export function Filter({ locations, onFilterChange }) {
+  /*   console.log(Alerta); */
   const [filter, setFilter] = useState({ filterCountry: '', searchTerm: '' });
   const [resetSearch, setResetSearch] = useState(false);
 
@@ -26,9 +28,15 @@ export function Filter({ locations, onFilterChange }) {
 
   return (
     <div className="relative h-full">
-      <div className="absolute top-0 right-0 -translate-y-8">
+      <div className="absolute top-0 right-0 -translate-y-10">
         {(filter.filterCountry || filter.searchTerm) && (
-          <div onClick={handleClearFilter}>Limpar Filtro</div>
+          <div
+            onClick={handleClearFilter}
+            className="flex gap-1 items-center hover:border-orange border-transparent border-b-2 cursor-pointer text-orange  font-serif px-2 "
+          >
+            Limpar Filtro{' '}
+            <Svg type="ClearFilter" color="#eb9658" width={20} height={20} />
+          </div>
         )}
       </div>
 
