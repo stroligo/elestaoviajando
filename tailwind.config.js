@@ -8,6 +8,7 @@ export default {
         black: '#000',
         gray: '#444343',
         'gray-light': '#b4b4b4',
+        'gray-extralight': '#f3f3f3',
         beige: '#EFEED6',
         primary: '#41798B',
         secondary: '#C78A4A',

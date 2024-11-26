@@ -1,0 +1,18 @@
+.select {
+  @apply px-3 py-1 text-lg  hover:bg-teal h-fit bg-blue-dark  font-semibold text-white hover:shadow-lg hover:text-white rounded-lg transition-all duration-150 ease-in-out appearance-none;
+  padding-right: 30px;
+}
+
+.icon {
+  position: absolute;
+  top: 50%;
+  right: 0.75rem;
+  transform: translateY(-50%);
+  width: 1.25rem;
+  height: 1.25rem;
+  color: #6b7280;
+}
+
+.rotate {
+  transform: translateY(-50%) rotate(180deg);
+}
