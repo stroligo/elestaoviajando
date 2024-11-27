@@ -1,0 +1,12 @@
+.splide {
+  ul {
+    @apply flex flex-row px-10 w-screen;
+  }
+}
+.splide__slide {
+  @apply w-[80vw] max-w-[80vw]  md:max-w-[23%]  mx-3;
+}
+.splide .splide__slide:first-child {
+}
+.splide .splide__slide:last-child {
+}

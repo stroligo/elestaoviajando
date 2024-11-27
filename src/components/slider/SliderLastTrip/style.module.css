@@ -1,0 +1,16 @@
+.splide {
+  img {
+    @apply overflow-clip rounded-xl;
+  }
+}
+.custom {
+  ul {
+    @apply md:-translate-y-6;
+    li {
+      @apply flex gap-2;
+      button {
+        @apply bg-orange;
+      }
+    }
+  }
+}

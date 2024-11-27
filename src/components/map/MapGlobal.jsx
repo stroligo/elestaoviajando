@@ -4,6 +4,7 @@ import 'leaflet/dist/leaflet.css';
 import { Link } from 'wouter';
 import { Slugify } from '../../utils/stringUtils';
 import { Button } from '../ui/Button';
+import Style from './style.module.css';
 
 export function MapGlobal() {
   const [data, setData] = useState(null);
@@ -22,6 +23,7 @@ export function MapGlobal() {
       zoom={3}
       scrollWheelZoom={false}
       style={{ height: '500px', width: '100%' }}
+      className={Style.MapContainerGlobal}
     >
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

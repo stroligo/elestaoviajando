@@ -1,8 +1,8 @@
 import { useState } from 'react';
+import PropTypes from 'prop-types';
 import { Select } from '../../ui/Select';
 import { SearchInput } from '../../ui/SearchInput';
-import PropTypes from 'prop-types';
-import { Svg } from '../../../utils/Svg';
+import { Svg } from '../../icons';
 
 export function Filter({ locations, onFilterChange }) {
   /*   console.log(Alerta); */
@@ -46,6 +46,7 @@ export function Filter({ locations, onFilterChange }) {
           value={filter.searchTerm}
           onChange={handleSearchTermChange}
           reset={resetSearch}
+          onReset={() => setFilter({ ...filter, searchTerm: '' })}
         />
 
         <Select value={filter.filterCountry} onChange={handleFilterCountry}>

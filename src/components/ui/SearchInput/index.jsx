@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { useState, useEffect } from 'react';
-import { Svg } from '../../../utils/Svg';
+import { Svg } from '../../icons';
 
 export function SearchInput({ placeholder, value, onChange, reset }) {
   const [searchTerm, setSearchTerm] = useState(value);
@@ -10,6 +10,10 @@ export function SearchInput({ placeholder, value, onChange, reset }) {
       setSearchTerm('');
     }
   }, [reset]);
+
+  useEffect(() => {
+    setSearchTerm(value);
+  }, [value]);
 
   const handleSearchTermChange = (event) => {
     setSearchTerm(event.target.value);

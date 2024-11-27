@@ -1,4 +1,4 @@
-import { Trips } from '../components/features/Trips';
+import { LastTrips } from '../components/features/LastTrips';
 import { Hero } from '../components/features/Hero';
 import { MapGlobal } from '../components/map/MapGlobal';
 import HomeIntro from '/assets/img/home/intro.jpg';
@@ -6,13 +6,21 @@ import { IntroSection } from '../components/features/IntroSection';
 import { BigNumber } from '../components/features/BigNumber';
 
 export function Home() {
-  return (
-    <article className="flex gap-8 flex-col">
-      <Hero />
+  const dataInicioViagem = new Date(2021, 6, 1);
+  const dataAtual = new Date();
+  const diasViajados = Math.floor(
+    (dataAtual - dataInicioViagem) / (1000 * 60 * 60 * 24),
+  );
+  const paisesViajados = 35;
+  const imagensGeradas = 80;
+  const kmPercorridos = 120;
 
+  return (
+    <article className="flex gap-8 flex-col ">
+      <Hero />
       {/* Intro */}
       <section>
-        <div className="flex flex-col md:flex-row gap-4 md:gap-8">
+        <div className="container mx-auto px-5 md:px-0 flex flex-col md:flex-row gap-4 md:gap-8">
           <div className="md:w-1/2">
             <figure className=" overflow-hidden rounded-3xl max-h-[200px] md:max-h-[400px]">
               <img src={HomeIntro} className="h-full w-full object-cover" />
@@ -42,7 +50,7 @@ export function Home() {
       </section>
       {/* BigNumbers */}
       <section>
-        <div className="flex  flex-col">
+        <div className="container mx-auto px-5 md:px-0 flex  flex-col">
           <IntroSection
             title="Números não dizem muito,"
             subtitle="Mas aqui estão alguns…"
@@ -50,23 +58,23 @@ export function Home() {
           />
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             <BigNumber
-              number={35}
+              number={paisesViajados}
               img="/assets/img/bignumbers/globo.png"
               text="Paises Visitados"
             />
             <BigNumber
-              number={250}
+              number={diasViajados}
               img="/assets/img/bignumbers/calendar.png"
               text="Dias Viajando"
             />
             <BigNumber
-              number={800}
+              number={imagensGeradas}
               complement={'K'}
               img="/assets/img/bignumbers/camera.png"
               text="Imagens Geradas"
             />
             <BigNumber
-              number={100}
+              number={kmPercorridos}
               complement={'K'}
               img="/assets/img/bignumbers/flag.png"
               text="KM Percorridos"
@@ -75,8 +83,8 @@ export function Home() {
         </div>
       </section>
       {/* Blog */}
-      <section>
-        <div className="flex  flex-col">
+      <section className="bg-gray-extralight">
+        <div className="container mx-auto px-5 md:px-0 flex  flex-col">
           <IntroSection
             title="Algumas de"
             subtitle="Nossas histórias"
@@ -93,27 +101,26 @@ export function Home() {
       {/*  Ultimas Viagens */}
       <section>
         <div className="flex  flex-col">
-          <IntroSection
-            title="Nossas ultimas"
-            subtitle="Viagens"
-            customCss="md:items-center"
-          />
-          <Trips />
+          <LastTrips />
         </div>
       </section>
       {/*  Por onde já passamos Map */}
       <section>
-        <div className="flex  flex-col">
-          <IntroSection
-            title="Por onde"
-            subtitle="já passamos"
-            customCss="md:items-center"
-          />
+        <div className="flex flex-col">
+          <div className="container mx-auto px-5 md:px-0">
+            <IntroSection
+              title="Por onde"
+              subtitle="já passamos"
+              customCss="md:items-center"
+            />
+          </div>
           <MapGlobal />
         </div>
       </section>
+
+      {/* Instagram Widgets */}
       <section>
-        <div className="flex md:flex-row flex-col">
+        <div className=" container mx-auto px-5 md:px-0 flex md:flex-row flex-col">
           <div className="md:w-1/2">
             <IntroSection title="Novidades no" subtitle="Instagram" />
           </div>

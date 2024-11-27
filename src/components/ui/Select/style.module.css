@@ -2,11 +2,8 @@
   @apply md:w-fit w-full;
 }
 .select {
-  @apply px-3 py-1 text-lg  hover:bg-teal h-fit bg-blue-dark  font-semibold text-white hover:shadow-lg hover:text-white rounded-lg transition-all duration-150 ease-in-out appearance-none pr-8 md:w-fit w-full;
+  @apply px-3 py-1 text-lg  hover:bg-teal h-fit bg-blue-dark   text-white hover:shadow-lg hover:text-white rounded-lg transition-all duration-150 ease-in-out appearance-none pr-8 md:w-fit w-full;
 }
-.icon {
-  @apply absolute top-1/2 right-1 -translate-y-1/2 transition-all duration-300 ease-in-out;
-}
-.rotate {
-  @apply rotate-180 -translate-y-1/2;
+.selectIcon {
+  @apply absolute right-3 top-2.5;
 }

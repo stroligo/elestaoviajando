@@ -3,6 +3,8 @@ import { getTripByCity } from '../services/api';
 import { useParams } from 'wouter';
 import { MapSingle } from '../components/map/MapSingle';
 import { IntroSection } from '../components/features/IntroSection';
+import { SliderTrip } from '../components/slider/SliderTrip';
+import { DateTrip } from '../components/features/DateTrip';
 
 export function Travel() {
   const [location, setLocation] = useState({});
@@ -23,23 +25,25 @@ export function Travel() {
   }, [city]);
 
   return (
-    <div>
+    <div className="container py-5 md:py-10 mx-auto flex px-5 md:px-0  flex-col">
       {location && location.city && (
-        <div className=" flex flex-row gap-8">
-          <div className="w-8/12">
+        <div className=" flex flex-col  md:flex-row gap-8">
+          <div className="w-full md:w-8/12">
             <IntroSection title={location.country} subtitle={location.city} />
 
-            <p>{location.description}</p>
+            <div className="pb-10">
+              <DateTrip date={location.date} />
 
-            {location.images &&
-              location.images.map((image, index) => (
-                <img src={`../${image}`} alt={location.city} key={index} />
-              ))}
-          </div>
-          <div className="w-4/12">
-            <div>
-              <MapSingle location={location} />
+              <p>{location.description}</p>
             </div>
+
+            <SliderTrip imagens={location.images} />
+          </div>
+          <div className="w-full md:w-4/12">
+            <div className="flex md:hidden">
+              <IntroSection subtitle="Mapa" />
+            </div>
+            <MapSingle location={location} />
           </div>
         </div>
       )}

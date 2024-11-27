@@ -3,7 +3,7 @@ import { IntroSection } from '../components/features/IntroSection';
 
 export function About() {
   return (
-    <article className="flex gap-8">
+    <article className="container py-5 md:py-10 mx-auto flex px-5 md:px-0  flex-col">
       <section>
         <div className="flex flex-col md:flex-row gap-4 md:gap-8">
           <div className="md:w-1/2">

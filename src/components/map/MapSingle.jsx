@@ -1,5 +1,5 @@
 import { MapContainer, TileLayer, Marker } from 'react-leaflet';
-
+import Style from './style.module.css';
 import PropTypes from 'prop-types';
 
 export function MapSingle({ location }) {
@@ -8,11 +8,11 @@ export function MapSingle({ location }) {
       center={[location.coordinates.lat, location.coordinates.lng]}
       zoom={5}
       scrollWheelZoom={false}
-      style={{ height: '500px', width: '100%' }}
+      className={Style.MapContainerSingle}
     >
       <TileLayer
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">Colaboradores do OpenStreetMap</a>'
-        url="https://{s}.tile.thunderforest.com/cycle/{z}/{x}/{y}.png?lang=pt"
+        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
       <Marker
         position={[location.coordinates.lat, location.coordinates.lng]}

@@ -17,8 +17,8 @@ export default {
         brown: '#C78A4A',
         teal: '#75A8A9',
         green: '#3F9499',
-        yellow: '#ECA95B',
-        orange: '#EB9658',
+        yellow: '#ece05b',
+        orange: '#ebb858',
       },
       fontFamily: {
         sans: ['BreveSans', 'sans-serif'],

@@ -21,5 +21,5 @@ p {
   @apply text-4xl md:text-5xl lg:text-7xl font-extrabold drop-shadow-lg font-serif leading-none;
 }
 section {
-  @apply py-10;
+  @apply py-4 md:py-10;
 }
