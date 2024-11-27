@@ -1,3 +1,15 @@
+/**
+ * Returns an SVG element based on the specified type.
+ *
+ * @param {Object} props - The properties for the SVG component.
+ * @param {string} props.type - The type of SVG to render. Possible values include
+ * 'AngleLeft', 'AngleRight', 'Search', 'Filter', 'ClearFilter', and 'ChevronDown'.
+ * @param {string} [props.color='#000'] - The color of the SVG paths.
+ * @param {number} [props.width=24] - The width of the SVG element.
+ * @param {number} [props.height=24] - The height of the SVG element.
+ * @param {Object} [props.props] - Additional properties to be passed to the SVG element.
+ * @returns {JSX.Element} The SVG element corresponding to the specified type.
+ */
 export function Svg({
   type,
   color = '#000',

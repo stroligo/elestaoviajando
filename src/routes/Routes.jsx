@@ -5,6 +5,17 @@ import { Blog } from '../pages/Blog';
 import { Travel } from '../pages/Travel';
 import { AllTravels } from '../pages/AllTravels';
 import { NewLocation } from '../pages/NewLocation';
+/**
+ * Renders all application routes.
+ *
+ * Routes:
+ * - Home: /
+ * - About: /about
+ * - Blog: /blog
+ * - NewLocation: /newlocation
+ * - All travels: /trips
+ * - Travel: /trips/:city (e.g. /trips/rio-de-janeiro)
+ */
 export function Routes() {
   return (
     <Switch>

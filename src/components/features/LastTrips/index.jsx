@@ -9,6 +9,18 @@ import Style from './style.module.css';
 
 import { Button } from '../../ui/Button';
 
+/**
+ * LastTrips component fetches and displays the last 10 trips using a carousel slider.
+ *
+ * This component utilizes the Splide library for displaying trips in a looped slider
+ * format with autoplay functionality and responsive breakpoints. It fetches trip data
+ * from the API and updates the state with the locations to be displayed.
+ *
+ * The component includes:
+ * - An introductory section with a title and subtitle.
+ * - A carousel slider showing the last 10 trips, each as a card with a link to its detail page.
+ * - A button linking to the page with all trips.
+ */
 export function LastTrips() {
   const [locations, setLocations] = useState([]);
 
@@ -28,7 +40,7 @@ export function LastTrips() {
     autoplay: true,
     interval: 3000,
     speed: 1000,
-    easing: 'ease-in-out', // Adiciona um efeito de transição suave
+    easing: 'ease-in-out',
     with: '100%',
     breakpoints: {
       640: {

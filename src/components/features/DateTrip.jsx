@@ -16,6 +16,14 @@ const meses = [
   'dezembro',
 ];
 
+/**
+ * Formats a given date string into a human-readable format in Portuguese.
+ * The format is "day de month de year". If the date is invalid, it displays "Data inválida".
+ *
+ * @param {Object} props - The component props.
+ * @param {string} props.date - The date string to be formatted.
+ * @returns {JSX.Element} A div containing the formatted date.
+ */
 export function DateTrip({ date }) {
   const [dataFormatada, setDataFormatada] = useState('');
 

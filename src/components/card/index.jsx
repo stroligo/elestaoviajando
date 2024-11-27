@@ -1,6 +1,19 @@
 import PropTypes from 'prop-types';
 import './card.modules.css';
 
+/**
+ * Renders a card component displaying information about a location.
+ * The card includes an image thumbnail, the city and country names,
+ * and a formatted date.
+ *
+ * @param {Object} location - The location data to display.
+ * @param {string} location.city - The name of the city.
+ * @param {string} location.country - The name of the country.
+ * @param {string} location.description - A description of the location.
+ * @param {string} location.thumbnail - The URL of the image thumbnail.
+ * @param {string} location.date - The date associated with the location.
+ * @returns {JSX.Element} A card component.
+ */
 export function Card({ location }) {
   const date = new Date(location.date);
   const formattedDate = date.toLocaleDateString('pt-BR', {

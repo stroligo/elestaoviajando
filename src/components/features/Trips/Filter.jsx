@@ -4,6 +4,18 @@ import { Select } from '../../ui/Select';
 import { SearchInput } from '../../ui/SearchInput';
 import { Svg } from '../../icons';
 
+/**
+ * Filter component for filtering locations based on country and search term.
+ *
+ * @param {Object[]} locations - List of locations to filter from.
+ * @param {function} onFilterChange - Callback function triggered when the filter changes.
+ *
+ * @description
+ * This component provides UI elements for filtering locations by country and search term.
+ * It includes a search input for entering the search term and a dropdown select for choosing
+ * the country. The component manages its own filter state and communicates changes via the
+ * `onFilterChange` callback. It also offers a "Clear Filter" option to reset the filters.
+ */
 export function Filter({ locations, onFilterChange }) {
   /*   console.log(Alerta); */
   const [filter, setFilter] = useState({ filterCountry: '', searchTerm: '' });

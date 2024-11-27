@@ -1,5 +1,14 @@
 import PropTypes from 'prop-types';
 
+/**
+ * IntroSection component
+ *
+ * @param {{ title: string, subtitle: string, customCss: string }} props
+ * @returns {JSX.Element}
+ *
+ * @example
+ * <IntroSection title="Ol " subtitle="Bem-vindo ao meu blog" />
+ */
 export function IntroSection({ title, subtitle, customCss }) {
   return (
     <div className={`pb-8 pt-2 flex flex-col ${customCss}`}>

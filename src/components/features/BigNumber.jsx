@@ -3,6 +3,12 @@ import CountUp from 'react-countup';
 import { Waypoint } from 'react-waypoint';
 import { useState } from 'react';
 
+/**
+ * Renders a number with an animation, when the component is visible.
+ *
+ * @param {{ number: number, img: string, complement: string, text: string }} props
+ * @returns {JSX.Element}
+ */
 export function BigNumber({ number, img, complement, text }) {
   const [animate, setAnimate] = useState(false);
 
