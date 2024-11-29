@@ -1,4 +1,4 @@
-import { Slugify } from '../utils/stringUtils';
+/* import { Slugify } from '../components/utils/stringUtils'; */
 
 /**
  * Fetches all trip data from the trips JSON file.
@@ -14,25 +14,11 @@ export async function getAllTrips() {
   return await response.json();
 }
 
-/**
- * Fetches trip data for a given city.
- *
- * This function makes an asynchronous request to retrieve all the trips data
- * from the trips JSON file and then searches for the trip that matches the
- * given city.
- *
- * @param {string} city - The name of the city to get the trip information for.
- * @returns {Promise<Object|undefined>} - A promise that resolves to the trip
- * data object for the given city if found, otherwise undefined.
- */
-export async function getTripByCity(city) {
+export async function getTrip(trip) {
   const response = await fetch('/data/trips.json');
   const data = await response.json();
-  const viagem = data.locations.find((location) => {
-    const citySlug = Slugify(location.city);
-    return citySlug === city;
-  });
-  return viagem;
+  const datatrip = data.locations.find((location) => location.trip === trip);
+  return datatrip;
 }
 
 /**

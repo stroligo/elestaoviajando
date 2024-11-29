@@ -23,3 +23,21 @@ p {
 section {
   @apply py-4 md:py-10;
 }
+table {
+  @apply bg-white p-6 rounded-2xl shadow-md w-full border border-blue;
+  th {
+    @apply bg-blue-dark text-white text-left font-bold text-sm px-6 py-2;
+  }
+  td {
+    @apply text-sm text-blue px-4 py-2;
+  }
+  tr {
+    @apply border-b border-blue;
+  }
+  tr:last-child {
+    @apply border-b-0;
+  }
+  tr:nth-child(even) {
+    @apply bg-gray-extralight;
+  }
+}

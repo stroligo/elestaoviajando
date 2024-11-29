@@ -3,6 +3,18 @@ import { Splide, SplideTrack, SplideSlide } from '@splidejs/react-splide';
 import Style from './style.module.css';
 
 export function SliderTrip({ imagens }) {
+  if (imagens.length === 1) {
+    return (
+      <div>
+        <img
+          src={imagens[0]}
+          alt="Imagem"
+          style={{ width: '100%', height: '500px', objectFit: 'cover' }}
+        />
+      </div>
+    );
+  }
+
   const options = {
     type: 'loop',
     perPage: 1,
@@ -11,9 +23,10 @@ export function SliderTrip({ imagens }) {
     gap: '10px',
     arrows: true,
     autoplay: true,
-    interval: 3000,
-    height: '400px',
+    interval: 2000,
+    height: '500px',
     width: '100%',
+    easing: 'ease-in-out',
   };
 
   return (

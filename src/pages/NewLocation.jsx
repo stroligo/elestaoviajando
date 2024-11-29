@@ -1,4 +1,4 @@
-import { MapGlobal } from '../components/map/MapGlobal';
+import { MapGlobal } from '../components/features/Map/MapGlobal';
 
 export function NewLocation() {
   return (

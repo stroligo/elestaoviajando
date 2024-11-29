@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Splide, SplideSlide } from '@splidejs/react-splide';
 import { getAllTrips } from '../../../services/api';
 import { Link } from 'wouter';
-import { Slugify } from '../../../utils/stringUtils';
+/* import { Slugify } from '../../utils/stringUtils'; */
 import { Card } from '../../card';
 import { IntroSection } from '../IntroSection';
 import Style from './style.module.css';
@@ -27,7 +27,10 @@ export function LastTrips() {
   useEffect(() => {
     async function loadViagens() {
       const data = await getAllTrips();
-      setLocations(data.locations);
+      const sortedTrips = data.locations.sort(
+        (a, b) => new Date(b.date) - new Date(a.date),
+      );
+      setLocations(sortedTrips);
     }
     loadViagens();
   }, []);
@@ -54,15 +57,15 @@ export function LastTrips() {
       <div className="container mx-auto px-5">
         <IntroSection
           title="Nossas Últimas"
-          subtitle="10 Viagens"
+          subtitle="20 Viagens"
           customCss="md:items-center"
         />
       </div>
 
       <Splide options={options} className={Style.splide} autoPlay={true}>
-        {locations.slice(0, 10).map((location) => (
+        {locations.slice(0, 20).map((location) => (
           <SplideSlide key={location.id} className={Style.splide__slide}>
-            <Link to={`/trips/${Slugify(location.city)}`}>
+            <Link to={`/trips/${location.trip}`}>
               <div>
                 <Card location={location} />
               </div>

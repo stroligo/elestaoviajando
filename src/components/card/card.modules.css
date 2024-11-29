@@ -3,7 +3,7 @@
   figure {
     @apply relative h-[400px] md:h-[350px] lg:h-[400px] overflow-clip;
     img {
-      @apply object-cover w-full h-full transition-all duration-300 ease-in-out opacity-70;
+      @apply object-cover w-full h-full transition-all duration-300 ease-in-out;
     }
   }
   .date {
@@ -21,8 +21,11 @@
   }
   &:hover {
     @apply shadow-lg;
+    figure {
+      @apply bg-gradient-to-r from-green to-beige;
+    }
     img {
-      @apply scale-105 transition-all duration-300 ease-in-out   filter-none opacity-100;
+      @apply scale-105 transition-all duration-300 ease-in-out   filter-none opacity-90;
     }
     .card-content {
       @apply bg-opacity-90 bg-white transition-all duration-300 ease-in-out;

@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import 'leaflet/dist/leaflet.css';
 import { Link } from 'wouter';
 import { Slugify } from '../../utils/stringUtils';
-import { Button } from '../ui/Button';
+import { Button } from '../../ui/Button';
 import Style from './style.module.css';
 
 export function MapGlobal() {

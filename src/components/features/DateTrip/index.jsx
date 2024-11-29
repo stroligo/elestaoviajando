@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { Svg } from '../../icons';
 
 const meses = [
   'janeiro',
@@ -40,7 +41,12 @@ export function DateTrip({ date }) {
     }
   }, [date]);
 
-  return <div>{dataFormatada}</div>;
+  return (
+    <div className="text-sm text-blue items-center flex gap-2 select-none border border-blue rounded-full px-3 w-fit py-1">
+      <Svg type="Calendar" color="#41798b" width={16} height={16} />
+      <span className="translate-y-[1px]">{dataFormatada}</span>
+    </div>
+  );
 }
 
 DateTrip.propTypes = {

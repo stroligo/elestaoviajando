@@ -1,6 +1,6 @@
 import { LastTrips } from '../components/features/LastTrips';
 import { Hero } from '../components/features/Hero';
-import { MapGlobal } from '../components/map/MapGlobal';
+import { MapGlobal } from '../components/features/Map/MapGlobal';
 import HomeIntro from '/assets/img/home/intro.jpg';
 import { IntroSection } from '../components/features/IntroSection';
 import { BigNumber } from '../components/features/BigNumber';

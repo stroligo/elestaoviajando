@@ -29,32 +29,41 @@ export function Weather({ weather }) {
   const translatedDescription = weatherDescriptions[description.toLowerCase()];
 
   return (
-    <div className="bg-gray-extralight p-4 rounded-xl flex flex-col gap-2">
-      <div>
-        Temperatura atual:
-        {weather.main ? (weather.main.temp - 273.15).toFixed(1) : ''}
-        °C
-      </div>
-      <div>
-        Condição do tempo:
-        {translatedDescription || description}
-      </div>
-      <div>
-        Temperatura mínima:
-        {weather.main ? (weather.main.temp_min - 273.15).toFixed(1) : ''}
-        °C
-      </div>
-      <div>
-        Temperatura máxima:
-        {weather.main ? (weather.main.temp_max - 273.15).toFixed(1) : ''}
-        °C
-      </div>
-      <div>Umidade: {weather.main ? weather.main.humidity : ''}%</div>
-      <div>
-        Vento: {weather.wind ? weather.wind.speed : ''} m/s (
-        {weather.wind ? weather.wind.deg : ''}°)
-      </div>
-    </div>
+    <table>
+      <tr>
+        <td className="font-bold">Temperatura atual</td>
+        <td>
+          {weather.main ? (weather.main.temp - 273.15).toFixed(1) : ''} °C
+        </td>
+      </tr>
+      <tr>
+        <td className="font-bold">Condição do tempo</td>
+        <td>{translatedDescription || description}</td>
+      </tr>
+      <tr>
+        <td className="font-bold">Temperatura mínima</td>
+        <td>
+          {weather.main ? (weather.main.temp_min - 273.15).toFixed(1) : ''} °C
+        </td>
+      </tr>
+      <tr>
+        <td className="font-bold">Temperatura máxima</td>
+        <td>
+          {weather.main ? (weather.main.temp_max - 273.15).toFixed(1) : ''} °C
+        </td>
+      </tr>
+      <tr>
+        <td className="font-bold">Umidade</td>
+        <td>{weather.main ? weather.main.humidity : ''}%</td>
+      </tr>
+      <tr>
+        <td className="font-bold">Vento</td>
+        <td>
+          {weather.wind ? weather.wind.speed : ''} m/s (
+          {weather.wind ? weather.wind.deg : ''}°)
+        </td>
+      </tr>
+    </table>
   );
 }
 
