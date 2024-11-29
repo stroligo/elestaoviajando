@@ -5,7 +5,7 @@ import { SearchInput } from '../../ui/SearchInput';
 import { Svg } from '../../icons';
 import { Button } from '../../ui/Button';
 
-export function Filter({ locations, onFilterChange, onOrderByChange }) {
+export function Filter({ trips, onFilterChange, onOrderByChange }) {
   /*   console.log(Alerta); */
   const [filter, setFilter] = useState({
     filterCountry: '',
@@ -61,7 +61,7 @@ export function Filter({ locations, onFilterChange, onOrderByChange }) {
 
         <Select value={filter.filterCountry} onChange={handleFilterCountry}>
           <option value="">Todos os países</option>
-          {Array.from(new Set(locations.map((location) => location.country)))
+          {Array.from(new Set(trips.map((location) => location.country)))
             .sort((a, b) => a.localeCompare(b))
             .map((country) => (
               <option key={country} value={country}>
@@ -82,7 +82,7 @@ export function Filter({ locations, onFilterChange, onOrderByChange }) {
 }
 
 Filter.propTypes = {
-  locations: PropTypes.array.isRequired,
+  trips: PropTypes.array.isRequired,
   onFilterChange: PropTypes.func.isRequired,
   onOrderByChange: PropTypes.func.isRequired,
 };

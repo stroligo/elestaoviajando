@@ -23,6 +23,10 @@ p {
 section {
   @apply py-4 md:py-10;
 }
+.active {
+  background-color: orange;
+  border-color: orange;
+}
 table {
   @apply bg-white p-6 rounded-2xl shadow-md w-full border border-blue;
   th {

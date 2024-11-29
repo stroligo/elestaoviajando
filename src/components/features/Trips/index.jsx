@@ -1,45 +1,36 @@
 import { useState, useEffect } from 'react';
 import { getAllTrips } from '../../../services/api';
-import { Link } from 'wouter';
+
 import { Slugify } from '../../utils/stringUtils';
-import { Card } from '../../card';
+
 import { Filter } from './Filter';
 import { IntroSection } from '../IntroSection';
+import { TripList } from './TripList';
+import { Pagination } from './Pagination';
 
 export function Trips() {
-  const [locations, setLocations] = useState([]);
-  const [displayedLocations, setDisplayedLocations] = useState([]);
-  const [orderBy, setOrderBy] = useState('asc');
-  const [orderedLocations, setOrderedLocations] = useState([]);
+  const [trips, setTrips] = useState([]);
+  const [displayedTrips, setDisplayedTrips] = useState([]);
+  const [orderBy, setOrderBy] = useState('desc');
+  const [page, setPage] = useState(0);
+  const [pageSize] = useState(20);
 
   useEffect(() => {
-    async function loadViagens() {
+    async function loadTrips() {
       const data = await getAllTrips();
-      setLocations(data.locations);
-      setDisplayedLocations(data.locations);
+      setTrips(data.locations);
+      setDisplayedTrips(data.locations);
     }
-    loadViagens();
+    loadTrips();
   }, []);
 
-  useEffect(() => {
-    const orderedLocations = displayedLocations.sort((a, b) => {
-      if (orderBy === 'asc') {
-        return a.city.localeCompare(b.city);
-      } else if (orderBy === 'desc') {
-        return b.city.localeCompare(a.city);
-      }
-    });
-    setOrderedLocations(orderedLocations);
-  }, [displayedLocations, orderBy]);
-
   const handleFilterChange = (filter) => {
-    const filteredLocations = getFilteredLocations(
-      locations,
+    const filteredTrips = getFilteredTrips(
+      trips,
       filter.filterCountry,
       filter.searchTerm,
     );
-
-    setDisplayedLocations(filteredLocations);
+    setDisplayedTrips(filteredTrips);
   };
 
   const handleOrderByChange = (orderBy) => {
@@ -48,45 +39,23 @@ export function Trips() {
   };
 
   const handleClearFilter = () => {
-    setDisplayedLocations(locations);
+    setDisplayedTrips(trips);
   };
 
-  const getFilteredLocations = (locations, filterCountry, searchTerm) => {
-    const filteredLocations = filterCountry
-      ? locations.filter((location) => location.country === filterCountry)
-      : locations;
+  const getFilteredTrips = (trips, filterCountry, searchTerm) => {
+    const filteredTrips = filterCountry
+      ? trips.filter((trip) => trip.country === filterCountry)
+      : trips;
 
     return searchTerm
-      ? filteredLocations.filter((location) =>
-          Slugify(location.city).includes(Slugify(searchTerm)),
+      ? filteredTrips.filter((trip) =>
+          Slugify(trip.city).includes(Slugify(searchTerm)),
         )
-      : filteredLocations;
+      : filteredTrips;
   };
 
-  const renderItems = () => {
-    return (
-      <div>
-        {orderedLocations.length > 0 ? (
-          <div className="flex  items-center  justify-end">
-            <div className="font-bold text-lg">
-              {orderedLocations.length} viagens encontradas
-            </div>
-          </div>
-        ) : (
-          <div className="flex  items-center  justify-end">
-            <div className="font-bold text-lg">Nenhuma viagem encontrada</div>
-          </div>
-        )}
-
-        <div className="grid  md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-8 py-10">
-          {orderedLocations.map((location) => (
-            <Link to={`/trips/${location.trip}`} key={location.id}>
-              <Card location={location} />
-            </Link>
-          ))}
-        </div>
-      </div>
-    );
+  const handlePageChange = (newPage) => {
+    setPage(newPage);
   };
 
   return (
@@ -95,14 +64,26 @@ export function Trips() {
         <IntroSection title="Todas as" subtitle="Viagens" />
 
         <Filter
-          locations={locations}
+          trips={trips}
           onFilterChange={handleFilterChange}
           onOrderByChange={handleOrderByChange}
           onClearFilter={handleClearFilter}
         />
       </div>
 
-      {renderItems()}
+      <TripList
+        trips={displayedTrips}
+        orderBy={orderBy}
+        page={page}
+        pageSize={pageSize}
+      />
+
+      <Pagination
+        page={page}
+        pageSize={pageSize}
+        totalTrips={displayedTrips.length}
+        onPageChange={handlePageChange}
+      />
     </div>
   );
 }
