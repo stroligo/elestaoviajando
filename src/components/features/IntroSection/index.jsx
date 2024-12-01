@@ -1,15 +1,6 @@
 import PropTypes from 'prop-types';
 import StyleModule from './style.module.css';
 
-/**
- * IntroSection component
- *
- * @param {{ title: string, subtitle: string, style: string }} props
- * @returns {JSX.Element}
- *
- * @example
- * <IntroSection title="Ol " subtitle="Bem-vindo ao meu blog" style="branco" />
- */
 export function IntroSection({ title, subtitle, style, customCss }) {
   return (
     <div

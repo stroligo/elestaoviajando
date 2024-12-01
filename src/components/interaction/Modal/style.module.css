@@ -1,0 +1,9 @@
+.modal-overlay {
+  @apply fixed top-0 left-0 w-full h-full bg-blue-dark bg-opacity-80 flex items-center justify-center z-50;
+}
+.modal-content {
+  @apply relative bg-white p-5 rounded-3xl shadow-2xl w-fit h-fit z-50;
+}
+.close-modal {
+  @apply bg-primary hover:bg-orange top-4 right-4 rounded-full flex items-center justify-center text-white font-extrabold text-sm w-8 h-8 cursor-pointer absolute;
+}

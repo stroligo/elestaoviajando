@@ -42,8 +42,8 @@ export function DateTrip({ date }) {
   }, [date]);
 
   return (
-    <div className="text-sm text-blue items-center flex gap-2 select-none border border-blue rounded-full px-3 w-fit py-1">
-      <Svg type="Calendar" color="#41798b" width={16} height={16} />
+    <div className="text-sm  text-orange items-center flex gap-2 select-none w-fit">
+      <Svg type="Calendar" color="#ebb858" width={16} height={16} />
       <span className="translate-y-[1px]">{dataFormatada}</span>
     </div>
   );

@@ -1,15 +1,5 @@
 import Logo from '/assets/img/logo.png';
-/**
- * Renders the hero section of the website.
- *
- * This component renders a background with a gradient color and a container with a child element that contains the text "Veja o mundo através da nossa janela.".
- * The text is centered and has a background color to make it more visible.
- * There is also an absolutely positioned image of the logo at the bottom right corner of the container.
- *
- * The component uses tailwindcss classes to style the elements.
- *
- * @returns {JSX.Element}
- */
+
 export function Hero() {
   return (
     <div className="bg-gradient-to-r from-green to-beige p-5 relative flex justify-between h-[20vh]  md:h-[60vh]  overflow-hidden w-full mx-0">

@@ -2,10 +2,10 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import { useState, useEffect } from 'react';
 import 'leaflet/dist/leaflet.css';
 import { Link } from 'wouter';
-import { Slugify } from '../../utils/stringUtils';
-import { Button } from '../../ui/Button';
-import Style from './style.module.css';
+import Style from '../style.module.css';
 
+import { Slugify } from '@/components/utils/stringUtils';
+import { Button } from '@/components/ui/Button';
 export function MapGlobal() {
   const [data, setData] = useState(null);
 

@@ -1,12 +1,12 @@
 import { MapContainer, TileLayer, Marker } from 'react-leaflet';
-import Style from './style.module.css';
+import Style from '../style.module.css';
 import PropTypes from 'prop-types';
 
 export function MapSingle({ location }) {
   return (
     <MapContainer
       center={[location.coordinates.lat, location.coordinates.lng]}
-      zoom={5}
+      zoom={3}
       scrollWheelZoom={false}
       className={Style.MapContainerSingle}
     >

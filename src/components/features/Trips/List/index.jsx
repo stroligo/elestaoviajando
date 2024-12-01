@@ -1,6 +1,6 @@
 // TripList.js
 import { Link } from 'wouter';
-import { Card } from '../../card';
+import { Card } from '../../../card';
 import PropTypes from 'prop-types';
 
 export function TripList({ trips, orderBy, page, pageSize }) {
@@ -20,7 +20,7 @@ export function TripList({ trips, orderBy, page, pageSize }) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 ">
       {paginatedTrips.map((item) => (
-        <Link key={item.id} to={`/trips/${item.trip}`}>
+        <Link key={item.id} to={`/trips/${item.id}`}>
           <Card location={item} />
         </Link>
       ))}

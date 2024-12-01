@@ -1,9 +1,9 @@
-import { LastTrips } from '../components/features/LastTrips';
 import { Hero } from '../components/features/Hero';
-import { MapGlobal } from '../components/features/Map/MapGlobal';
+import { MapGlobal } from '../components/features/Map/Global';
 import HomeIntro from '/assets/img/home/intro.jpg';
 import { IntroSection } from '../components/features/IntroSection';
 import { BigNumber } from '../components/features/BigNumber';
+import { SliderLastTrip } from '../components/features/Slider/SliderLastTrip';
 
 export function Home() {
   const dataInicioViagem = new Date(2021, 6, 1);
@@ -101,7 +101,7 @@ export function Home() {
       {/*  Ultimas Viagens */}
       <section>
         <div className="flex  flex-col">
-          <LastTrips />
+          <SliderLastTrip />
         </div>
       </section>
       {/*  Por onde já passamos Map */}

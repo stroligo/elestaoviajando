@@ -7,7 +7,7 @@
     }
   }
   .date {
-    @apply text-xs transition-all duration-300 ease-in-out absolute rounded-bl-lg bg-gray-extralight bg-opacity-35 px-2 py-2 top-0 right-0 font-bold text-blue-dark;
+    @apply text-xs transition-all duration-300 ease-in-out absolute rounded-bl-lg bg-blue bg-opacity-35 px-2 py-2 top-0 right-0 font-bold text-white;
   }
   .card-content {
     @apply absolute bottom-0 font-serif w-full  right-0 bg-black bg-opacity-60 font-bold text-white px-5 pb-5 text-right  duration-300 ease-in-out;

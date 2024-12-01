@@ -14,11 +14,11 @@ export async function getAllTrips() {
   return await response.json();
 }
 
-export async function getTrip(trip) {
+export async function getTrip(id) {
   const response = await fetch('/data/trips.json');
   const data = await response.json();
-  const datatrip = data.locations.find((location) => location.trip === trip);
-  return datatrip;
+  const dataId = data.locations.find((location) => location.id === id);
+  return dataId;
 }
 
 /**

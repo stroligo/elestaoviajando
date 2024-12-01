@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Select } from '../../ui/Select';
-import { SearchInput } from '../../ui/SearchInput';
-import { Svg } from '../../icons';
-import { Button } from '../../ui/Button';
+import { Select } from '@/components/ui/Select';
+import { SearchInput } from '@/components/ui/SearchInput';
+import { Svg } from '@/components/icons';
+import { Button } from '@/components/ui/Button';
 
 export function Filter({ trips, onFilterChange, onOrderByChange }) {
   /*   console.log(Alerta); */

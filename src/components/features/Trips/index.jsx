@@ -1,12 +1,10 @@
 import { useState, useEffect } from 'react';
 import { getAllTrips } from '../../../services/api';
-
 import { Slugify } from '../../utils/stringUtils';
-
 import { Filter } from './Filter';
 import { IntroSection } from '../IntroSection';
-import { TripList } from './TripList';
 import { Pagination } from './Pagination';
+import { TripList } from './List';
 
 export function Trips() {
   const [trips, setTrips] = useState([]);
@@ -70,7 +68,6 @@ export function Trips() {
           onClearFilter={handleClearFilter}
         />
       </div>
-
       <TripList
         trips={displayedTrips}
         orderBy={orderBy}

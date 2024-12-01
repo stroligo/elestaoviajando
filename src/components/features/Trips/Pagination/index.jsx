@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
-import { Svg } from '../../icons';
+import { Svg } from '../../../icons';
 
 export function Pagination({ pageSize, totalTrips, onPageChange }) {
   const totalPages = Math.ceil(totalTrips / pageSize);

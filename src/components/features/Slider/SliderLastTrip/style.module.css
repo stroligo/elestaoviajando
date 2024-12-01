@@ -1,16 +1,12 @@
 .splide {
-  img {
-    @apply overflow-clip rounded-xl;
+  ul {
+    @apply flex flex-row px-10 w-screen;
   }
 }
-.custom {
-  ul {
-    @apply md:-translate-y-6;
-    li {
-      @apply flex gap-2;
-      button {
-        @apply bg-orange;
-      }
-    }
-  }
+.splide__slide {
+  @apply w-[80vw] max-w-[80vw]  md:max-w-[23%]  mx-3;
+}
+.splide .splide__slide:first-child {
+}
+.splide .splide__slide:last-child {
 }

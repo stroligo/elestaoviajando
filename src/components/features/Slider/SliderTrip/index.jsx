@@ -1,16 +1,45 @@
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Splide, SplideTrack, SplideSlide } from '@splidejs/react-splide';
 import Style from './style.module.css';
+import { Modal } from '@/components/interaction/Modal';
 
 export function SliderTrip({ imagens }) {
+  const [imagemSelecionada, setImagemSelecionada] = useState(null);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleOpenModal = (imagem) => {
+    setImagemSelecionada(imagem);
+    setIsOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsOpen(false);
+  };
+
   if (imagens.length === 1) {
     return (
       <div>
-        <img
-          src={imagens[0]}
-          alt="Imagem"
-          style={{ width: '100%', height: '500px', objectFit: 'cover' }}
-        />
+        <figure className=" cursor-pointer">
+          <img
+            src={imagens[0]}
+            alt="Imagem"
+            style={{ width: '100%', height: '700px', objectFit: 'cover' }}
+            onClick={() => handleOpenModal(imagens[0])}
+          />
+        </figure>
+
+        <Modal isOpen={isOpen} onClose={handleCloseModal}>
+          {imagemSelecionada && (
+            <figure className="h-fit max-h-full">
+              <img
+                src={imagemSelecionada}
+                alt="Imagem selecionada"
+                className="md:max-w-screen-md max-w-sm max-h-[85vh] object-cover"
+              />
+            </figure>
+          )}
+        </Modal>
       </div>
     );
   }
@@ -24,7 +53,7 @@ export function SliderTrip({ imagens }) {
     arrows: true,
     autoplay: true,
     interval: 2000,
-    height: '500px',
+    height: '700px',
     width: '100%',
     easing: 'ease-in-out',
   };
@@ -42,18 +71,30 @@ export function SliderTrip({ imagens }) {
             {imagens.map((imagem, index) => (
               <SplideSlide
                 key={index}
-                style={{ width: '100%', height: '100%' }}
+                style={{ height: '100%', cursor: 'pointer' }}
+                onClick={() => handleOpenModal(imagem)}
               >
                 <img
                   src={imagem}
                   alt={`Imagem ${index + 1}`}
-                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  className="w-full object-cover "
                 />
               </SplideSlide>
-            ))}{' '}
+            ))}
           </SplideTrack>
         </div>
       </Splide>
+      <Modal isOpen={isOpen} onClose={handleCloseModal}>
+        {imagemSelecionada && (
+          <figure className="h-fit max-h-full">
+            <img
+              src={imagemSelecionada}
+              alt="Imagem selecionada"
+              className="md:max-w-screen-md max-w-sm max-h-[85vh] object-cover"
+            />
+          </figure>
+        )}
+      </Modal>
     </div>
   );
 }
