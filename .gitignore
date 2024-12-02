@@ -1,5 +1,5 @@
 # Fotos LFS
-/public/trips/
+#/public/trips/
 
 .env
 config.json
