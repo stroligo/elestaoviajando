@@ -1,17 +1,17 @@
 import { useState, useEffect } from 'react';
-import { conectData } from '../../../services/api';
-import { Slugify } from '../../utils/stringUtils';
-import { Filter } from './Filter';
-import { IntroSection } from '../IntroSection';
+import { conectData } from '@/services/api';
+import { Slugify } from '@/components/utils/stringUtils';
+import { IntroSection } from '@/components/features/IntroSection';
 import { Pagination } from './Pagination';
+import { Filter } from './Filter';
 import { TripList } from './List';
 
 export function Trips() {
   const [trips, setTrips] = useState([]);
   const [displayedTrips, setDisplayedTrips] = useState([]);
-  const [orderBy, setOrderBy] = useState('asc');
+  const [orderBy, setOrderBy] = useState('desc');
   const [page, setPage] = useState(0);
-  const [pageSize] = useState(1000);
+  const [pageSize] = useState(20);
 
   useEffect(() => {
     async function loadTrips() {

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Svg } from '../../icons';
+import { Svg } from '../Icons';
 
 const meses = [
   'janeiro',

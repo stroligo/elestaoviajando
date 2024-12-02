@@ -1,15 +1,15 @@
 import { useState, useEffect } from 'react';
-import { conectData } from '../../../services/api';
-import { Slugify } from '../../utils/stringUtils';
+import { conectData } from '@/services/api';
+import { Slugify } from '@/components/utils/stringUtils';
 import { Filter } from './Filter';
-import { IntroSection } from '../IntroSection';
+import { IntroSection } from '@/components/features/IntroSection';
 import { Pagination } from './Pagination';
 import { BlogList } from './List';
 
 export function Blog() {
   const [blog, setBlog] = useState([]);
   const [displayedBlog, setDisplayedBlog] = useState([]);
-  const [orderBy, setOrderBy] = useState('asc');
+  const [orderBy, setOrderBy] = useState('desc');
   const [page, setPage] = useState(0);
   const [pageSize] = useState(20);
 

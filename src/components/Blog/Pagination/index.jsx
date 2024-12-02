@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
-import { Svg } from '../../../icons';
+import { Svg } from '@/components/ui/Icons';
 
-export function Pagination({ pageSize, totalTrips, onPageChange }) {
-  const totalPages = Math.ceil(totalTrips / pageSize);
+export function Pagination({ pageSize, totalBlog, onPageChange }) {
+  const totalPages = Math.ceil(totalBlog / pageSize);
   const [currentPage, setCurrentPage] = useState(0);
 
   const handlePrev = () => {
@@ -63,7 +63,7 @@ export function Pagination({ pageSize, totalTrips, onPageChange }) {
         )}
       </div>
       <div className="absolute top-1/2 text-xs right-0 text-right text-gray-light transform -translate-x-1/2 -translate-y-1/2 select-none">
-        {totalTrips > 0 ? `Página ${currentPage + 1} de ${totalPages}` : ''}
+        {totalBlog > 0 ? `Página ${currentPage + 1} de ${totalPages}` : ''}
       </div>
     </div>
   );
@@ -71,6 +71,6 @@ export function Pagination({ pageSize, totalTrips, onPageChange }) {
 
 Pagination.propTypes = {
   pageSize: PropTypes.number.isRequired,
-  totalTrips: PropTypes.number.isRequired,
+  totalBlog: PropTypes.number.isRequired,
   onPageChange: PropTypes.func.isRequired,
 };

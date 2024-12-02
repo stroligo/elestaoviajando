@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { useCallback } from 'react';
 import style from './style.module.css';
-import { Svg } from '../../icons';
+import { Svg } from '../Icons';
 
 export function Select(props) {
   const { onChange } = props;

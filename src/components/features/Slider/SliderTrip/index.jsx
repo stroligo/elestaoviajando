@@ -2,7 +2,7 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Splide, SplideTrack, SplideSlide } from '@splidejs/react-splide';
 import Style from './style.module.css';
-import { Modal } from '@/components/interaction/Modal';
+import { Modal } from '@/components/features/Modal';
 
 export function SliderTrip({ imagens }) {
   const [imagemSelecionada, setImagemSelecionada] = useState(null);

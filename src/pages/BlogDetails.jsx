@@ -2,10 +2,10 @@ import { useState, useEffect } from 'react';
 import { getBlog } from '../services/api';
 import { useParams } from 'wouter';
 
-import { IntroSection } from '../components/features/IntroSection';
-import { SliderTrip } from '../components/features/Slider/SliderTrip';
+import { IntroSection } from '@/components/features/IntroSection';
+import { SliderTrip } from '@/components/features/Slider/SliderTrip';
 
-import { DateTrip } from '../components/ui/DateTrip';
+import { DateTrip } from '@/components/ui/DateTrip';
 
 export function BlogDetails() {
   const [location, setLocation] = useState({});
@@ -35,9 +35,9 @@ export function BlogDetails() {
             <div className="relative w-full   lg:w-7/12">
               <div className="sticky top-10 z-50">
                 <SliderTrip imagens={location.images} />
-                <div className="absolute top-0 left-0  w-full pt-6 pl-6">
+                {/*   <div className="absolute top-0 left-0  w-full pt-6 pl-6">
                   <IntroSection subtitle={location.titulo} style="hero" />
-                </div>
+                </div> */}
               </div>
             </div>
             {/* Container */}

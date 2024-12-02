@@ -8,17 +8,17 @@ import { IntroSection } from '@/components/features/IntroSection';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 
-export function SliderLastTrip() {
-  const [trip, setTrip] = useState([]);
+export function SliderLastBlog() {
+  const [blog, setBlog] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     async function loadViagens() {
       const data = await conectData();
-      const sortedTrips = data.trip.sort(
+      const sortedBlog = data.blog.sort(
         (a, b) => new Date(b.date) - new Date(a.date),
       );
-      setTrip(sortedTrips);
+      setBlog(sortedBlog);
       setIsLoading(false);
     }
     loadViagens();
@@ -42,11 +42,11 @@ export function SliderLastTrip() {
   };
 
   return (
-    <div className="flex flex-col gap-10 h-screen items-center justify-center">
+    <div className="flex flex-col gap-10 py-12 items-center justify-center">
       <div className="container mx-auto px-5">
         <IntroSection
-          title="Nossas Últimas"
-          subtitle="20 Viagens"
+          title="Nosso Blog"
+          subtitle="Vida na estrada"
           customCss="md:items-center"
         />
       </div>
@@ -59,9 +59,9 @@ export function SliderLastTrip() {
         </div>
       ) : (
         <Splide options={options} className={Style.splide} autoPlay={true}>
-          {trip.slice(0, 20).map((location) => (
+          {blog.slice(0, 20).map((location) => (
             <SplideSlide key={location.id} className={Style.splide__slide}>
-              <Link to={`/trips/${location.id}`}>
+              <Link to={`/blog/${location.id}`}>
                 <div>
                   <Card location={location} />
                 </div>

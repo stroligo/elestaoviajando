@@ -1,10 +1,20 @@
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import L from 'leaflet';
 import { useState, useEffect } from 'react';
 import 'leaflet/dist/leaflet.css';
 import { Link } from 'wouter';
 import Style from '../style.module.css';
 
 import { Button } from '@/components/ui/Button';
+import Pin from '/assets/img/pin.png';
+
+const icon = L.icon({
+  iconUrl: Pin,
+  iconSize: [40, 40],
+  iconAnchor: [20, 40],
+  popupAnchor: [0, -40],
+});
+
 export function MapGlobal() {
   const [data, setData] = useState(null);
 
@@ -18,10 +28,10 @@ export function MapGlobal() {
 
   return (
     <MapContainer
-      center={[55.426616, 14.119192]}
-      zoom={3}
+      center={[47.471330401942076, -1.587923206983062]}
+      zoom={4}
       scrollWheelZoom={false}
-      style={{ height: '500px', width: '100%' }}
+      style={{ height: '550px', width: '100%' }}
       className={Style.MapContainerGlobal}
     >
       <TileLayer
@@ -32,14 +42,17 @@ export function MapGlobal() {
         <Marker
           key={location.id}
           position={[location.coordinates.lat, location.coordinates.lng]}
+          icon={icon}
         >
           <Popup>
-            <div className="font-extrabold text-blue-dark font-serif text-xl leading-none pb-1   pr-4 border-b-2 border-orange w-fit">
-              {location.city}
+            <div className="flex flex-col gap-4 justify-center items-center">
+              <div className="font-extrabold text-blue-dark font-serif text-xl leading-none pb-1   pr-4 border-b-2 border-orange w-fit">
+                {location.city}
+              </div>
+              <Link to={`/trips/${location.id}`}>
+                <Button> Ver Viagem </Button>
+              </Link>
             </div>
-            <Link to={`/trips/${location.id}`}>
-              <Button> Ver Viagem </Button>
-            </Link>
           </Popup>
         </Marker>
       ))}

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { getTrip } from '../services/api';
 import { useParams } from 'wouter';
-import { MapSingle } from '../components/features/Map/Trip';
+import { MapSingle } from '../components/Map/Trip';
 import { IntroSection } from '../components/features/IntroSection';
 import { SliderTrip } from '../components/features/Slider/SliderTrip';
 import { DateTrip } from '../components/ui/DateTrip';

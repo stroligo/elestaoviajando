@@ -1,4 +1,4 @@
-import { Trips } from '../components/features/Trips';
+import { Trips } from '@/components/Trips';
 
 export function PageTrips() {
   return (

@@ -1,7 +1,7 @@
 .card {
   @apply border border-beige rounded-xl overflow-hidden;
   figure {
-    @apply relative h-[400px] md:h-[350px] lg:h-[400px] overflow-clip;
+    @apply relative h-[400px] md:h-[400px] lg:h-[500px] overflow-clip;
     img {
       @apply object-cover w-full h-full transition-all duration-300 ease-in-out;
     }

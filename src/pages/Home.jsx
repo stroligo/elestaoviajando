@@ -1,9 +1,10 @@
 import { Hero } from '../components/features/Hero';
-import { MapGlobal } from '../components/features/Map/Global';
+import { MapGlobal } from '../components/Map/Global';
 import HomeIntro from '/assets/img/home/intro.jpg';
 import { IntroSection } from '../components/features/IntroSection';
 import { BigNumber } from '../components/features/BigNumber';
 import { SliderLastTrip } from '../components/features/Slider/SliderLastTrip';
+import { SliderLastBlog } from '@/components/features/Slider/SliderLastBlog';
 
 export function Home() {
   const dataInicioViagem = new Date(2021, 6, 1);
@@ -48,9 +49,29 @@ export function Home() {
           </div>
         </div>
       </section>
+
+      {/*  Ultimas Viagens */}
+      <section>
+        <div className="flex  flex-col">
+          <SliderLastTrip />
+        </div>
+      </section>
+      {/*  Por onde já passamos Map */}
+      <section>
+        <div className="flex flex-col">
+          <div className="container mx-auto px-5 md:px-0">
+            <IntroSection
+              title="Por onde"
+              subtitle="já passamos"
+              customCss="md:items-center"
+            />
+          </div>
+          <MapGlobal />
+        </div>
+      </section>
       {/* BigNumbers */}
       <section>
-        <div className="container mx-auto px-5 md:px-0 flex  flex-col">
+        <div className="container mx-auto h-[30vh] pb-20 justify-center items-center px-5 md:px-0 flex  flex-col">
           <IntroSection
             title="Números não dizem muito,"
             subtitle="Mas aqui estão alguns…"
@@ -84,47 +105,8 @@ export function Home() {
       </section>
       {/* Blog */}
       <section className="bg-gray-extralight">
-        <div className="container mx-auto px-5 md:px-0 flex  flex-col">
-          <IntroSection
-            title="Algumas de"
-            subtitle="Nossas histórias"
-            customCss="md:items-center"
-          />
-          <div className="grid grid-cols-4 gap-6">
-            <div>Blog 1</div>
-            <div>Blog 2</div>
-            <div>Blog 3</div>
-            <div>Blog 4</div>
-          </div>
-        </div>
-      </section>
-      {/*  Ultimas Viagens */}
-      <section>
         <div className="flex  flex-col">
-          <SliderLastTrip />
-        </div>
-      </section>
-      {/*  Por onde já passamos Map */}
-      <section>
-        <div className="flex flex-col">
-          <div className="container mx-auto px-5 md:px-0">
-            <IntroSection
-              title="Por onde"
-              subtitle="já passamos"
-              customCss="md:items-center"
-            />
-          </div>
-          <MapGlobal />
-        </div>
-      </section>
-
-      {/* Instagram Widgets */}
-      <section>
-        <div className=" container mx-auto px-5 md:px-0 flex md:flex-row flex-col">
-          <div className="md:w-1/2">
-            <IntroSection title="Novidades no" subtitle="Instagram" />
-          </div>
-          <div className="md:w-1/2">INSTAGRAM WIDGETS</div>
+          <SliderLastBlog />
         </div>
       </section>
     </article>
