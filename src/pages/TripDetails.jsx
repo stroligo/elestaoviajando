@@ -5,8 +5,8 @@ import { MapSingle } from '../components/features/Map/Trip';
 import { IntroSection } from '../components/features/IntroSection';
 import { SliderTrip } from '../components/features/Slider/SliderTrip';
 
-import { Weather } from '../components/features/weather';
 import { DateTrip } from '../components/ui/DateTrip';
+import { Weather } from '@/components/features/Weather';
 
 export function TripDetails() {
   const [location, setLocation] = useState({});
