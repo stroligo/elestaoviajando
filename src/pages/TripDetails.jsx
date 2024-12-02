@@ -8,7 +8,7 @@ import { SliderTrip } from '../components/features/Slider/SliderTrip';
 import { Weather } from '../components/features/weather';
 import { DateTrip } from '../components/ui/DateTrip';
 
-export function Travel() {
+export function TripDetails() {
   const [location, setLocation] = useState({});
   const [weather, setWeather] = useState({});
   const { city } = useParams();
@@ -38,13 +38,13 @@ export function Travel() {
             <div className="relative w-full   lg:w-7/12">
               <div className="sticky top-10 z-50">
                 <SliderTrip imagens={location.images} />
-                <div className="absolute top-0 left-0  w-full pt-6 pl-6">
+                {/*  <div className="absolute top-0 left-0  w-full pt-6 pl-6">
                   <IntroSection
                     title={location.country}
                     subtitle={location.city}
                     style="hero"
                   />
-                </div>
+                </div> */}
               </div>
             </div>
             {/* Container */}
@@ -68,12 +68,14 @@ export function Travel() {
                   </div>
                 </div>
                 {/* Clima */}
+
                 <div>
                   <IntroSection title="Informações" customCss="pb-4" />
                   <Weather weather={weather} />
                 </div>
               </article>
               {/* Mapa */}
+
               <div className="flex flex-col gap-4">
                 <IntroSection title="Localizacão" customCss="pb-2" />
                 <div>

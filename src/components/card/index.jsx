@@ -15,8 +15,13 @@ export function Card({ location }) {
         <img src={location.thumbnail} alt={location.city} />
         <div className="date">{formattedDate}</div>
         <div className="card-content">
-          <div className="title">{location.city}</div>
-          <div className="country"> {location.country}</div>
+          {location.titulo && (
+            <div className="blogtitle">{location.titulo}</div>
+          )}
+          {location.city && <div className="title">{location.city}</div>}
+          {location.country && (
+            <div className="country"> {location.country}</div>
+          )}
         </div>
       </figure>
     </div>
@@ -25,8 +30,9 @@ export function Card({ location }) {
 
 Card.propTypes = {
   location: PropTypes.shape({
-    city: PropTypes.string.isRequired,
-    country: PropTypes.string.isRequired,
+    titulo: PropTypes.string,
+    city: PropTypes.string,
+    country: PropTypes.string,
     thumbnail: PropTypes.string.isRequired,
     date: PropTypes.string.isRequired,
   }).isRequired,

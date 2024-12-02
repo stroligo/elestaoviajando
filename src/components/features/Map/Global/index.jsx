@@ -4,13 +4,12 @@ import 'leaflet/dist/leaflet.css';
 import { Link } from 'wouter';
 import Style from '../style.module.css';
 
-import { Slugify } from '@/components/utils/stringUtils';
 import { Button } from '@/components/ui/Button';
 export function MapGlobal() {
   const [data, setData] = useState(null);
 
   useEffect(() => {
-    fetch('/data/trips.json')
+    fetch('/data/data.json')
       .then((response) => response.json())
       .then((data) => setData(data));
   }, []);
@@ -29,7 +28,7 @@ export function MapGlobal() {
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      {data.locations.map((location) => (
+      {data.trip.map((location) => (
         <Marker
           key={location.id}
           position={[location.coordinates.lat, location.coordinates.lng]}
@@ -38,8 +37,7 @@ export function MapGlobal() {
             <div className="font-extrabold text-blue-dark font-serif text-xl leading-none pb-1   pr-4 border-b-2 border-orange w-fit">
               {location.city}
             </div>
-            <p>{location.description}</p>
-            <Link to={`/trips/${Slugify(location.city)}`}>
+            <Link to={`/trips/${location.id}`}>
               <Button> Ver Viagem </Button>
             </Link>
           </Popup>

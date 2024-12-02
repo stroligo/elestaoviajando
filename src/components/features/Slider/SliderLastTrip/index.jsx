@@ -3,22 +3,22 @@ import { Splide, SplideSlide } from '@splidejs/react-splide';
 import { Link } from 'wouter';
 import Style from './style.module.css';
 
-import { getAllTrips } from '@/services/api';
+import { conectData } from '@/services/api';
 import { IntroSection } from '@/components/features/IntroSection';
 import { Card } from '@/components/card';
 import { Button } from '@/components/ui/Button';
 
 export function SliderLastTrip() {
-  const [locations, setLocations] = useState([]);
+  const [trip, setTrip] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     async function loadViagens() {
-      const data = await getAllTrips();
-      const sortedTrips = data.locations.sort(
+      const data = await conectData();
+      const sortedTrips = data.trip.sort(
         (a, b) => new Date(b.date) - new Date(a.date),
       );
-      setLocations(sortedTrips);
+      setTrip(sortedTrips);
       setIsLoading(false);
     }
     loadViagens();
@@ -59,7 +59,7 @@ export function SliderLastTrip() {
         </div>
       ) : (
         <Splide options={options} className={Style.splide} autoPlay={true}>
-          {locations.slice(0, 20).map((location) => (
+          {trip.slice(0, 20).map((location) => (
             <SplideSlide key={location.id} className={Style.splide__slide}>
               <Link to={`/trips/${location.id}`}>
                 <div>

@@ -4,31 +4,31 @@ import { Slugify } from '../../utils/stringUtils';
 import { Filter } from './Filter';
 import { IntroSection } from '../IntroSection';
 import { Pagination } from './Pagination';
-import { TripList } from './List';
+import { BlogList } from './List';
 
-export function Trips() {
-  const [trips, setTrips] = useState([]);
-  const [displayedTrips, setDisplayedTrips] = useState([]);
+export function Blog() {
+  const [blog, setBlog] = useState([]);
+  const [displayedBlog, setDisplayedBlog] = useState([]);
   const [orderBy, setOrderBy] = useState('asc');
   const [page, setPage] = useState(0);
-  const [pageSize] = useState(1000);
+  const [pageSize] = useState(20);
 
   useEffect(() => {
-    async function loadTrips() {
+    async function loadBlog() {
       const data = await conectData();
-      setTrips(data.trip);
-      setDisplayedTrips(data.trip);
+      setBlog(data.blog);
+      setDisplayedBlog(data.blog);
     }
-    loadTrips();
+    loadBlog();
   }, []);
 
   const handleFilterChange = (filter) => {
-    const filteredTrips = getFilteredTrips(
-      trips,
+    const filteredBlog = getFilteredBlog(
+      blog,
       filter.filterCountry,
       filter.searchTerm,
     );
-    setDisplayedTrips(filteredTrips);
+    setDisplayedBlog(filteredBlog);
   };
 
   const handleOrderByChange = (orderBy) => {
@@ -37,19 +37,19 @@ export function Trips() {
   };
 
   const handleClearFilter = () => {
-    setDisplayedTrips(trips);
+    setDisplayedBlog(blog);
   };
 
-  const getFilteredTrips = (trips, filterCountry, searchTerm) => {
-    const filteredTrips = filterCountry
-      ? trips.filter((trip) => trip.country === filterCountry)
-      : trips;
+  const getFilteredBlog = (blog, filterCountry, searchTerm) => {
+    const filteredBlog = filterCountry
+      ? blog.filter((trip) => trip.country === filterCountry)
+      : blog;
 
     return searchTerm
-      ? filteredTrips.filter((trip) =>
-          Slugify(trip.city).includes(Slugify(searchTerm)),
+      ? filteredBlog.filter((trip) =>
+          Slugify(trip.titulo).includes(Slugify(searchTerm)),
         )
-      : filteredTrips;
+      : filteredBlog;
   };
 
   const handlePageChange = (newPage) => {
@@ -59,17 +59,17 @@ export function Trips() {
   return (
     <div>
       <div className="flex md:justify-between md:flex-row flex-col md:items-center ">
-        <IntroSection title="Todas as" subtitle="Viagens" />
+        <IntroSection title="Blog" subtitle="Elestaoviajando" />
 
         <Filter
-          trips={trips}
+          blog={blog}
           onFilterChange={handleFilterChange}
           onOrderByChange={handleOrderByChange}
           onClearFilter={handleClearFilter}
         />
       </div>
-      <TripList
-        trips={displayedTrips}
+      <BlogList
+        blog={displayedBlog}
         orderBy={orderBy}
         page={page}
         pageSize={pageSize}
@@ -78,7 +78,7 @@ export function Trips() {
       <Pagination
         page={page}
         pageSize={pageSize}
-        totalTrips={displayedTrips.length}
+        totalBlog={displayedBlog.length}
         onPageChange={handlePageChange}
       />
     </div>

@@ -15,6 +15,9 @@
     .title {
       @apply text-4xl text-beige leading-[28px] drop-shadow-md h-16 flex items-center justify-end;
     }
+    .blogtitle {
+      @apply text-3xl text-orange leading-[28px] drop-shadow-md h-16 flex items-center justify-end;
+    }
     .country {
       @apply text-teal;
     }
