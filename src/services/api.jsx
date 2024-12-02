@@ -28,20 +28,13 @@ export async function getBlog(id) {
   return dataId;
 }
 
-/**
- * Fetches weather data for a given city.
- *
- * This function makes an asynchronous request to the OpenWeatherMap API
- * to retrieve the current weather data for the given city.
- *
- * @param {string} city - The name of the city to get the weather data for.
- * @returns {Promise<Object>} - A promise that resolves to the weather data
- * object for the given city if found, otherwise undefined.
- */
-export async function getWeather(city) {
-  const API_KEY = 'be16c876a4dd3f05bb88eeeef8d8e7fd';
+export async function getWeather(lat, lon) {
+  if (!lat || !lon) {
+    throw new Error('Latitude e longitude são obrigatórias');
+  }
 
-  const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}`;
+  const API_KEY = 'be16c876a4dd3f05bb88eeeef8d8e7fd';
+  const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}`;
   const response = await fetch(url);
   return await response.json();
 }

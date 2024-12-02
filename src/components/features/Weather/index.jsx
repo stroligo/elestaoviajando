@@ -1,5 +1,7 @@
 import PropTypes from 'prop-types';
+import { useState, useEffect } from 'react';
 
+import { getWeather } from '@/services/api';
 const weatherDescriptions = {
   'clear sky': 'Céu limpo',
   'few clouds': 'Poucas nuvens',
@@ -14,55 +16,70 @@ const weatherDescriptions = {
   mist: 'Névoa',
 };
 
-/**
- * Renderiza as informações climáticas para uma cidade.
- *
- * @param {{ weather: { main: { temp: number, temp_min: number, temp_max: number, humidity: number }, wind: { speed: number, deg: number }, weather: { description: string }[] } }} props
- * @returns {JSX.Element}
- */
-export function Weather({ weather }) {
-  if (!weather || !weather.weather || !weather.weather[0]) {
+export function Weather({ lat, lon }) {
+  const [weatherData, setWeatherData] = useState({});
+
+  useEffect(() => {
+    async function loadWeather() {
+      const response = await getWeather(lat, lon);
+      setWeatherData(response);
+    }
+    loadWeather();
+  }, [lat, lon]);
+
+  if (!weatherData || !weatherData.weather || !weatherData.weather[0]) {
     return <div>Não foi possível obter o clima</div>;
   }
 
-  const description = weather.weather[0].description;
+  const description = weatherData.weather[0].description;
   const translatedDescription = weatherDescriptions[description.toLowerCase()];
 
   return (
     <table>
-      <tr>
-        <td className="font-bold">Temperatura atual</td>
-        <td>
-          {weather.main ? (weather.main.temp - 273.15).toFixed(1) : ''} °C
-        </td>
-      </tr>
-      <tr>
-        <td className="font-bold">Condição do tempo</td>
-        <td>{translatedDescription || description}</td>
-      </tr>
-      <tr>
-        <td className="font-bold">Temperatura mínima</td>
-        <td>
-          {weather.main ? (weather.main.temp_min - 273.15).toFixed(1) : ''} °C
-        </td>
-      </tr>
-      <tr>
-        <td className="font-bold">Temperatura máxima</td>
-        <td>
-          {weather.main ? (weather.main.temp_max - 273.15).toFixed(1) : ''} °C
-        </td>
-      </tr>
-      <tr>
-        <td className="font-bold">Umidade</td>
-        <td>{weather.main ? weather.main.humidity : ''}%</td>
-      </tr>
-      <tr>
-        <td className="font-bold">Vento</td>
-        <td>
-          {weather.wind ? weather.wind.speed : ''} m/s (
-          {weather.wind ? weather.wind.deg : ''}°)
-        </td>
-      </tr>
+      <tbody>
+        <tr>
+          <td className="font-bold">Temperatura atual</td>
+          <td>
+            {weatherData.main
+              ? (weatherData.main.temp - 273.15).toFixed(1)
+              : ''}{' '}
+            °C
+          </td>
+        </tr>
+        <tr>
+          <td className="font-bold">Condição do tempo</td>
+          <td>{translatedDescription || description}</td>
+        </tr>
+        <tr>
+          <td className="font-bold">Temperatura mínima</td>
+          <td>
+            {weatherData.main
+              ? (weatherData.main.temp_min - 273.15).toFixed(1)
+              : ''}{' '}
+            °C
+          </td>
+        </tr>
+        <tr>
+          <td className="font-bold">Temperatura máxima</td>
+          <td>
+            {weatherData.main
+              ? (weatherData.main.temp_max - 273.15).toFixed(1)
+              : ''}{' '}
+            °C
+          </td>
+        </tr>
+        <tr>
+          <td className="font-bold">Umidade</td>
+          <td>{weatherData.main ? weatherData.main.humidity : ''}%</td>
+        </tr>
+        <tr>
+          <td className="font-bold">Vento</td>
+          <td>
+            {weatherData.wind ? weatherData.wind.speed : ''} m/s (
+            {weatherData.wind ? weatherData.wind.deg : ''}°)
+          </td>
+        </tr>
+      </tbody>
     </table>
   );
 }
@@ -85,4 +102,6 @@ Weather.propTypes = {
       deg: PropTypes.number,
     }),
   }),
+  lat: PropTypes.number,
+  lon: PropTypes.number,
 };

@@ -6,7 +6,7 @@ export function MapSingle({ location }) {
   return (
     <MapContainer
       center={[location.coordinates.lat, location.coordinates.lng]}
-      zoom={3}
+      zoom={14}
       scrollWheelZoom={false}
       className={Style.MapContainerSingle}
     >
@@ -22,7 +22,7 @@ export function MapSingle({ location }) {
 }
 MapSingle.propTypes = {
   location: PropTypes.shape({
-    id: PropTypes.number.isRequired,
+    id: PropTypes.string.isRequired,
     city: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     coordinates: PropTypes.shape({

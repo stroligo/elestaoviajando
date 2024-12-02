@@ -1,16 +1,15 @@
 import { useState, useEffect } from 'react';
-import { getTrip, getWeather } from '../services/api';
+import { getTrip } from '../services/api';
 import { useParams } from 'wouter';
 import { MapSingle } from '../components/features/Map/Trip';
 import { IntroSection } from '../components/features/IntroSection';
 import { SliderTrip } from '../components/features/Slider/SliderTrip';
-
 import { DateTrip } from '../components/ui/DateTrip';
 import { Weather } from '@/components/features/Weather';
 
 export function TripDetails() {
   const [location, setLocation] = useState({});
-  const [weather, setWeather] = useState({});
+
   const { city } = useParams();
 
   useEffect(() => {
@@ -19,8 +18,6 @@ export function TripDetails() {
         try {
           const locationData = await getTrip(city);
           setLocation(locationData);
-          const weatherData = await getWeather(city);
-          setWeather(weatherData);
         } catch (error) {
           console.error('Error:', error);
         }
@@ -68,10 +65,12 @@ export function TripDetails() {
                   </div>
                 </div>
                 {/* Clima */}
-
                 <div>
                   <IntroSection title="Informações" customCss="pb-4" />
-                  <Weather weather={weather} />
+                  <Weather
+                    lat={location.coordinates.lat}
+                    lon={location.coordinates.lng}
+                  />
                 </div>
               </article>
               {/* Mapa */}
