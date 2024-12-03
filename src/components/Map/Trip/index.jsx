@@ -1,6 +1,18 @@
 import { MapContainer, TileLayer, Marker } from 'react-leaflet';
-import Style from '../style.module.css';
+import L from 'leaflet';
 import PropTypes from 'prop-types';
+
+import 'leaflet/dist/leaflet.css';
+
+import Style from '../style.module.css';
+import Pin from '/assets/img/pin.png';
+
+const icon = L.icon({
+  iconUrl: Pin,
+  iconSize: [40, 40],
+  iconAnchor: [20, 40],
+  popupAnchor: [0, -40],
+});
 
 export function MapSingle({ location }) {
   return (
@@ -16,15 +28,14 @@ export function MapSingle({ location }) {
       />
       <Marker
         position={[location.coordinates.lat, location.coordinates.lng]}
+        icon={icon}
       ></Marker>
     </MapContainer>
   );
 }
+
 MapSingle.propTypes = {
   location: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    city: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
     coordinates: PropTypes.shape({
       lat: PropTypes.number.isRequired,
       lng: PropTypes.number.isRequired,
