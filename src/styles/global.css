@@ -6,7 +6,7 @@ body {
   @apply antialiased font-sans text-gray;
 }
 h2 {
-  @apply font-extrabold text-blue-dark font-serif text-4xl leading-none pb-1  mb-4 pr-4  w-fit;
+  @apply font-extrabold  text-blue-dark font-serif text-4xl leading-none pb-1  mb-4 pr-4  w-fit;
 }
 h3 {
   @apply font-extrabold text-blue-dark font-serif text-2xl leading-none pb-1  mb-4 pr-4  w-fit;
