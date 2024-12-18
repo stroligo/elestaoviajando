@@ -71,10 +71,8 @@ export function Filter({ trips, onFilterChange, onOrderByChange }) {
         </Select>
 
         <div className="flex gap-2">
-          <Button onClick={() => handleOrderByChange('asc')}>Crescente</Button>
-          <Button onClick={() => handleOrderByChange('desc')}>
-            Decrescente
-          </Button>
+          <Button onClick={() => handleOrderByChange('asc')}>Antigos</Button>
+          <Button onClick={() => handleOrderByChange('desc')}>Recentes</Button>
         </div>
       </div>
     </div>

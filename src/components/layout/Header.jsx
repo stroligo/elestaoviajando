@@ -23,24 +23,42 @@ export function Header() {
               </div>
             </Link>
           </div>
+          {/*   Botao Hamburguer */}
           <div
-            className="md:hidden flex bg-red-500 items-center justify-center w-8 h-8  rounded-full"
+            className="md:hidden flex bg-blue items-center justify-center w-8 h-8  rounded-full"
             onClick={handleClick}
           >
-            <svg
-              className="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M4 6h16M4 12h16M4 18h16"
-              />
-            </svg>
+            {menuOpen ? (
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            ) : (
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              </svg>
+            )}
           </div>
           {/*  Menu Desktop */}
           <div className=" gap-4  md:flex hidden">
@@ -54,24 +72,24 @@ export function Header() {
               <Link href="/about">Sobre Nós</Link>
             </Button>
             <Button>
-              <Link href="/newlocation">New Location</Link>
+              <Link href="/newlocation">Novos Locais</Link>
             </Button>
           </div>
           {/*  Menu Mobile */}
           {menuOpen && (
             <div className="bg-gradient-to-t from-white to-beige absolute top-20 p-10 z-50 left-0 w-full h-full flex flex-col gap-4">
-              <Link href="/trips">
-                <Button onClick={handleClick}>Viagens</Button>
-              </Link>
-              <Link href="/blog">
-                <Button onClick={handleClick}>Blog</Button>
-              </Link>
-              <Link href="/about">
-                <Button onClick={handleClick}>Sobre Nós</Button>
-              </Link>
-              <Link href="/newlocation">
-                <Button onClick={handleClick}>New Location</Button>
-              </Link>
+              <Button>
+                <Link href="/trips">Viagens</Link>
+              </Button>
+              <Button>
+                <Link href="/blog">Blog</Link>
+              </Button>
+              <Button>
+                <Link href="/about">Sobre Nós</Link>
+              </Button>
+              <Button>
+                <Link href="/newlocation">Novos Locais</Link>
+              </Button>
             </div>
           )}
         </div>

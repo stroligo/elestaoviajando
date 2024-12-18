@@ -10,8 +10,8 @@ export function Hero() {
           </div>
         </div>
       </div>
-      <figure className=" absolute max-w-[600px] top-1/2  -right-10  -translate-y-1/2 bg-blue md:bg-transparent">
-        <img src={Logo} alt="Logo" className=" opacity-5 md:opacity-50" />
+      <figure className="herorotate rotate">
+        <img src={Logo} alt="Logo" className="opacity-5 md:opacity-50" />
       </figure>
     </div>
   );

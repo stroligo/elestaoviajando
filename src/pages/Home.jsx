@@ -77,7 +77,7 @@ export function Home() {
             subtitle="Mas aqui estão alguns…"
             customCss="md:items-center"
           />
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-10">
             <BigNumber
               number={paisesViajados}
               img="/assets/img/bignumbers/globo.png"

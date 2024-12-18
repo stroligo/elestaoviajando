@@ -52,9 +52,17 @@ export function Filter({ onFilterChange, onOrderByChange }) {
         />
 
         <div className="flex gap-2">
-          <Button onClick={() => handleOrderByChange('asc')}>Crescente</Button>
-          <Button onClick={() => handleOrderByChange('desc')}>
-            Decrescente
+          <Button
+            onClick={() => handleOrderByChange('asc')}
+            className="flex gap-2"
+          >
+            <span>Antigos</span>
+          </Button>
+          <Button
+            onClick={() => handleOrderByChange('desc')}
+            className="flex gap-2"
+          >
+            <span>Recentes</span>
           </Button>
         </div>
       </div>

@@ -59,7 +59,7 @@ export function Blog() {
   return (
     <div>
       <div className="flex md:justify-between md:flex-row flex-col md:items-center ">
-        <IntroSection title="Blog" subtitle="Elestaoviajando" />
+        <IntroSection title="Blog" subtitle="Eles tao viajando" />
 
         <Filter
           blog={blog}

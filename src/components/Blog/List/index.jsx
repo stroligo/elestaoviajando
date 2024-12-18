@@ -17,6 +17,10 @@ export function BlogList({ blog, orderBy, page, pageSize }) {
     (page + 1) * pageSize,
   );
 
+  if (paginatedBlog.length === 0) {
+    return <div>Nenhum post encontrado</div>;
+  }
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 ">
       {paginatedBlog.map((item) => (

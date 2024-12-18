@@ -45,3 +45,32 @@ table {
     @apply bg-gray-extralight;
   }
 }
+.herorotate {
+  @apply absolute max-w-[600px] -top-5  -right-10   bg-blue md:bg-transparent;
+}
+.rotate {
+  animation: rotate 10s infinite;
+  transform-origin: center;
+  @apply translate-y-1/2;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(15deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+form {
+  label {
+    @apply md:w-28 flex items-center font-bold;
+  }
+  input,
+  textarea {
+    @apply bg-white w-full px-4 py-2 rounded-md;
+  }
+}
