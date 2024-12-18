@@ -1,7 +1,7 @@
 import { Link } from 'wouter';
 import { useState } from 'react';
 import { Button } from '../ui/Button';
-import Logo from '/assets/img/logo_header.png';
+/* import Logo from '/assets/img/logo_header.png'; */
 
 export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -13,14 +13,14 @@ export function Header() {
   };
 
   return (
-    <header className="bg-blue-dark text-white bg-cover shadow-xl ">
+    <header className="bg-blue-white  text-white bg-cover shadow-xl ">
       <nav className="container mx-auto px-5 md:px-0">
         <div className="flex justify-between py-6 items-center">
-          <div className="text-2xl font-bold">
+          <div className="text-2xl font-bold  p-2">
             <Link href="/">
-              <figure className="w-[150px] md:w-[200px] overflow-hidden ">
-                <img src={Logo} alt="Logo" className="w-full object-contain " />
-              </figure>
+              <div className="text-blue-dark  drop-shadow-nav select-none font-extrabold text-4xl">
+                <span className="text-orange">/ </span>ElesTãoViajando
+              </div>
             </Link>
           </div>
           <div
