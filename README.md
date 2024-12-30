@@ -1,12 +1,38 @@
-# Projeto final de Front-End
+# Projeto Final de Front-End: Elesta Viajando
 
-https://www.npmjs.com/package/react-social-media-embed
+## Introdução
 
-be16c876a4dd3f05bb88eeeef8d8e7fd
-ajusta a KEY do tempo para .env
+Este projeto é o resultado final do curso de Front-End, onde foi desenvolvido um aplicativo web para gerenciar viagens. O aplicativo permite que os usuários criem, editem e visualizem suas viagens, além de adicionar imagens e descrições.
 
-fazer modo noturno
+## Funcionalidades
 
-ajustar degrade radial claro para o bg
+- Criar viagens com informações como título, cidade, país, data e descrição
+- Adicionar imagens às viagens
+- Visualizar todas as viagens criadas
+- Editar e excluir viagens existentes
+- Filtrar viagens por cidade ou país
 
-fazer o formulario de envio
+## Tecnologias Utilizadas
+
+- ReactJS
+- JavaScript
+- HTML5
+- CSS3
+- Vercel (para hospedagem)
+
+## Acesso ao Projeto
+
+O projeto está hospedado no Vercel e pode ser acessado através do seguinte link:
+
+https://elestaoviajando.vercel.app/
+
+## Instalação
+
+Para executar o projeto localmente, é necessário ter o Node.js e o npm instalados. Em seguida, execute os seguintes comandos:
+
+```bash
+git clone https://github.com/stroligo/elestaoviajando.git
+cd elesta-viajando
+npm install
+npm start
+```
