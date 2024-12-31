@@ -2,7 +2,7 @@ import Logo from '/assets/img/logo.png';
 
 export function Hero() {
   return (
-    <div className="bg-gradient-to-r from-green to-beige p-5 relative flex justify-between h-[20vh]  md:h-[60vh]  overflow-hidden w-full mx-0">
+    <div className="bg-gradient-to-r from-green to-beige p-5 relative flex justify-between h-[20vh]  md:h-[60vh]  overflow-hidden w-full mx-0 ">
       <div className="z-10 container mx-auto ">
         <div className="md:w-1/2 md:px-6 flex justify-center items-center h-full flex-col ">
           <div className="hero text-white ">

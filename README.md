@@ -1,4 +1,4 @@
-# Projeto Final de Front-End: Elesta Viajando
+# Projeto Final de Front-End: ElestaoViajando
 
 ## Introdução
 
@@ -32,7 +32,6 @@ Para executar o projeto localmente, é necessário ter o Node.js e o npm instala
 
 ```bash
 git clone https://github.com/stroligo/elestaoviajando.git
-cd elesta-viajando
 npm install
 npm start
 ```
