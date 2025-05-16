@@ -120,6 +120,7 @@ npm run dev
 - Autenticação de usuários
 - CRUD completo para viagens e blog
 - Integração com MongoDB Atlas
+- Integração com Cloudinary
 
 ### Frontend
 
@@ -128,6 +129,10 @@ npm run dev
 - Carrossel de imagens
 - Animações suaves
 - Design adaptativo para diferentes dispositivos
+- Conexão com a API do backend
+- Conexão com o OpenWeatherMap API
+- Conexão com o Google Maps API
+- Rotas de navegação
 
 ## 🔒 Segurança
 
