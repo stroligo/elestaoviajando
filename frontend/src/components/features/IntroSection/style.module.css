@@ -1,0 +1,21 @@
+.title {
+  @apply text-3xl font-serif uppercase text-gray-light font-light;
+}
+.subtitle {
+  @apply text-5xl font-serif  uppercase text-blue-dark;
+}
+.bar {
+  @apply w-[100px] h-1 bg-orange;
+}
+.hero {
+  @apply bg-transparent;
+  .title {
+    @apply text-white text-xl drop-shadow-texto bg-blue-dark bg-opacity-60 px-2 w-fit;
+  }
+  .subtitle {
+    @apply text-white drop-shadow-texto bg-blue-dark bg-opacity-60 px-2 w-fit;
+  }
+  .bar {
+    @apply hidden;
+  }
+}

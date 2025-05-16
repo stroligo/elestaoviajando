@@ -1,0 +1,43 @@
+.card {
+  @apply border border-beige rounded-xl overflow-hidden;
+  figure {
+    @apply relative h-[400px] md:h-[400px] lg:h-[500px] overflow-clip;
+    img {
+      @apply object-cover w-full h-full transition-all duration-300 ease-in-out;
+    }
+  }
+  .date {
+    @apply text-xs transition-all duration-300 ease-in-out absolute rounded-bl-lg bg-blue bg-opacity-35 px-2 py-2 top-0 right-0 font-bold text-white;
+  }
+  .card-content {
+    @apply absolute bottom-0 font-serif w-full  right-0 bg-black bg-opacity-60 font-bold text-white px-5 pb-5 text-right  duration-300 ease-in-out;
+
+    .title {
+      @apply text-4xl text-beige leading-[28px] drop-shadow-md h-16 flex items-center justify-end;
+    }
+    .blogtitle {
+      @apply text-3xl text-orange leading-[28px] drop-shadow-md h-16 flex items-center justify-end;
+    }
+    .country {
+      @apply text-teal;
+    }
+  }
+  &:hover {
+    @apply shadow-lg;
+    figure {
+      @apply bg-gradient-to-r from-green to-beige;
+    }
+    img {
+      @apply scale-105 transition-all duration-300 ease-in-out   filter-none opacity-90;
+    }
+    .card-content {
+      @apply bg-opacity-90 bg-white transition-all duration-300 ease-in-out;
+      .date {
+        @apply text-teal transition-all duration-300 ease-in-out;
+      }
+      .title {
+        @apply text-blue-dark transition-all duration-300 ease-in-out;
+      }
+    }
+  }
+}

@@ -1,0 +1,76 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply antialiased font-sans text-gray;
+}
+h2 {
+  @apply font-extrabold  text-blue-dark font-serif text-4xl leading-none pb-1  mb-4 pr-4  w-fit;
+}
+h3 {
+  @apply font-extrabold text-blue-dark font-serif text-2xl leading-none pb-1  mb-4 pr-4  w-fit;
+}
+h6 {
+  @apply font-serif text-xl text-gray leading-none mb-3;
+}
+p {
+  @apply font-sans text-gray-light mb-3;
+}
+.hero {
+  @apply text-4xl md:text-5xl lg:text-7xl font-extrabold drop-shadow-lg font-serif leading-none;
+}
+section {
+  @apply py-4 md:py-10;
+}
+.active {
+  background-color: orange;
+  border-color: orange;
+}
+table {
+  @apply bg-white p-6 rounded-2xl shadow-md w-full border border-blue;
+  th {
+    @apply bg-blue-dark text-white text-left font-bold text-sm px-6 py-2;
+  }
+  td {
+    @apply text-sm text-blue px-4 py-2;
+  }
+  tr {
+    @apply border-b border-blue;
+  }
+  tr:last-child {
+    @apply border-b-0;
+  }
+  tr:nth-child(even) {
+    @apply bg-gray-extralight;
+  }
+}
+.herorotate {
+  @apply absolute max-w-[600px] -top-5  -right-10   bg-blue md:bg-transparent;
+}
+.rotate {
+  animation: rotate 10s infinite;
+  transform-origin: center;
+  @apply translate-y-1/2;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(15deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+form {
+  label {
+    @apply md:w-28 flex items-center font-bold;
+  }
+  input,
+  textarea {
+    @apply bg-white w-full px-4 py-2 rounded-md;
+  }
+}

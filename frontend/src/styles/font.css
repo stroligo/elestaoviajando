@@ -1,0 +1,34 @@
+/* Font Padrao */
+@font-face {
+  font-family: 'BreveSans';
+  font-style: normal;
+  font-display: swap;
+  src: url('../assets/font/BreveSans.woff2') format('woff2'),
+    url('../assets/font/BreveSans.woff') format('woff');
+  font-weight: 400; /* Normal */
+}
+@font-face {
+  font-family: 'BreveSans';
+  font-style: normal;
+  font-display: swap;
+  src: url('../assets/font/BreveSans-Bold.woff2') format('woff2'),
+    url('../assets/font/BreveSans-Bold.woff') format('woff');
+  font-weight: 700; /* Bold */
+}
+/* Font Destaque */
+@font-face {
+  font-family: 'BreveSlab';
+  font-style: normal;
+  font-display: swap;
+  src: url('../assets/font/BreveSlab.woff2') format('woff2'),
+    url('../assets/font/BreveSlab.woff') format('woff');
+  font-weight: 400; /* Normal */
+}
+@font-face {
+  font-family: 'BreveSlab';
+  font-style: normal;
+  font-display: swap;
+  src: url('../assets/font/BreveSlab-Bold.woff2') format('woff2'),
+    url('../assets/font/BreveSlab-Bold.woff') format('woff');
+  font-weight: 700; /* Bold */
+}
