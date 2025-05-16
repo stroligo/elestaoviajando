@@ -4,6 +4,8 @@
 
 Eles Tão Viajando é uma plataforma completa para compartilhar experiências de viagem, focada especialmente no público feminino. O projeto permite que usuárias compartilhem suas aventuras, dicas e experiências de viagem através de posts e relatos detalhados.
 
+Este projeto foi desenvolvido como trabalho de conclusão de curso da Turma de FullStack da Flag.PT.
+
 ## 🚀 Tecnologias Utilizadas
 
 ### Backend
@@ -25,6 +27,8 @@ Eles Tão Viajando é uma plataforma completa para compartilhar experiências de
 - React Splide (para carrosséis)
 - React CountUp (para animações)
 - Wouter (para roteamento)
+
+As fotos exibidas no projeto são hospedadas no [Cloudinary](https://res.cloudinary.com).
 
 ## 🏗️ Estrutura do Projeto
 
@@ -146,6 +150,13 @@ Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para ma
 
 ## ✨ Agradecimentos
 
-- Equipe de desenvolvimento
-- Contribuidores
-- Comunidade open source
+- Prof. Helder Pereira
+- Prof. Valério Vaz
+- Equipe da Flag.PT
+- Todos os colegas da Turma do curso
+
+## 📝 Contato
+
+- GitHub: [stroligo](https://github.com/stroligo)
+- LinkedIn: [gabrielstroligo](https://www.linkedin.com/in/gabrielstroligo/)
+- Instagram: [gabrielstroligo](https://instagram.com/gabrielstroligo)
