@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useLocation } from 'wouter';
-import { getTrip } from '@/services/api';
+import { getTrip, fetchWithAuth } from '@/services/api';
 import { CLOUDINARY_BASE_URL } from '@/utils/cloudinary';
 
 export function EditTrip() {
@@ -45,13 +45,11 @@ export function EditTrip() {
     e.preventDefault();
     try {
       const tripId = window.location.pathname.split('/').pop();
-      const response = await fetch(
+
+      const response = await fetchWithAuth(
         `https://elestaoviajando.onrender.com/api/trips/${tripId}`,
         {
           method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-          },
           body: JSON.stringify({
             ...formData,
             thumbnail: formData.images[0]?.includes(CLOUDINARY_BASE_URL)
@@ -69,10 +67,13 @@ export function EditTrip() {
       if (response.ok) {
         setLocation('/admin/trips');
       } else {
-        console.error('Erro ao atualizar viagem');
+        const errorData = await response.json();
+        console.error('Erro ao atualizar viagem:', errorData);
+        throw new Error(errorData.message || 'Erro ao atualizar viagem');
       }
     } catch (error) {
       console.error('Erro ao atualizar viagem:', error);
+      alert('Erro ao atualizar viagem. Por favor, tente novamente.');
     }
   };
 

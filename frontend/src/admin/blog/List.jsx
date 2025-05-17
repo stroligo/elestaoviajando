@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'wouter';
 import { conectBlogs, deleteBlog } from '@/services/api';
+import { IntroSection } from '@/components/features/IntroSection';
 
 export function BlogsList() {
   const [blogs, setBlogs] = useState([]);
@@ -183,17 +184,17 @@ export function BlogsList() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">Gerenciar Blogs</h1>
+      <div className="flex justify-between items-center mb-0">
+        <IntroSection subtitle="Posts" />
         <Link href="/admin/blog/create">
           <button className="bg-primary text-white px-4 py-2 rounded hover:bg-blue-dark transition-colors">
-            Novo Blog
+            Novo Post
           </button>
         </Link>
       </div>
 
       {/* Barra de busca */}
-      <div className="mb-6">
+      <div className="mb-6 flex justify-between items-center">
         <input
           type="text"
           placeholder="Buscar por título ou hashtag..."

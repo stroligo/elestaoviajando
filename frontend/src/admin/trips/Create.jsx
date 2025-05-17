@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useLocation } from 'wouter';
+import { fetchWithAuth } from '@/services/api';
 import { CLOUDINARY_BASE_URL } from '@/utils/cloudinary';
 
 export function CreateTrip() {
@@ -31,13 +32,10 @@ export function CreateTrip() {
           : null,
       };
 
-      const response = await fetch(
+      const response = await fetchWithAuth(
         'https://elestaoviajando.onrender.com/api/trips',
         {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
           body: JSON.stringify({
             ...formData,
             coordinates,
@@ -56,10 +54,13 @@ export function CreateTrip() {
       if (response.ok) {
         setLocation('/admin/trips');
       } else {
-        console.error('Erro ao criar viagem');
+        const errorData = await response.json();
+        console.error('Erro ao criar viagem:', errorData);
+        throw new Error(errorData.message || 'Erro ao criar viagem');
       }
     } catch (error) {
       console.error('Erro ao criar viagem:', error);
+      alert('Erro ao criar viagem. Por favor, tente novamente.');
     }
   };
 

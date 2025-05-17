@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useLocation } from 'wouter';
 import { CLOUDINARY_BASE_URL } from '@/utils/cloudinary';
 import { Slugify } from '@/utils/stringUtils';
+import { fetchWithAuth } from '@/services/api';
 
 export function CreateBlog() {
   const [, setLocation] = useLocation();
@@ -19,7 +20,7 @@ export function CreateBlog() {
     e.preventDefault();
     try {
       const slug = Slugify(formData.titulo);
-      const response = await fetch(
+      const response = await fetchWithAuth(
         'https://elestaoviajando.onrender.com/api/posts',
         {
           method: 'POST',
@@ -44,10 +45,13 @@ export function CreateBlog() {
       if (response.ok) {
         setLocation('/admin/blog');
       } else {
-        console.error('Erro ao criar blog');
+        const errorData = await response.json();
+        console.error('Erro ao criar blog:', errorData);
+        throw new Error(errorData.message || 'Erro ao criar blog');
       }
     } catch (error) {
       console.error('Erro ao criar blog:', error);
+      alert('Erro ao criar blog. Por favor, tente novamente.');
     }
   };
 

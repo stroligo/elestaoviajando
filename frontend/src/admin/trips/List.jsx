@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'wouter';
-import { conectTrips } from '@/services/api';
+import { conectTrips, fetchWithAuth } from '@/services/api';
+import { IntroSection } from '@/components/features/IntroSection';
 
 export function TripsList() {
   const [trips, setTrips] = useState([]);
@@ -30,7 +31,7 @@ export function TripsList() {
   const handleDelete = async (id) => {
     if (window.confirm('Tem certeza que deseja excluir esta viagem?')) {
       try {
-        const response = await fetch(
+        const response = await fetchWithAuth(
           `https://elestaoviajando.onrender.com/api/trips/${id}`,
           {
             method: 'DELETE',
@@ -40,10 +41,13 @@ export function TripsList() {
         if (response.ok) {
           setTrips(trips.filter((trip) => trip._id !== id));
         } else {
-          console.error('Erro ao deletar viagem');
+          const errorData = await response.json();
+          console.error('Erro ao deletar viagem:', errorData);
+          throw new Error(errorData.message || 'Erro ao deletar viagem');
         }
       } catch (error) {
         console.error('Erro ao deletar viagem:', error);
+        alert('Erro ao deletar viagem. Por favor, tente novamente.');
       }
     }
   };
@@ -191,8 +195,9 @@ export function TripsList() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">Gerenciar Viagens</h1>
+      <div className="flex justify-between items-center mb-0">
+        <IntroSection subtitle="Viagens" />
+
         <Link href="/admin/trips/create">
           <button className="bg-primary text-white px-4 py-2 rounded hover:bg-blue-dark transition-colors">
             Nova Viagem

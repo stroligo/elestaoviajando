@@ -1,24 +1,42 @@
 // Função para fazer requisições com autenticação
-const fetchWithAuth = async (url, options = {}) => {
+export const fetchWithAuth = async (url, options = {}) => {
   const token = localStorage.getItem('token');
+
+  if (!token) {
+    console.error('Token não encontrado');
+    window.location.href = '/login';
+    throw new Error('Não autorizado. Por favor, faça login.');
+  }
+
   const headers = {
     'Content-Type': 'application/json',
-    ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    Authorization: `Bearer ${token}`,
     ...options.headers,
   };
 
-  const response = await fetch(url, {
-    ...options,
-    headers,
-  });
+  try {
+    const response = await fetch(url, {
+      ...options,
+      headers,
+    });
 
-  if (response.status === 401) {
-    localStorage.removeItem('token');
-    window.location.href = '/login';
-    throw new Error('Sessão expirada. Por favor, faça login novamente.');
+    if (response.status === 401) {
+      console.error('Token inválido ou expirado');
+      localStorage.removeItem('token');
+      window.location.href = '/login';
+      throw new Error('Sessão expirada. Por favor, faça login novamente.');
+    }
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || 'Erro na requisição');
+    }
+
+    return response;
+  } catch (error) {
+    console.error('Erro na requisição:', error);
+    throw error;
   }
-
-  return response;
 };
 
 export const conectTrips = async () => {
@@ -115,14 +133,15 @@ export const updateBlog = async (id, blogData) => {
 
 export const deleteBlog = async (id) => {
   try {
-    const response = await fetch(
+    const response = await fetchWithAuth(
       `https://elestaoviajando.onrender.com/api/posts/${id}`,
       {
         method: 'DELETE',
       },
     );
     if (!response.ok) {
-      throw new Error('Erro ao deletar post');
+      const errorData = await response.json();
+      throw new Error(errorData.message || 'Erro ao deletar post');
     }
     return await response.json();
   } catch (error) {

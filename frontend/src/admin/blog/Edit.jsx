@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useLocation } from 'wouter';
-import { getBlog } from '@/services/api';
+import { getBlog, fetchWithAuth } from '@/services/api';
 import { CLOUDINARY_BASE_URL } from '@/utils/cloudinary';
 
 export function EditBlog() {
@@ -80,7 +80,7 @@ export function EditBlog() {
 
       console.log('Dados sendo enviados:', blogData);
 
-      const response = await fetch(
+      const response = await fetchWithAuth(
         `https://elestaoviajando.onrender.com/api/posts/${blogId}`,
         {
           method: 'PUT',
@@ -96,9 +96,11 @@ export function EditBlog() {
       } else {
         const errorData = await response.json();
         console.error('Erro ao atualizar blog:', errorData);
+        throw new Error(errorData.message || 'Erro ao atualizar blog');
       }
     } catch (error) {
       console.error('Erro ao atualizar blog:', error);
+      alert('Erro ao atualizar blog. Por favor, tente novamente.');
     }
   };
 

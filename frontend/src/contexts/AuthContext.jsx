@@ -18,16 +18,20 @@ export function AuthProvider({ children }) {
           Authorization: `Bearer ${token}`,
         },
       })
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.user) {
+        .then(async (res) => {
+          const data = await res.json();
+          if (res.ok && data.user) {
             setUser(data.user);
           } else {
+            console.error('Erro ao validar token:', data);
             localStorage.removeItem('token');
+            navigate('/login');
           }
         })
-        .catch(() => {
+        .catch((error) => {
+          console.error('Erro ao validar token:', error);
           localStorage.removeItem('token');
+          navigate('/login');
         })
         .finally(() => {
           setLoading(false);
@@ -35,7 +39,7 @@ export function AuthProvider({ children }) {
     } else {
       setLoading(false);
     }
-  }, []);
+  }, [navigate]);
 
   const login = async (email, password) => {
     try {
@@ -56,11 +60,16 @@ export function AuthProvider({ children }) {
         throw new Error(data.error || 'Erro ao fazer login');
       }
 
+      if (!data.token) {
+        throw new Error('Token não recebido do servidor');
+      }
+
       localStorage.setItem('token', data.token);
       setUser(data.user);
-      navigate('/admin/trips');
+      navigate('/admin');
       return { success: true };
     } catch (error) {
+      console.error('Erro no login:', error);
       return { success: false, error: error.message };
     }
   };

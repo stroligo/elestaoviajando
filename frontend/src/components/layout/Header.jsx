@@ -73,10 +73,7 @@ export function Header() {
             </Button>
 
             <Button>
-              <Link href="/admin/trips">Admin Trips </Link>
-            </Button>
-            <Button>
-              <Link href="/admin/blog">Admin Blog </Link>
+              <Link href="/admin">Dashboard</Link>
             </Button>
           </div>
           {/*  Menu Mobile */}
