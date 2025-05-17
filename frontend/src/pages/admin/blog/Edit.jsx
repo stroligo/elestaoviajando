@@ -1,30 +1,71 @@
 import { useState, useEffect } from 'react';
 import { useLocation } from 'wouter';
 import { useRoute } from 'wouter';
+import { getBlog } from '@/services/api';
 
 export function EditBlogPost() {
   const [, setLocation] = useLocation();
   const [, params] = useRoute('/admin/blog/edit/:id');
   const [formData, setFormData] = useState({
-    title: '',
-    content: '',
-    author: '',
-    published: false,
+    titulo: '',
+    date: '',
+    description: '',
+    hashtag: [],
     images: [],
   });
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (params?.id) {
-      // TODO: Implementar chamada à API para buscar dados do post
-      setLoading(false);
+    async function loadPost() {
+      if (params?.id) {
+        try {
+          const post = await getBlog(params.id);
+          if (post) {
+            setFormData({
+              titulo: post.titulo || '',
+              date: post.date
+                ? new Date(post.date).toISOString().split('T')[0]
+                : '',
+              description: post.description ? post.description.join('\n') : '',
+              hashtag: post.hashtag || [],
+              images: post.images || [],
+            });
+          }
+        } catch (error) {
+          console.error('Erro ao carregar post:', error);
+        } finally {
+          setLoading(false);
+        }
+      }
     }
+    loadPost();
   }, [params?.id]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // TODO: Implementar chamada à API para atualizar post
-    setLocation('/admin/blog');
+    try {
+      const response = await fetch(
+        `https://elestaoviajando.onrender.com/api/posts/${params.id}`,
+        {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            ...formData,
+            description: formData.description.split('\n'),
+          }),
+        },
+      );
+
+      if (response.ok) {
+        setLocation('/admin/blog');
+      } else {
+        console.error('Erro ao atualizar post');
+      }
+    } catch (error) {
+      console.error('Erro ao atualizar post:', error);
+    }
   };
 
   const handleImageChange = (e) => {
@@ -44,57 +85,78 @@ export function EditBlogPost() {
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <label
-              htmlFor="title"
+              htmlFor="titulo"
               className="block text-sm font-medium text-gray-700"
             >
               Título
             </label>
             <input
               type="text"
-              id="title"
+              id="titulo"
               required
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-              value={formData.title}
+              value={formData.titulo}
               onChange={(e) =>
-                setFormData({ ...formData, title: e.target.value })
+                setFormData({ ...formData, titulo: e.target.value })
               }
             />
           </div>
 
           <div>
             <label
-              htmlFor="author"
+              htmlFor="date"
               className="block text-sm font-medium text-gray-700"
             >
-              Autor
+              Data
+            </label>
+            <input
+              type="date"
+              id="date"
+              required
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+              value={formData.date}
+              onChange={(e) =>
+                setFormData({ ...formData, date: e.target.value })
+              }
+            />
+          </div>
+
+          <div>
+            <label
+              htmlFor="description"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Descrição
+            </label>
+            <textarea
+              id="description"
+              rows={4}
+              required
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+              value={formData.description}
+              onChange={(e) =>
+                setFormData({ ...formData, description: e.target.value })
+              }
+            />
+          </div>
+
+          <div>
+            <label
+              htmlFor="hashtag"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Hashtags (separadas por vírgula)
             </label>
             <input
               type="text"
-              id="author"
-              required
+              id="hashtag"
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-              value={formData.author}
+              value={formData.hashtag.join(', ')}
               onChange={(e) =>
-                setFormData({ ...formData, author: e.target.value })
-              }
-            />
-          </div>
-
-          <div>
-            <label
-              htmlFor="content"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Conteúdo
-            </label>
-            <textarea
-              id="content"
-              rows={10}
-              required
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-              value={formData.content}
-              onChange={(e) =>
-                setFormData({ ...formData, content: e.target.value })
+                setFormData({
+                  ...formData,
+                  hashtag: e.target.value.split(',').map((tag) => tag.trim()),
+                })
               }
             />
           </div>
@@ -114,24 +176,6 @@ export function EditBlogPost() {
               className="mt-1 block w-full"
               onChange={handleImageChange}
             />
-          </div>
-
-          <div className="flex items-center">
-            <input
-              type="checkbox"
-              id="published"
-              className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
-              checked={formData.published}
-              onChange={(e) =>
-                setFormData({ ...formData, published: e.target.checked })
-              }
-            />
-            <label
-              htmlFor="published"
-              className="ml-2 block text-sm text-gray-900"
-            >
-              Publicado
-            </label>
           </div>
 
           <div className="flex justify-end space-x-4">

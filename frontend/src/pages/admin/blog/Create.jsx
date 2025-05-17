@@ -4,185 +4,147 @@ import { useLocation } from 'wouter';
 export function CreateBlogPost() {
   const [, setLocation] = useLocation();
   const [formData, setFormData] = useState({
-    title: '',
-    content: '',
-    author: '',
-    published: false,
+    titulo: '',
+    date: '',
+    description: '',
+    hashtag: [],
     images: [],
-    tags: '',
-    excerpt: '',
   });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // TODO: Implementar chamada à API para criar post
-    setLocation('/admin/blog');
+    try {
+      const response = await fetch(
+        'https://elestaoviajando.onrender.com/api/posts',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            ...formData,
+            description: formData.description.split('\n'),
+          }),
+        },
+      );
+
+      if (response.ok) {
+        setLocation('/admin/blog');
+      } else {
+        console.error('Erro ao criar post');
+      }
+    } catch (error) {
+      console.error('Erro ao criar post:', error);
+    }
   };
 
-  /*   const handleImageChange = (e) => {
+  const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
     // TODO: Implementar upload de imagens
-  }; */
+  };
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <div className="max-w-3xl mx-auto">
-        <div className="flex justify-between items-center mb-6">
-          <h1 className="text-2xl font-bold">Novo Post</h1>
-          <button
-            onClick={() => setLocation('/admin/blog')}
-            className="text-gray-600 hover:text-gray-900"
-          >
-            Voltar
-          </button>
-        </div>
+      <div className="max-w-2xl mx-auto">
+        <h1 className="text-2xl font-bold mb-6">Novo Post</h1>
 
-        <form
-          onSubmit={handleSubmit}
-          className="space-y-6 bg-white p-6 rounded-lg shadow"
-        >
-          <div className="grid grid-cols-1 gap-6">
-            <div>
-              <label
-                htmlFor="title"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Título
-              </label>
-              <input
-                type="text"
-                id="title"
-                required
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                value={formData.title}
-                onChange={(e) =>
-                  setFormData({ ...formData, title: e.target.value })
-                }
-                placeholder="Digite o título do post"
-              />
-            </div>
-
-            <div>
-              <label
-                htmlFor="author"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Autor
-              </label>
-              <input
-                type="text"
-                id="author"
-                required
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                value={formData.author}
-                onChange={(e) =>
-                  setFormData({ ...formData, author: e.target.value })
-                }
-                placeholder="Nome do autor"
-              />
-            </div>
-
-            <div>
-              <label
-                htmlFor="excerpt"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Resumo
-              </label>
-              <textarea
-                id="excerpt"
-                rows={3}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                value={formData.excerpt}
-                onChange={(e) =>
-                  setFormData({ ...formData, excerpt: e.target.value })
-                }
-                placeholder="Breve descrição do post"
-              />
-            </div>
-
-            <div>
-              <label
-                htmlFor="content"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Conteúdo
-              </label>
-              <textarea
-                id="content"
-                rows={10}
-                required
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                value={formData.content}
-                onChange={(e) =>
-                  setFormData({ ...formData, content: e.target.value })
-                }
-                placeholder="Conteúdo do post"
-              />
-            </div>
-
-            <div>
-              <label
-                htmlFor="tags"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Tags
-              </label>
-              <input
-                type="text"
-                id="tags"
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                value={formData.tags}
-                onChange={(e) =>
-                  setFormData({ ...formData, tags: e.target.value })
-                }
-                placeholder="Separe as tags por vírgula"
-              />
-              <p className="mt-1 text-sm text-gray-500">
-                Exemplo: viagem, europa, paris
-              </p>
-            </div>
-
-            <div>
-              <label
-                htmlFor="images"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Imagens
-              </label>
-              <input
-                type="file"
-                id="images"
-                multiple
-                accept="image/*"
-                className="mt-1 block w-full"
-                /*  onChange={handleImageChange} */
-              />
-              <p className="mt-1 text-sm text-gray-500">
-                Você pode selecionar múltiplas imagens
-              </p>
-            </div>
-
-            <div className="flex items-center">
-              <input
-                type="checkbox"
-                id="published"
-                className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
-                checked={formData.published}
-                onChange={(e) =>
-                  setFormData({ ...formData, published: e.target.checked })
-                }
-              />
-              <label
-                htmlFor="published"
-                className="ml-2 block text-sm text-gray-900"
-              >
-                Publicar imediatamente
-              </label>
-            </div>
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div>
+            <label
+              htmlFor="titulo"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Título
+            </label>
+            <input
+              type="text"
+              id="titulo"
+              required
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+              value={formData.titulo}
+              onChange={(e) =>
+                setFormData({ ...formData, titulo: e.target.value })
+              }
+            />
           </div>
 
-          <div className="flex justify-end space-x-4 pt-4 border-t">
+          <div>
+            <label
+              htmlFor="date"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Data
+            </label>
+            <input
+              type="date"
+              id="date"
+              required
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+              value={formData.date}
+              onChange={(e) =>
+                setFormData({ ...formData, date: e.target.value })
+              }
+            />
+          </div>
+
+          <div>
+            <label
+              htmlFor="description"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Descrição
+            </label>
+            <textarea
+              id="description"
+              rows={4}
+              required
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+              value={formData.description}
+              onChange={(e) =>
+                setFormData({ ...formData, description: e.target.value })
+              }
+            />
+          </div>
+
+          <div>
+            <label
+              htmlFor="hashtag"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Hashtags (separadas por vírgula)
+            </label>
+            <input
+              type="text"
+              id="hashtag"
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+              value={formData.hashtag.join(', ')}
+              onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  hashtag: e.target.value.split(',').map((tag) => tag.trim()),
+                })
+              }
+            />
+          </div>
+
+          <div>
+            <label
+              htmlFor="images"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Imagens
+            </label>
+            <input
+              type="file"
+              id="images"
+              multiple
+              accept="image/*"
+              className="mt-1 block w-full"
+              onChange={handleImageChange}
+            />
+          </div>
+
+          <div className="flex justify-end space-x-4">
             <button
               type="button"
               onClick={() => setLocation('/admin/blog')}

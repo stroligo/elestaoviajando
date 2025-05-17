@@ -9,6 +9,7 @@ export function Filter({ onFilterChange, onOrderByChange }) {
   /*   console.log(Alerta); */
   const [filter, setFilter] = useState({
     searchTerm: '',
+    hashtag: '',
     orderBy: 'asc',
   });
   const [resetSearch, setResetSearch] = useState(false);
@@ -18,20 +19,25 @@ export function Filter({ onFilterChange, onOrderByChange }) {
     onFilterChange({ ...filter, searchTerm });
   };
 
+  const handleHashtagChange = (hashtag) => {
+    setFilter({ ...filter, hashtag });
+    onFilterChange({ ...filter, hashtag });
+  };
+
   const handleOrderByChange = (orderBy) => {
     setFilter({ ...filter, orderBy });
     onOrderByChange(orderBy);
   };
 
   const handleClearFilter = () => {
-    onFilterChange({ searchTerm: '', orderBy: 'asc' });
+    onFilterChange({ searchTerm: '', hashtag: '', orderBy: 'asc' });
     setResetSearch(true);
   };
 
   return (
     <div className="relative h-full">
       <div className="absolute top-0 right-0 -translate-y-10">
-        {filter.searchTerm && (
+        {(filter.searchTerm || filter.hashtag) && (
           <div
             onClick={handleClearFilter}
             className="flex gap-1 items-center hover:border-orange border-transparent border-b-2 cursor-pointer text-orange  font-serif px-2 "
@@ -43,13 +49,22 @@ export function Filter({ onFilterChange, onOrderByChange }) {
       </div>
 
       <div className="flex w-full h-fit md:flex-row flex-col justify-between gap-4 items-center  bg-beige p-3 rounded-xl">
-        <SearchInput
-          placeholder="Buscar local"
-          value={filter.searchTerm}
-          onChange={handleSearchTermChange}
-          reset={resetSearch}
-          onReset={() => setFilter({ ...filter, searchTerm: '' })}
-        />
+        <div className="flex flex-col md:flex-row gap-4 w-full">
+          <SearchInput
+            placeholder="Buscar post"
+            value={filter.searchTerm}
+            onChange={handleSearchTermChange}
+            reset={resetSearch}
+            onReset={() => setFilter({ ...filter, searchTerm: '' })}
+          />
+          <SearchInput
+            placeholder="Filtrar por hashtag"
+            value={filter.hashtag}
+            onChange={handleHashtagChange}
+            reset={resetSearch}
+            onReset={() => setFilter({ ...filter, hashtag: '' })}
+          />
+        </div>
 
         <div className="flex gap-2">
           <Button

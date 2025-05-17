@@ -16,7 +16,7 @@ export function Card({ location }) {
         {/* IMG REMOTA */}
         <img
           src={`${CLOUDINARY_BASE_URL}${location.thumbnail}`}
-          alt={location.city}
+          alt={location.titulo || location.city}
         />
 
         {/*  <div className="date">{formattedDate}</div> */}
@@ -27,6 +27,15 @@ export function Card({ location }) {
           {location.city && <div className="title">{location.city}</div>}
           {location.country && (
             <div className="country"> {location.country}</div>
+          )}
+          {location.hashtag && location.hashtag.length > 0 && (
+            <div className="hashtags">
+              {location.hashtag.map((tag, index) => (
+                <span key={index} className="hashtag">
+                  #{tag}
+                </span>
+              ))}
+            </div>
           )}
         </div>
       </figure>
@@ -41,5 +50,6 @@ Card.propTypes = {
     country: PropTypes.string,
     thumbnail: PropTypes.string.isRequired,
     date: PropTypes.string.isRequired,
+    hashtag: PropTypes.arrayOf(PropTypes.string),
   }).isRequired,
 };

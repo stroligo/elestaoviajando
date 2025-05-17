@@ -1,27 +1,52 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'wouter';
+import { conectBlog } from '@/services/api';
 
 export function BlogList() {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // TODO: Implementar chamada à API para buscar posts
-    setLoading(false);
+    async function loadPosts() {
+      try {
+        const data = await conectBlog();
+        setPosts(data);
+      } catch (error) {
+        console.error('Erro ao carregar posts:', error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadPosts();
   }, []);
 
   const handleDelete = async (id) => {
     if (window.confirm('Tem certeza que deseja excluir este post?')) {
-      // TODO: Implementar chamada à API para deletar
+      try {
+        const response = await fetch(
+          `https://elestaoviajando.onrender.com/api/posts/${id}`,
+          {
+            method: 'DELETE',
+          },
+        );
+
+        if (response.ok) {
+          setPosts(posts.filter((post) => post._id !== id));
+        } else {
+          console.error('Erro ao deletar post');
+        }
+      } catch (error) {
+        console.error('Erro ao deletar post:', error);
+      }
     }
   };
 
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">Gerenciar Blog</h1>
+        <h1 className="text-2xl font-bold">Gerenciar Posts</h1>
         <Link href="/admin/blog/create">
-          <button className="bg-blue-500  px-4 py-2 rounded hover:bg-blue-600">
+          <button className="bg-blue-500 px-4 py-2 rounded hover:bg-blue-600">
             Novo Post
           </button>
         </Link>
@@ -38,13 +63,7 @@ export function BlogList() {
                   Título
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Autor
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Data
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Status
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Ações
@@ -54,21 +73,9 @@ export function BlogList() {
             <tbody className="bg-white divide-y divide-gray-200">
               {posts.map((post) => (
                 <tr key={post._id}>
-                  <td className="px-6 py-4 whitespace-nowrap">{post.title}</td>
-                  <td className="px-6 py-4 whitespace-nowrap">{post.author}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">{post.titulo}</td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     {new Date(post.date).toLocaleDateString()}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <span
-                      className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                        post.published
-                          ? 'bg-green-100 text-green-800'
-                          : 'bg-yellow-100 text-yellow-800'
-                      }`}
-                    >
-                      {post.published ? 'Publicado' : 'Rascunho'}
-                    </span>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <Link href={`/admin/blog/edit/${post._id}`}>

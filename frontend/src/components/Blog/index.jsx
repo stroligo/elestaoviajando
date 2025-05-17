@@ -25,31 +25,37 @@ export function Blog() {
   const handleFilterChange = (filter) => {
     const filteredBlog = getFilteredBlog(
       blog,
-      filter.filterCountry,
       filter.searchTerm,
+      filter.hashtag,
     );
     setDisplayedBlog(filteredBlog);
   };
 
   const handleOrderByChange = (orderBy) => {
     setOrderBy(orderBy);
-    handleFilterChange({ filterCountry: '', searchTerm: '' });
+    handleFilterChange({ searchTerm: '', hashtag: '' });
   };
 
   const handleClearFilter = () => {
     setDisplayedBlog(blog);
   };
 
-  const getFilteredBlog = (blog, filterCountry, searchTerm) => {
-    const filteredBlog = filterCountry
-      ? blog.filter((trip) => trip.country === filterCountry)
-      : blog;
+  const getFilteredBlog = (blog, searchTerm, hashtag) => {
+    let filteredBlog = blog;
 
-    return searchTerm
-      ? filteredBlog.filter((trip) =>
-          Slugify(trip.titulo).includes(Slugify(searchTerm)),
-        )
-      : filteredBlog;
+    if (searchTerm) {
+      filteredBlog = filteredBlog.filter((post) =>
+        Slugify(post.titulo).includes(Slugify(searchTerm)),
+      );
+    }
+
+    if (hashtag) {
+      filteredBlog = filteredBlog.filter((post) =>
+        post.hashtag?.some((tag) => Slugify(tag).includes(Slugify(hashtag))),
+      );
+    }
+
+    return filteredBlog;
   };
 
   const handlePageChange = (newPage) => {

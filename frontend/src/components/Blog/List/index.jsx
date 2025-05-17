@@ -24,7 +24,7 @@ export function BlogList({ blog, orderBy, page, pageSize }) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 ">
       {paginatedBlog.map((item) => (
-        <Link key={item.id} to={`/blog/${item.id}`}>
+        <Link key={item._id} to={`/blog/${item._id}`}>
           <Card location={item} />
         </Link>
       ))}

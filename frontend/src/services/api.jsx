@@ -52,12 +52,22 @@ export async function getTripByCity(city) {
 }
 
 export async function getBlog(id) {
-  const response = await fetch(
-    'https://elestaoviajando.onrender.com/api/posts',
-  );
-  const data = await response.json();
-  const dataId = data.find((blog) => blog.id === id);
-  return dataId;
+  try {
+    console.log('Buscando post com ID:', id);
+    const response = await fetch(
+      'https://elestaoviajando.onrender.com/api/posts',
+    );
+    const data = await response.json();
+    console.log('Dados recebidos:', data);
+
+    const post = data.find((post) => post._id === id);
+    console.log('Post encontrado:', post);
+
+    return post;
+  } catch (error) {
+    console.error('Erro ao buscar post:', error);
+    throw error;
+  }
 }
 
 export async function getWeather(lat, lon) {
