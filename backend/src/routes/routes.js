@@ -16,19 +16,9 @@ router.delete('/trips/:id', tripController.deleteTrip);
 
 // Rotas para posts
 router.get('/posts', blogController.getPosts);
-router.get('/posts/:slug', blogController.getPostBySlug, (req, res) => {
-  res.json(req.post);
-});
+router.get('/posts/:id', blogController.getPostById);
 router.post('/posts', blogController.createPost);
-router.put(
-  '/posts/:slug',
-  blogController.getPostBySlug,
-  blogController.updatePost,
-);
-router.delete(
-  '/posts/:slug',
-  blogController.getPostBySlug,
-  blogController.deletePost,
-);
+router.put('/posts/:id', blogController.updatePost);
+router.delete('/posts/:id', blogController.deletePost);
 
 module.exports = router;

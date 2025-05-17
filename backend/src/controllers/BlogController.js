@@ -1,5 +1,16 @@
 const Blog = require('../models/Blog');
 
+function slugify(str) {
+  return str
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[^\w\s-]/g, '')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
+
 class BlogController {
   async getPosts(req, res) {
     try {
@@ -10,14 +21,13 @@ class BlogController {
     }
   }
 
-  async getPostBySlug(req, res, next) {
+  async getPostById(req, res) {
     try {
-      const post = await Blog.findOne({ slug: req.params.slug });
+      const post = await Blog.findById(req.params.id);
       if (!post) {
         return res.status(404).json({ message: 'Post não encontrado' });
       }
-      req.post = post;
-      next();
+      res.json(post);
     } catch (err) {
       res.status(500).json({ message: err.message });
     }
@@ -25,13 +35,7 @@ class BlogController {
 
   async createPost(req, res) {
     const post = new Blog({
-      title: req.body.title,
-      slug: req.body.slug,
-      content: req.body.content,
-      excerpt: req.body.excerpt,
-      author: req.body.author,
-      date: req.body.date,
-      status: req.body.status,
+      ...req.body,
     });
 
     try {
@@ -43,10 +47,14 @@ class BlogController {
   }
 
   async updatePost(req, res) {
-    Object.assign(req.post, req.body);
-
     try {
-      const updatedPost = await req.post.save();
+      const post = await Blog.findById(req.params.id);
+      if (!post) {
+        return res.status(404).json({ message: 'Post não encontrado' });
+      }
+
+      Object.assign(post, req.body);
+      const updatedPost = await post.save();
       res.json(updatedPost);
     } catch (err) {
       res.status(400).json({ message: err.message });
@@ -55,7 +63,12 @@ class BlogController {
 
   async deletePost(req, res) {
     try {
-      await req.post.deleteOne();
+      const post = await Blog.findById(req.params.id);
+      if (!post) {
+        return res.status(404).json({ message: 'Post não encontrado' });
+      }
+
+      await post.deleteOne();
       res.json({ message: 'Post deletado com sucesso' });
     } catch (err) {
       res.status(500).json({ message: err.message });
