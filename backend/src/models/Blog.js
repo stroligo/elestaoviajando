@@ -2,19 +2,7 @@ const mongoose = require('mongoose');
 
 const blogSchema = new mongoose.Schema(
   {
-    title: {
-      type: String,
-      required: true,
-    },
-    content: {
-      type: String,
-      required: true,
-    },
-    excerpt: {
-      type: String,
-      required: true,
-    },
-    author: {
+    titulo: {
       type: String,
       required: true,
     },
@@ -22,10 +10,26 @@ const blogSchema = new mongoose.Schema(
       type: Date,
       required: true,
     },
+    description: {
+      type: [String],
+      required: true,
+    },
+    images: {
+      type: [String],
+      default: [],
+    },
+    hashtag: {
+      type: [String],
+      default: [],
+    },
     status: {
       type: String,
       enum: ['draft', 'published'],
       default: 'draft',
+    },
+    thumbnail: {
+      type: String,
+      default: '',
     },
   },
   {

@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { useLocation } from 'wouter';
 import { getBlog } from '@/services/api';
 import { CLOUDINARY_BASE_URL } from '@/utils/cloudinary';
-import { Slugify } from '@/utils/stringUtils';
 
 export function EditBlog() {
   const [, setLocation] = useLocation();
@@ -21,18 +20,26 @@ export function EditBlog() {
     async function loadBlog() {
       try {
         const blogId = window.location.pathname.split('/').pop();
-        const blog = await getBlog(blogId);
-        if (blog) {
-          setFormData({
-            ...blog,
-            date: new Date(blog.date).toISOString().split('T')[0],
-            images: blog.images.map((image) =>
-              image.startsWith('http')
-                ? image
-                : `${CLOUDINARY_BASE_URL}${image}`,
-            ),
-          });
-        }
+        const blogData = await getBlog(blogId);
+
+        // Formata a data para o formato do input date
+        const formattedDate = new Date(blogData.date)
+          .toISOString()
+          .split('T')[0];
+
+        setFormData({
+          titulo: blogData.titulo,
+          date: formattedDate,
+          description: blogData.description || [],
+          images:
+            blogData.images?.map((img) =>
+              img.includes(CLOUDINARY_BASE_URL)
+                ? img
+                : `${CLOUDINARY_BASE_URL}${img}`,
+            ) || [],
+          hashtag: blogData.hashtag || [],
+          status: blogData.status || 'draft',
+        });
       } catch (error) {
         console.error('Erro ao carregar blog:', error);
       } finally {
@@ -46,8 +53,23 @@ export function EditBlog() {
     e.preventDefault();
     try {
       const blogId = window.location.pathname.split('/').pop();
+
+      // Garantir que description seja um array
+      const description = Array.isArray(formData.description)
+        ? formData.description
+        : [formData.description];
+
+      // Garantir que hashtag seja um array
+      const hashtag = Array.isArray(formData.hashtag)
+        ? formData.hashtag
+        : formData.hashtag.split(',').map((tag) => tag.trim());
+
       const blogData = {
-        ...formData,
+        titulo: formData.titulo,
+        date: formData.date,
+        description: description,
+        hashtag: hashtag,
+        status: formData.status,
         thumbnail: formData.images[0]?.includes(CLOUDINARY_BASE_URL)
           ? formData.images[0].replace(CLOUDINARY_BASE_URL, '')
           : formData.images[0],
@@ -57,6 +79,8 @@ export function EditBlog() {
             : image,
         ),
       };
+
+      console.log('Dados sendo enviados:', blogData);
 
       const response = await fetch(
         `https://elestaoviajando.onrender.com/api/posts/${blogId}`,
@@ -97,9 +121,7 @@ export function EditBlog() {
   };
 
   const handleDescriptionChange = (e) => {
-    const paragraphs = e.target.value
-      .split('\n')
-      .filter((line) => line.trim() !== '');
+    const paragraphs = e.target.value.split('\n\n').filter((p) => p.trim());
     setFormData((prev) => ({
       ...prev,
       description: paragraphs,
@@ -181,57 +203,78 @@ export function EditBlog() {
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
-          <div>
-            <label
-              htmlFor="titulo"
-              className="block text-sm font-medium text-gray mb-2"
-            >
-              Título
-            </label>
-            <input
-              type="text"
-              id="titulo"
-              name="titulo"
-              value={formData.titulo}
-              onChange={handleChange}
-              required
-              className="w-full px-4 py-2 border border-gray-light rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-            />
-          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label
+                htmlFor="titulo"
+                className="block text-sm font-medium text-gray mb-2"
+              >
+                Título
+              </label>
+              <input
+                type="text"
+                id="titulo"
+                name="titulo"
+                value={formData.titulo}
+                onChange={handleChange}
+                required
+                className="w-full px-4 py-2 border border-gray-light rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+              />
+            </div>
 
-          <div>
-            <label
-              htmlFor="date"
-              className="block text-sm font-medium text-gray mb-2"
-            >
-              Data
-            </label>
-            <input
-              type="date"
-              id="date"
-              name="date"
-              value={formData.date}
-              onChange={handleChange}
-              required
-              className="w-full px-4 py-2 border border-gray-light rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-            />
-          </div>
+            <div>
+              <label
+                htmlFor="date"
+                className="block text-sm font-medium text-gray mb-2"
+              >
+                Data
+              </label>
+              <input
+                type="date"
+                id="date"
+                name="date"
+                value={formData.date}
+                onChange={handleChange}
+                required
+                className="w-full px-4 py-2 border border-gray-light rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+              />
+            </div>
 
-          <div>
-            <label
-              htmlFor="hashtag"
-              className="block text-sm font-medium text-gray mb-2"
-            >
-              Hashtags (separadas por vírgula)
-            </label>
-            <input
-              type="text"
-              id="hashtag"
-              name="hashtag"
-              value={formData.hashtag.join(', ')}
-              onChange={handleHashtagChange}
-              className="w-full px-4 py-2 border border-gray-light rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-            />
+            <div>
+              <label
+                htmlFor="hashtag"
+                className="block text-sm font-medium text-gray mb-2"
+              >
+                Hashtags (separadas por vírgula)
+              </label>
+              <input
+                type="text"
+                id="hashtag"
+                name="hashtag"
+                value={formData.hashtag.join(', ')}
+                onChange={handleHashtagChange}
+                className="w-full px-4 py-2 border border-gray-light rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+              />
+            </div>
+
+            <div>
+              <label
+                htmlFor="status"
+                className="block text-sm font-medium text-gray mb-2"
+              >
+                Status
+              </label>
+              <select
+                id="status"
+                name="status"
+                value={formData.status}
+                onChange={handleChange}
+                className="w-full px-4 py-2 border border-gray-light rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+              >
+                <option value="draft">Rascunho</option>
+                <option value="published">Publicado</option>
+              </select>
+            </div>
           </div>
 
           <div>
@@ -244,23 +287,15 @@ export function EditBlog() {
             <textarea
               id="description"
               name="description"
-              value={
-                Array.isArray(formData.description)
-                  ? formData.description.join('\n')
-                  : ''
-              }
+              value={formData.description.join('\n\n')}
               onChange={handleDescriptionChange}
-              required
               rows="5"
               className="w-full px-4 py-2 border border-gray-light rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
             />
           </div>
 
           <div>
-            <label
-              htmlFor="images"
-              className="block text-sm font-medium text-gray mb-2"
-            >
+            <label className="block text-sm font-medium text-gray mb-2">
               Imagens
             </label>
             <div className="mt-2">
@@ -309,44 +344,36 @@ export function EditBlog() {
             )}
 
             {formData.images.length > 0 && (
-              <div className="mt-6">
-                <h3 className="text-sm font-medium text-gray mb-3">
-                  Imagens Atuais
-                </h3>
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                  {formData.images.map((image, index) => (
-                    <div
-                      key={index}
-                      className="relative group aspect-square rounded-lg overflow-hidden"
+              <div className="mt-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                {formData.images.map((image, index) => (
+                  <div key={index} className="relative group">
+                    <img
+                      src={image}
+                      alt={`Imagem ${index + 1}`}
+                      className="w-full h-32 object-cover rounded-lg"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => handleRemoveImage(index)}
+                      className="absolute top-2 right-2 p-1 bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
                     >
-                      <img
-                        src={image}
-                        alt={`Imagem ${index + 1}`}
-                        className="w-full h-full object-cover"
-                      />
-                      <button
-                        type="button"
-                        onClick={() => handleRemoveImage(index)}
-                        className="absolute top-2 right-2 p-1 bg-brown text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-4 w-4"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
                       >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="h-4 w-4"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M6 18L18 6M6 6l12 12"
-                          />
-                        </svg>
-                      </button>
-                    </div>
-                  ))}
-                </div>
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M6 18L18 6M6 6l12 12"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                ))}
               </div>
             )}
           </div>
@@ -355,14 +382,14 @@ export function EditBlog() {
             <button
               type="button"
               onClick={() => setLocation('/admin/blog')}
-              className="px-4 py-2 border border-gray-light rounded-md text-gray hover:bg-gray-extralight transition-colors"
+              className="px-6 py-2 border border-gray-light rounded-md text-gray hover:bg-gray-extralight transition-colors"
             >
               Cancelar
             </button>
             <button
               type="submit"
               disabled={uploadingImages}
-              className="px-4 py-2 bg-primary text-white rounded-md hover:bg-blue-dark transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="px-6 py-2 bg-primary text-white rounded-md hover:bg-blue-dark transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {uploadingImages ? 'Salvando...' : 'Salvar Alterações'}
             </button>

@@ -1,16 +1,5 @@
 const Blog = require('../models/Blog');
 
-function slugify(str) {
-  return str
-    .toLowerCase()
-    .normalize('NFD')
-    .replace(/[^\w\s-]/g, '')
-    .replace(/[\u0300-\u036f]/g, '')
-    .replace(/\s+/g, '-')
-    .replace(/-+/g, '-')
-    .replace(/^-+|-+$/g, '');
-}
-
 class BlogController {
   async getPosts(req, res) {
     try {
@@ -48,14 +37,16 @@ class BlogController {
 
   async updatePost(req, res) {
     try {
-      const post = await Blog.findById(req.params.id);
+      const post = await Blog.findByIdAndUpdate(req.params.id, req.body, {
+        new: true,
+        runValidators: true,
+      });
+
       if (!post) {
         return res.status(404).json({ message: 'Post não encontrado' });
       }
 
-      Object.assign(post, req.body);
-      const updatedPost = await post.save();
-      res.json(updatedPost);
+      res.json(post);
     } catch (err) {
       res.status(400).json({ message: err.message });
     }
