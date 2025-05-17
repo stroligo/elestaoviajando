@@ -38,7 +38,9 @@ app.use('/api', routes);
 
 // Rota raiz
 app.get('/', (req, res) => {
-  res.json({ message: 'API - Projeto Elas Tão Viajando' });
+  res.json({
+    message: 'API - Projeto Eles Tão Viajando - Conclusão do Curso Flag.pt',
+  });
 });
 
 // Tratamento de rotas não existentes
