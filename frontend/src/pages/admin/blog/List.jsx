@@ -9,8 +9,8 @@ export function BlogsList() {
   const [itemsPerPage] = useState(10);
   const [searchTerm, setSearchTerm] = useState('');
   const [sortConfig, setSortConfig] = useState({
-    key: 'titulo',
-    direction: 'asc',
+    key: 'date',
+    direction: 'desc',
   });
 
   useEffect(() => {

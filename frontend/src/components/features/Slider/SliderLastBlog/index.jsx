@@ -61,15 +61,17 @@ export function SliderLastBlog() {
       </div>
 
       {isLoading ? (
-        <div className="flex justify-center">
-          <div className="spinner-border" role="status">
-            <span className="sr-only">Carregando...</span>
-          </div>
+        <div className="flex justify-center items-center h-64">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
         </div>
       ) : error ? (
-        <div className="text-gray">{error}</div>
+        <div className="flex justify-center items-center h-64">
+          <div className="text-gray">{error}</div>
+        </div>
       ) : blog.length === 0 ? (
-        <div className="text-gray">Nenhum blog encontrado</div>
+        <div className="flex justify-center items-center h-64">
+          <div className="text-gray">Nenhum blog encontrado</div>
+        </div>
       ) : (
         <Splide options={options} className={Style.splide} autoPlay={true}>
           {blog.slice(0, 20).map((location) => (

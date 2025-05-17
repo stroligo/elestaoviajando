@@ -33,9 +33,7 @@ export function EditBlog() {
           description: blogData.description || [],
           images:
             blogData.images?.map((img) =>
-              img.includes(CLOUDINARY_BASE_URL)
-                ? img
-                : `${CLOUDINARY_BASE_URL}${img}`,
+              img.startsWith('http') ? img : `${CLOUDINARY_BASE_URL}${img}`,
             ) || [],
           hashtag: blogData.hashtag || [],
           status: blogData.status || 'draft',

@@ -126,17 +126,20 @@ export const getWeather = async (lat, lon) => {
   }
 };
 
-export const getTrip = async (id) => {
+export async function getTrip(id) {
   try {
+    console.log('Buscando viagem com ID:', id);
     const response = await fetch(
       `https://elestaoviajando.onrender.com/api/trips/${id}`,
     );
     if (!response.ok) {
       throw new Error('Erro ao buscar viagem');
     }
-    return await response.json();
+    const data = await response.json();
+    console.log('Dados recebidos:', data);
+    return data;
   } catch (error) {
     console.error('Erro ao buscar viagem:', error);
     throw error;
   }
-};
+}

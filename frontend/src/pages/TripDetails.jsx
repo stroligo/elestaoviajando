@@ -10,17 +10,15 @@ import { CLOUDINARY_BASE_URL } from '../utils/cloudinary';
 
 export function TripDetails() {
   const [location, setLocation] = useState({});
-  const { slug } = useParams();
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const { id } = useParams();
 
   useEffect(() => {
     async function loadViagem() {
-      if (slug) {
+      if (id) {
         try {
-          // Extrai o ID do slug (última parte após o hífen)
-          const id = slug.split('-').pop();
-          console.log('Slug recebido:', slug);
-          console.log('ID extraído:', id);
-
+          console.log('ID recebido:', id);
           const locationData = await getTrip(id);
           console.log('Dados da viagem carregados:', locationData);
 
@@ -35,16 +33,43 @@ export function TripDetails() {
               ),
             };
             setLocation(processedData);
+            setError(null);
           } else {
             console.error('Viagem não encontrada');
+            setError('Viagem não encontrada');
+            setLocation({});
           }
         } catch (error) {
           console.error('Erro ao carregar viagem:', error);
+          setError('Não foi possível carregar a viagem');
+          setLocation({});
+        } finally {
+          setIsLoading(false);
         }
       }
     }
     loadViagem();
-  }, [slug]);
+  }, [id]);
+
+  if (isLoading) {
+    return (
+      <div className="container py-5 md:py-10 mx-auto flex px-5 md:px-0 flex-col">
+        <div className="flex justify-center">
+          <div className="spinner-border" role="status">
+            <span className="sr-only">Carregando...</span>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="container py-5 md:py-10 mx-auto flex px-5 md:px-0 flex-col">
+        <div className="text-gray">{error}</div>
+      </div>
+    );
+  }
 
   return (
     <div className="container py-5 md:py-10 mx-auto flex px-5 md:px-0  flex-col">
@@ -55,13 +80,6 @@ export function TripDetails() {
             <div className="relative w-full   lg:w-7/12">
               <div className="sticky top-10 z-50">
                 <SliderTrip imagens={location.images} />
-                {/*  <div className="absolute top-0 left-0  w-full pt-6 pl-6">
-                  <IntroSection
-                    title={location.country}
-                    subtitle={location.city}
-                    style="hero"
-                  />
-                </div> */}
               </div>
             </div>
             {/* Container */}

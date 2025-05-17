@@ -9,8 +9,8 @@ export function TripsList() {
   const [itemsPerPage] = useState(10);
   const [searchTerm, setSearchTerm] = useState('');
   const [sortConfig, setSortConfig] = useState({
-    key: 'city',
-    direction: 'asc',
+    key: 'date',
+    direction: 'desc',
   });
 
   useEffect(() => {

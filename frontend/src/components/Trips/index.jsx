@@ -12,12 +12,24 @@ export function Trips() {
   const [orderBy, setOrderBy] = useState('desc');
   const [page, setPage] = useState(0);
   const [pageSize] = useState(20);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     async function loadTrips() {
-      const data = await conectTrips();
-      setTrips(data);
-      setDisplayedTrips(data);
+      try {
+        const data = await conectTrips();
+        setTrips(data);
+        setDisplayedTrips(data);
+        setError(null);
+      } catch (error) {
+        console.error('Erro ao carregar viagens:', error);
+        setError('Não foi possível carregar as viagens');
+        setTrips([]);
+        setDisplayedTrips([]);
+      } finally {
+        setIsLoading(false);
+      }
     }
     loadTrips();
   }, []);
@@ -68,19 +80,36 @@ export function Trips() {
           onClearFilter={handleClearFilter}
         />
       </div>
-      <TripList
-        trips={displayedTrips}
-        orderBy={orderBy}
-        page={page}
-        pageSize={pageSize}
-      />
 
-      <Pagination
-        page={page}
-        pageSize={pageSize}
-        totalTrips={displayedTrips.length}
-        onPageChange={handlePageChange}
-      />
+      {isLoading ? (
+        <div className="flex justify-center items-center h-64">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+        </div>
+      ) : error ? (
+        <div className="flex justify-center items-center h-64">
+          <div className="text-gray">{error}</div>
+        </div>
+      ) : displayedTrips.length === 0 ? (
+        <div className="flex justify-center items-center h-64">
+          <div className="text-gray">Nenhuma viagem encontrada</div>
+        </div>
+      ) : (
+        <>
+          <TripList
+            trips={displayedTrips}
+            orderBy={orderBy}
+            page={page}
+            pageSize={pageSize}
+          />
+
+          <Pagination
+            page={page}
+            pageSize={pageSize}
+            totalTrips={displayedTrips.length}
+            onPageChange={handlePageChange}
+          />
+        </>
+      )}
     </div>
   );
 }
