@@ -26,7 +26,6 @@ export function Routes() {
       <Route path="/blog" component={PageBlog} />
       <Route path="/blog/:id" component={BlogDetails} />
 
-      <Route path="/newlocation" component={NewLocation} />
       <Route path="/trips" component={PageTrips} />
       <Route path="/trips/:id" component={TripDetails} />
 

@@ -71,9 +71,7 @@ export function Header() {
             <Button>
               <Link href="/about">Sobre Nós</Link>
             </Button>
-            <Button>
-              <Link href="/newlocation">Novos Locais</Link>
-            </Button>
+
             <Button>
               <Link href="/admin/trips">Admin Trips </Link>
             </Button>

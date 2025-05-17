@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'wouter';
-import { conectBlogs } from '@/services/api';
+import { conectBlogs, deleteBlog } from '@/services/api';
 
 export function BlogsList() {
   const [blogs, setBlogs] = useState([]);
@@ -30,18 +30,8 @@ export function BlogsList() {
   const handleDelete = async (id) => {
     if (window.confirm('Tem certeza que deseja excluir este blog?')) {
       try {
-        const response = await fetch(
-          `https://elestaoviajando.onrender.com/api/blogs/${id}`,
-          {
-            method: 'DELETE',
-          },
-        );
-
-        if (response.ok) {
-          setBlogs(blogs.filter((blog) => blog._id !== id));
-        } else {
-          console.error('Erro ao deletar blog');
-        }
+        await deleteBlog(id);
+        setBlogs(blogs.filter((blog) => blog._id !== id));
       } catch (error) {
         console.error('Erro ao deletar blog:', error);
       }
