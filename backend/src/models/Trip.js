@@ -17,4 +17,4 @@ const tripSchema = new mongoose.Schema(
   { timestamps: true },
 );
 
-module.exports = mongoose.model('Trip', tripSchema, 'elestaoviajando.trips');
+module.exports = mongoose.model('Trip', tripSchema);
