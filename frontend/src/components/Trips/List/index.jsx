@@ -3,6 +3,16 @@ import { Link } from 'wouter';
 import { Card } from '@/components/ui/Card';
 import PropTypes from 'prop-types';
 
+function generateSlug(city, id) {
+  const citySlug = city
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '');
+  return `${citySlug}-${id}`;
+}
+
 export function TripList({ trips, orderBy, page, pageSize }) {
   const sortedTrips = trips.sort((a, b) => {
     if (orderBy === 'asc') {
@@ -23,7 +33,7 @@ export function TripList({ trips, orderBy, page, pageSize }) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 ">
       {paginatedTrips.map((item) => (
-        <Link key={item.id} to={`/trips/${item.id}`}>
+        <Link key={item._id} to={`/trips/${generateSlug(item.city, item._id)}`}>
           <Card location={item} />
         </Link>
       ))}

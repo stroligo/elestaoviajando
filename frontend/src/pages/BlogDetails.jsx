@@ -71,3 +71,4 @@ export function BlogDetails() {
     </div>
   );
 }
+// BlogDetails.jsx

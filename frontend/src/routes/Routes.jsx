@@ -6,11 +6,20 @@ import { BlogDetails } from '@/pages/BlogDetails';
 import { TripDetails } from '@/pages/TripDetails';
 import { NewLocation } from '@/pages/NewLocation';
 import { PageTrips } from '@/pages/PageTrips';
-import { PostsPage } from '@/pages/PostsPage';
+
+// Admin Pages
+import { Login } from '@/pages/admin/login/Login';
+import { TripsList } from '@/pages/admin/trips/List';
+import { CreateTrip } from '@/pages/admin/trips/Create';
+import { EditTrip } from '@/pages/admin/trips/Edit';
+import { BlogList } from '@/pages/admin/blog/List';
+import { CreateBlogPost } from '@/pages/admin/blog/Create';
+import { EditBlogPost } from '@/pages/admin/blog/Edit';
 
 export function Routes() {
   return (
     <Switch>
+      {/* Rotas públicas */}
       <Route path="/" component={Home} />
       <Route path="/about" component={About} />
 
@@ -19,9 +28,20 @@ export function Routes() {
 
       <Route path="/newlocation" component={NewLocation} />
       <Route path="/trips" component={PageTrips} />
-      <Route path="/trips/:city" component={TripDetails} />
+      <Route path="/trips/:slug" component={TripDetails} />
 
-      <Route path="/posts" component={PostsPage} />
+      {/* Rotas administrativas */}
+      <Route path="/admin/login" component={Login} />
+
+      {/* Rotas de Trips */}
+      <Route path="/admin/trips" component={TripsList} />
+      <Route path="/admin/trips/create" component={CreateTrip} />
+      <Route path="/admin/trips/edit/:id" component={EditTrip} />
+
+      {/* Rotas de Blog */}
+      <Route path="/admin/blog" component={BlogList} />
+      <Route path="/admin/blog/create" component={CreateBlogPost} />
+      <Route path="/admin/blog/edit/:id" component={EditBlogPost} />
     </Switch>
   );
 }

@@ -1,4 +1,4 @@
-// TripList.js
+// BlogList.js
 import { Link } from 'wouter';
 import { Card } from '@/components/ui/Card';
 import PropTypes from 'prop-types';

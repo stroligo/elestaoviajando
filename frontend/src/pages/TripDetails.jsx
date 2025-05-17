@@ -9,22 +9,32 @@ import { Weather } from '@/components/features/Weather';
 
 export function TripDetails() {
   const [location, setLocation] = useState({});
-
-  const { city } = useParams();
+  const { slug } = useParams();
 
   useEffect(() => {
     async function loadViagem() {
-      if (city) {
+      if (slug) {
         try {
-          const locationData = await getTrip(city);
-          setLocation(locationData);
+          // Extrai o ID do slug (última parte após o hífen)
+          const id = slug.split('-').pop();
+          console.log('Slug recebido:', slug);
+          console.log('ID extraído:', id);
+
+          const locationData = await getTrip(id);
+          console.log('Dados da viagem carregados:', locationData);
+
+          if (locationData) {
+            setLocation(locationData);
+          } else {
+            console.error('Viagem não encontrada');
+          }
         } catch (error) {
-          console.error('Error:', error);
+          console.error('Erro ao carregar viagem:', error);
         }
       }
     }
     loadViagem();
-  }, [city]);
+  }, [slug]);
 
   return (
     <div className="container py-5 md:py-10 mx-auto flex px-5 md:px-0  flex-col">
