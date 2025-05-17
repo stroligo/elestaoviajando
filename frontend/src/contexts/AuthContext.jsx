@@ -71,7 +71,11 @@ export function AuthProvider({ children }) {
 
       localStorage.setItem('token', data.token);
       setUser(data.user);
+
+      // Aguardar o estado ser atualizado antes de navegar
+      await new Promise((resolve) => setTimeout(resolve, 100));
       navigate('/admin');
+
       return { success: true };
     } catch (error) {
       console.error('Erro no login:', error);
