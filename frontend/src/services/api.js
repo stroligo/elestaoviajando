@@ -33,6 +33,7 @@ export const fetchWithAuth = async (url, options = {}) => {
   }
 };
 
+// Funções para viagens
 export const conectTrips = async () => {
   try {
     const response = await fetchWithAuth(
@@ -48,6 +49,51 @@ export const conectTrips = async () => {
   }
 };
 
+export const getTrip = async (id) => {
+  try {
+    console.log('Buscando viagem com ID:', id);
+    const response = await fetchWithAuth(
+      `https://elestaoviajando.onrender.com/api/trips/${id}`,
+    );
+    if (!response.ok) {
+      throw new Error('Erro ao buscar viagem');
+    }
+    const data = await response.json();
+    console.log('Dados recebidos:', data);
+    return data;
+  } catch (error) {
+    console.error('Erro ao buscar viagem:', error);
+    throw error;
+  }
+};
+
+export const getTripByCity = async (city) => {
+  try {
+    const response = await fetchWithAuth(
+      'https://elestaoviajando.onrender.com/api/trips',
+    );
+    const data = await response.json();
+    const trip = data.find(
+      (trip) => trip.city.toLowerCase() === city.toLowerCase(),
+    );
+
+    if (trip) {
+      // Adiciona a URL base do Cloudinary para as imagens
+      trip.images = trip.images.map((image) =>
+        image.startsWith('http')
+          ? image
+          : `https://res.cloudinary.com/drn1sflf0/image/upload/v1747421200/${image}`,
+      );
+    }
+
+    return trip;
+  } catch (error) {
+    console.error('Erro ao buscar viagem por cidade:', error);
+    throw error;
+  }
+};
+
+// Funções para blog
 export const conectBlogs = async () => {
   try {
     const response = await fetchWithAuth(
@@ -83,7 +129,7 @@ export const getBlog = async (id) => {
 
 export const createBlog = async (blogData) => {
   try {
-    const response = await fetch(
+    const response = await fetchWithAuth(
       'https://elestaoviajando.onrender.com/api/posts',
       {
         method: 'POST',
@@ -105,7 +151,7 @@ export const createBlog = async (blogData) => {
 
 export const updateBlog = async (id, blogData) => {
   try {
-    const response = await fetch(
+    const response = await fetchWithAuth(
       `https://elestaoviajando.onrender.com/api/posts/${id}`,
       {
         method: 'PUT',
@@ -144,8 +190,13 @@ export const deleteBlog = async (id) => {
   }
 };
 
+// Função para clima
 export const getWeather = async (lat, lon) => {
   try {
+    if (!lat || !lon) {
+      throw new Error('Latitude e longitude são obrigatórias');
+    }
+
     const API_KEY = '8c247ea0b4b6ed5558be9f656b5a3f5c';
     const response = await fetch(
       `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric&lang=pt_br`,
@@ -159,21 +210,3 @@ export const getWeather = async (lat, lon) => {
     throw error;
   }
 };
-
-export async function getTrip(id) {
-  try {
-    console.log('Buscando viagem com ID:', id);
-    const response = await fetchWithAuth(
-      `https://elestaoviajando.onrender.com/api/trips/${id}`,
-    );
-    if (!response.ok) {
-      throw new Error('Erro ao buscar viagem');
-    }
-    const data = await response.json();
-    console.log('Dados recebidos:', data);
-    return data;
-  } catch (error) {
-    console.error('Erro ao buscar viagem:', error);
-    throw error;
-  }
-}
