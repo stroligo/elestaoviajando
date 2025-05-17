@@ -1,3 +1,0 @@
-# elestaoviajando-backend
-
-Projeto
