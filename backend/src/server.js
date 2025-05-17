@@ -3,9 +3,7 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const corsMiddleware = require('./middleware/cors-middleware');
-const apiRouter = require('./routes/routes');
-const uploadRoutes = require('./routes/upload');
-const authRoutes = require('./routes/auth');
+const routes = require('./routes');
 
 const app = express();
 
@@ -35,14 +33,8 @@ mongoose
 app.use(corsMiddleware());
 app.use(express.json());
 
-// Rotas de autenticação
-app.use('/api/auth', authRoutes);
-
-// Rotas de upload de imagens
-app.use('/api/upload', uploadRoutes);
-
-// Roteador principal da API
-app.use('/api', apiRouter);
+// Usando todas as rotas centralizadas
+app.use('/api', routes);
 
 // Rota raiz
 app.get('/', (req, res) => {
