@@ -4,7 +4,6 @@ import { About } from '@/pages/About';
 import { PageBlog } from '@/pages/PageBlog';
 import { BlogDetails } from '@/pages/BlogDetails';
 import { TripDetails } from '@/pages/TripDetails';
-import { NewLocation } from '@/pages/NewLocation';
 import { PageTrips } from '@/pages/PageTrips';
 
 // Admin Pages
