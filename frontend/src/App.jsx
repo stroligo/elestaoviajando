@@ -5,7 +5,7 @@ import { Routes } from './routes/Routes';
 
 export function App() {
   return (
-    <div className="flex flex-col min-h-screen antialiased ">
+    <div className="flex flex-col min-h-screen antialiased">
       <Header />
       <Main>
         <Routes />
