@@ -2,7 +2,6 @@
 import { Link } from 'wouter';
 import { Card } from '@/components/ui/Card';
 import PropTypes from 'prop-types';
-import { Slugify } from '@/utils/stringUtils';
 
 export function BlogList({ blog, orderBy, page, pageSize }) {
   const sortedBlog = blog.sort((a, b) => {
@@ -24,14 +23,11 @@ export function BlogList({ blog, orderBy, page, pageSize }) {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 ">
-      {paginatedBlog.map((item) => {
-        const slug = item.slug || Slugify(item.titulo);
-        return (
-          <Link key={item._id} to={`/blog/${slug}`}>
-            <Card location={item} />
-          </Link>
-        );
-      })}
+      {paginatedBlog.map((item) => (
+        <Link key={item._id} to={`/blog/${item._id}`}>
+          <Card location={item} />
+        </Link>
+      ))}
     </div>
   );
 }

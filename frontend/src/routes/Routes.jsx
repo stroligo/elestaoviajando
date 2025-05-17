@@ -28,7 +28,7 @@ export function Routes() {
 
       <Route path="/newlocation" component={NewLocation} />
       <Route path="/trips" component={PageTrips} />
-      <Route path="/trips/:slug" component={TripDetails} />
+      <Route path="/trips/:id" component={TripDetails} />
 
       {/* Rotas administrativas */}
       <Route path="/admin/login" component={Login} />

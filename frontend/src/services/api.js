@@ -28,15 +28,20 @@ export const conectBlogs = async () => {
   }
 };
 
-export const getBlog = async (slug) => {
+export const getBlog = async (id) => {
   try {
+    console.log('Buscando post com ID:', id);
     const response = await fetch(
-      `https://elestaoviajando.onrender.com/api/posts/${slug}`,
+      `https://elestaoviajando.onrender.com/api/posts/${id}`,
     );
+
     if (!response.ok) {
-      throw new Error('Erro ao buscar post');
+      throw new Error('Post não encontrado');
     }
-    return await response.json();
+
+    const post = await response.json();
+    console.log('Post encontrado:', post);
+    return post;
   } catch (error) {
     console.error('Erro ao buscar post:', error);
     throw error;
@@ -65,10 +70,10 @@ export const createBlog = async (blogData) => {
   }
 };
 
-export const updateBlog = async (slug, blogData) => {
+export const updateBlog = async (id, blogData) => {
   try {
     const response = await fetch(
-      `https://elestaoviajando.onrender.com/api/posts/${slug}`,
+      `https://elestaoviajando.onrender.com/api/posts/${id}`,
       {
         method: 'PUT',
         headers: {
@@ -87,10 +92,10 @@ export const updateBlog = async (slug, blogData) => {
   }
 };
 
-export const deleteBlog = async (slug) => {
+export const deleteBlog = async (id) => {
   try {
     const response = await fetch(
-      `https://elestaoviajando.onrender.com/api/posts/${slug}`,
+      `https://elestaoviajando.onrender.com/api/posts/${id}`,
       {
         method: 'DELETE',
       },

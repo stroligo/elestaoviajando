@@ -1,18 +1,55 @@
 import { useState } from 'react';
 import { useLocation } from 'wouter';
-import { conectBlogs } from '@/services/api';
 import { CLOUDINARY_BASE_URL } from '@/utils/cloudinary';
+import { Slugify } from '@/utils/stringUtils';
 
 export function CreateBlog() {
   const [, setLocation] = useLocation();
-  const [loading, setLoading] = useState(false);
+  const [uploadingImages, setUploadingImages] = useState(false);
   const [formData, setFormData] = useState({
     titulo: '',
-    date: new Date().toISOString().split('T')[0],
-    hashtag: '',
+    date: '',
+    description: [],
     images: [],
-    content: '',
+    hashtag: [],
+    status: 'draft',
   });
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const slug = Slugify(formData.titulo);
+      const response = await fetch(
+        'https://elestaoviajando.onrender.com/api/posts',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            ...formData,
+            slug,
+            thumbnail: formData.images[0]?.includes(CLOUDINARY_BASE_URL)
+              ? formData.images[0].replace(CLOUDINARY_BASE_URL, '')
+              : formData.images[0],
+            images: formData.images.map((image) =>
+              image.includes(CLOUDINARY_BASE_URL)
+                ? image.replace(CLOUDINARY_BASE_URL, '')
+                : image,
+            ),
+          }),
+        },
+      );
+
+      if (response.ok) {
+        setLocation('/admin/blog');
+      } else {
+        console.error('Erro ao criar blog');
+      }
+    } catch (error) {
+      console.error('Erro ao criar blog:', error);
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -30,94 +67,81 @@ export function CreateBlog() {
     }));
   };
 
-  const handleImageUpload = async (e) => {
-    const files = Array.from(e.target.files);
-    setLoading(true);
+  const handleDescriptionChange = (e) => {
+    const paragraphs = e.target.value
+      .split('\n')
+      .filter((line) => line.trim() !== '');
+    setFormData((prev) => ({
+      ...prev,
+      description: paragraphs,
+    }));
+  };
+
+  const uploadToCloudinary = async (file) => {
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('upload_preset', 'unsigned_upload');
 
     try {
-      const uploadPromises = files.map(async (file) => {
-        const formData = new FormData();
-        formData.append('file', file);
-        formData.append('upload_preset', 'elestaoviajando');
+      const response = await fetch(
+        'https://api.cloudinary.com/v1_1/drn1sflf0/image/upload',
+        {
+          method: 'POST',
+          body: formData,
+        },
+      );
 
-        const response = await fetch(
-          'https://api.cloudinary.com/v1_1/drn1sflf0/image/upload',
-          {
-            method: 'POST',
-            body: formData,
-          },
-        );
+      if (!response.ok) {
+        throw new Error('Falha no upload');
+      }
 
-        if (!response.ok) {
-          throw new Error('Erro ao fazer upload da imagem');
-        }
+      const data = await response.json();
+      return data.secure_url;
+    } catch (error) {
+      console.error('Erro no upload:', error);
+      throw error;
+    }
+  };
 
-        const data = await response.json();
-        return data.secure_url;
-      });
+  const handleImageChange = async (e) => {
+    const files = Array.from(e.target.files);
+    if (files.length === 0) return;
 
+    setUploadingImages(true);
+    try {
+      const uploadPromises = files.map((file) => uploadToCloudinary(file));
       const uploadedUrls = await Promise.all(uploadPromises);
+
       setFormData((prev) => ({
         ...prev,
         images: [...prev.images, ...uploadedUrls],
       }));
     } catch (error) {
       console.error('Erro ao fazer upload das imagens:', error);
-      alert('Erro ao fazer upload das imagens. Tente novamente.');
     } finally {
-      setLoading(false);
+      setUploadingImages(false);
     }
   };
 
-  const handleRemoveImage = (index) => {
+  const handleRemoveImage = (indexToRemove) => {
     setFormData((prev) => ({
       ...prev,
-      images: prev.images.filter((_, i) => i !== index),
+      images: prev.images.filter((_, index) => index !== indexToRemove),
     }));
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-
-    try {
-      const blogData = {
-        ...formData,
-        images: formData.images.map((image) =>
-          image.includes(CLOUDINARY_BASE_URL)
-            ? image.replace(CLOUDINARY_BASE_URL, '')
-            : image,
-        ),
-      };
-
-      const response = await fetch(
-        'https://elestaoviajando.onrender.com/api/blogs',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(blogData),
-        },
-      );
-
-      if (!response.ok) {
-        throw new Error('Erro ao criar blog');
-      }
-
-      setLocation('/admin/blog');
-    } catch (error) {
-      console.error('Erro ao criar blog:', error);
-      alert('Erro ao criar blog. Tente novamente.');
-    } finally {
-      setLoading(false);
-    }
   };
 
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="max-w-4xl mx-auto">
-        <h1 className="text-2xl font-bold mb-6">Criar Novo Blog</h1>
+        <div className="flex justify-between items-center mb-8">
+          <h1 className="text-2xl font-bold text-gray">Criar Novo Blog</h1>
+          <button
+            onClick={() => setLocation('/admin/blog')}
+            className="text-gray hover:text-primary transition-colors"
+          >
+            Voltar
+          </button>
+        </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
@@ -175,18 +199,22 @@ export function CreateBlog() {
 
           <div>
             <label
-              htmlFor="content"
+              htmlFor="description"
               className="block text-sm font-medium text-gray mb-2"
             >
-              Conteúdo
+              Descrição
             </label>
             <textarea
-              id="content"
-              name="content"
-              value={formData.content}
-              onChange={handleChange}
+              id="description"
+              name="description"
+              value={
+                Array.isArray(formData.description)
+                  ? formData.description.join('\n')
+                  : ''
+              }
+              onChange={handleDescriptionChange}
               required
-              rows="10"
+              rows="5"
               className="w-full px-4 py-2 border border-gray-light rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
             />
           </div>
@@ -198,49 +226,93 @@ export function CreateBlog() {
             >
               Imagens
             </label>
-            <input
-              type="file"
-              id="images"
-              accept="image/*"
-              multiple
-              onChange={handleImageUpload}
-              className="w-full px-4 py-2 border border-gray-light rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-            />
-          </div>
-
-          {formData.images.length > 0 && (
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-              {formData.images.map((image, index) => (
-                <div key={index} className="relative group">
-                  <img
-                    src={image}
-                    alt={`Preview ${index + 1}`}
-                    className="w-full h-32 object-cover rounded-md"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => handleRemoveImage(index)}
-                    className="absolute top-2 right-2 bg-brown text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
-                  >
+            <div className="mt-2">
+              <div className="flex items-center justify-center w-full">
+                <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-light border-dashed rounded-lg cursor-pointer bg-gray-extralight hover:bg-gray-light transition-colors">
+                  <div className="flex flex-col items-center justify-center pt-5 pb-6">
                     <svg
+                      className="w-8 h-8 mb-4 text-gray"
+                      aria-hidden="true"
                       xmlns="http://www.w3.org/2000/svg"
-                      className="h-4 w-4"
                       fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
+                      viewBox="0 0 20 16"
                     >
                       <path
+                        stroke="currentColor"
                         strokeLinecap="round"
                         strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M6 18L18 6M6 6l12 12"
+                        strokeWidth="2"
+                        d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
                       />
                     </svg>
-                  </button>
-                </div>
-              ))}
+                    <p className="mb-2 text-sm text-gray">
+                      <span className="font-semibold">
+                        Clique para fazer upload
+                      </span>{' '}
+                      ou arraste e solte
+                    </p>
+                    <p className="text-xs text-gray">PNG, JPG ou JPEG</p>
+                  </div>
+                  <input
+                    type="file"
+                    className="hidden"
+                    multiple
+                    accept="image/*"
+                    onChange={handleImageChange}
+                    disabled={uploadingImages}
+                  />
+                </label>
+              </div>
             </div>
-          )}
+
+            {uploadingImages && (
+              <div className="mt-4 flex justify-center">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+              </div>
+            )}
+
+            {formData.images.length > 0 && (
+              <div className="mt-6">
+                <h3 className="text-sm font-medium text-gray mb-3">
+                  Imagens Selecionadas
+                </h3>
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                  {formData.images.map((image, index) => (
+                    <div
+                      key={index}
+                      className="relative group aspect-square rounded-lg overflow-hidden"
+                    >
+                      <img
+                        src={image}
+                        alt={`Imagem ${index + 1}`}
+                        className="w-full h-full object-cover"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveImage(index)}
+                        className="absolute top-2 right-2 p-1 bg-brown text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-4 w-4"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M6 18L18 6M6 6l12 12"
+                          />
+                        </svg>
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
 
           <div className="flex justify-end space-x-4">
             <button
@@ -252,10 +324,10 @@ export function CreateBlog() {
             </button>
             <button
               type="submit"
-              disabled={loading}
+              disabled={uploadingImages}
               className="px-4 py-2 bg-primary text-white rounded-md hover:bg-blue-dark transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {loading ? 'Criando...' : 'Criar Blog'}
+              {uploadingImages ? 'Salvando...' : 'Criar Blog'}
             </button>
           </div>
         </form>

@@ -12,15 +12,23 @@ export function BlogDetails() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const { slug } = useParams();
+  const { id } = useParams();
 
   useEffect(() => {
     async function loadPost() {
-      if (slug) {
+      if (id) {
         try {
-          const postData = await getBlog(slug);
-          setPost(postData);
-          setError(null);
+          const postData = await getBlog(id);
+          console.log('Dados do post carregados:', postData);
+
+          if (postData) {
+            setPost(postData);
+            setError(null);
+          } else {
+            console.error('Post não encontrado');
+            setError('Post não encontrado');
+            setPost({});
+          }
         } catch (error) {
           console.error('Erro ao carregar post:', error);
           setError('Não foi possível carregar o post');
@@ -31,7 +39,7 @@ export function BlogDetails() {
       }
     }
     loadPost();
-  }, [slug]);
+  }, [id]);
 
   if (isLoading) {
     return (
@@ -71,13 +79,13 @@ export function BlogDetails() {
               <article className="bg-gray-extralight relative rounded-md p-6">
                 <div className="flex flex-col gap-4 pb-6">
                   <div className="flex flex-col gap-1 pb-4">
-                    <IntroSection subtitle={post.title} customCss="pb-2" />
+                    <IntroSection subtitle={post.titulo} customCss="pb-2" />
                     <DateTrip date={post.date} />
                   </div>
                   <div>
-                    {Array.isArray(post.content) &&
-                      post.content.length > 0 &&
-                      post.content.map((paragraph, index) => (
+                    {Array.isArray(post.description) &&
+                      post.description.length > 0 &&
+                      post.description.map((paragraph, index) => (
                         <p key={index}>{paragraph}</p>
                       ))}
                   </div>
