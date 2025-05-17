@@ -3,6 +3,7 @@ import { useLocation } from 'wouter';
 import { useAuth } from '@/contexts/AuthContext';
 import { TripsList } from './trips/List';
 import { BlogsList } from './blog/List';
+import { Profile } from './Profile';
 
 export function Dashboard() {
   const [activeComponent, setActiveComponent] = useState('dashboard');
@@ -84,7 +85,7 @@ export function Dashboard() {
           />
         </svg>
       ),
-      onClick: () => setLocation('/admin/profile'),
+      onClick: () => setActiveComponent('profile'),
     },
   ];
 
@@ -217,7 +218,7 @@ export function Dashboard() {
                   Gerencie suas informações pessoais
                 </p>
                 <button
-                  onClick={() => setLocation('/admin/profile')}
+                  onClick={() => setActiveComponent('profile')}
                   className="text-primary hover:text-blue-dark font-medium flex items-center"
                 >
                   Ver perfil
@@ -243,55 +244,47 @@ export function Dashboard() {
         return <TripsList />;
       case 'blogs':
         return <BlogsList />;
+      case 'profile':
+        return <Profile />;
       default:
         return null;
     }
   };
 
   return (
-    <div className="flex min-h-screen bg-gray-extralight">
-      <div className="w-64 bg-white shadow-lg sticky top-0 h-screen">
-        <div className="p-6 border-b border-gray-extralight">
-          <h2 className="text-xl font-bold text-gray-dark">Admin</h2>
-          <p className="text-sm text-gray-light mt-1">Painel de Controle</p>
+    <div className="min-h-screen bg-gray-50">
+      <div className="flex">
+        {/* Sidebar */}
+        <div className="w-64 bg-white shadow-md sticky top-0 h-screen">
+          <div className="p-6">
+            <h2 className="text-xl font-bold text-gray-dark mb-8">
+              El Está Viajando
+            </h2>
+            <nav>
+              <ul className="space-y-2">
+                {menuItems.map((item, index) => (
+                  <li key={index}>
+                    <button
+                      onClick={item.onClick}
+                      className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors ${
+                        activeComponent === item.label.toLowerCase()
+                          ? 'bg-primary text-white'
+                          : 'text-gray-600 hover:bg-gray-50'
+                      }`}
+                    >
+                      {item.icon}
+                      <span>{item.label}</span>
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          </div>
         </div>
-        <nav className="mt-6">
-          {menuItems.map((item) => (
-            <button
-              key={item.label}
-              onClick={item.onClick}
-              className={`w-full px-6 py-3 text-left flex items-center space-x-3 transition-colors ${
-                activeComponent === item.label.toLowerCase()
-                  ? 'bg-primary text-white'
-                  : 'text-gray-600 hover:bg-gray-100'
-              }`}
-            >
-              {item.icon}
-              <span>{item.label}</span>
-            </button>
-          ))}
-          <button
-            onClick={logout}
-            className="w-full px-6 py-3 text-left flex items-center space-x-3 text-red-500 hover:bg-red-50 transition-colors mt-4"
-          >
-            <svg
-              className="w-5 h-5"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
-              />
-            </svg>
-            <span>Sair</span>
-          </button>
-        </nav>
+
+        {/* Main Content */}
+        <div className="flex-1">{renderContent()}</div>
       </div>
-      <div className="flex-1">{renderContent()}</div>
     </div>
   );
 }

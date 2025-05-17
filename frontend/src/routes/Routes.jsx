@@ -13,7 +13,6 @@ import { Login } from '@/pages/Login';
 
 // Páginas administrativas
 import { Dashboard } from '@/admin/Dashboard';
-import { Profile } from '@/admin/Profile';
 import { TripsList } from '@/admin/trips/List';
 import { CreateTrip } from '@/admin/trips/Create';
 import { EditTrip } from '@/admin/trips/Edit';
@@ -37,11 +36,6 @@ export function Routes() {
         <Route path="/admin">
           <ProtectedRoute requireAdmin>
             <Dashboard />
-          </ProtectedRoute>
-        </Route>
-        <Route path="/admin/profile">
-          <ProtectedRoute requireAdmin>
-            <Profile />
           </ProtectedRoute>
         </Route>
         <Route path="/admin/trips">

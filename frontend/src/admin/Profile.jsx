@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
-import { AdminMenu } from '@/components/AdminMenu';
+import { fetchWithAuth } from '@/services/api';
 
 export function Profile() {
   const { user } = useAuth();
@@ -37,14 +37,26 @@ export function Profile() {
     setLoading(true);
     setMessage({ type: '', text: '' });
 
+    // Validar se as senhas coincidem
+    if (
+      formData.newPassword &&
+      formData.newPassword !== formData.confirmPassword
+    ) {
+      setMessage({
+        type: 'error',
+        text: 'As senhas não coincidem',
+      });
+      setLoading(false);
+      return;
+    }
+
     try {
-      const response = await fetch(
+      const response = await fetchWithAuth(
         'https://elestaoviajando.onrender.com/api/users/profile',
         {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${localStorage.getItem('token')}`,
           },
           body: JSON.stringify({
             name: formData.name,
@@ -72,24 +84,33 @@ export function Profile() {
         });
       }
     } catch (error) {
-      setMessage({ type: 'error', text: 'Erro ao atualizar perfil' });
+      setMessage({
+        type: 'error',
+        text: error.message || 'Erro ao atualizar perfil',
+      });
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="flex flex-col md:flex-row gap-6">
-        <div className="md:w-1/4">
-          <AdminMenu />
-        </div>
-
-        <div className="md:w-3/4">
-          <div className="bg-white shadow-md rounded-lg p-6">
-            <h1 className="text-2xl font-bold text-gray-dark mb-6">
-              Meu Perfil
-            </h1>
+    <div className="p-12">
+      <div className="max-w-4xl mx-auto">
+        <div className="bg-white shadow-md rounded-lg overflow-hidden">
+          <div className="p-8">
+            <div className="mb-8">
+              <div className="flex items-center space-x-4 mb-6">
+                <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center text-white text-2xl">
+                  {user?.name?.charAt(0).toUpperCase()}
+                </div>
+                <div>
+                  <h2 className="text-xl font-semibold text-gray">
+                    {user?.name}
+                  </h2>
+                  <p className="text-gray-light">{user?.email}</p>
+                </div>
+              </div>
+            </div>
 
             {message.text && (
               <div
@@ -104,52 +125,54 @@ export function Profile() {
             )}
 
             <form onSubmit={handleSubmit} className="space-y-6">
-              <div>
-                <label
-                  htmlFor="name"
-                  className="block text-sm font-medium text-gray-dark mb-1"
-                >
-                  Nome
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  className="w-full px-4 py-2 border border-gray-light rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-                  required
-                />
-              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label
+                    htmlFor="name"
+                    className="block text-sm font-medium text-gray mb-2"
+                  >
+                    Nome
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    className="w-full px-4 py-2 border border-gray-light rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                    required
+                  />
+                </div>
 
-              <div>
-                <label
-                  htmlFor="email"
-                  className="block text-sm font-medium text-gray-dark mb-1"
-                >
-                  Email
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  className="w-full px-4 py-2 border border-gray-light rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-                  required
-                />
+                <div>
+                  <label
+                    htmlFor="email"
+                    className="block text-sm font-medium text-gray mb-2"
+                  >
+                    Email
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    className="w-full px-4 py-2 border border-gray-light rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                    required
+                  />
+                </div>
               </div>
 
               <div className="border-t border-gray-light pt-6">
-                <h2 className="text-lg font-semibold text-gray-dark mb-4">
+                <h2 className="text-lg font-semibold text-gray mb-4">
                   Alterar Senha
                 </h2>
 
-                <div className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <label
                       htmlFor="currentPassword"
-                      className="block text-sm font-medium text-gray-dark mb-1"
+                      className="block text-sm font-medium text-gray mb-2"
                     >
                       Senha Atual
                     </label>
@@ -166,7 +189,7 @@ export function Profile() {
                   <div>
                     <label
                       htmlFor="newPassword"
-                      className="block text-sm font-medium text-gray-dark mb-1"
+                      className="block text-sm font-medium text-gray mb-2"
                     >
                       Nova Senha
                     </label>
@@ -183,7 +206,7 @@ export function Profile() {
                   <div>
                     <label
                       htmlFor="confirmPassword"
-                      className="block text-sm font-medium text-gray-dark mb-1"
+                      className="block text-sm font-medium text-gray mb-2"
                     >
                       Confirmar Nova Senha
                     </label>
@@ -199,7 +222,7 @@ export function Profile() {
                 </div>
               </div>
 
-              <div className="flex justify-end">
+              <div className="flex justify-end pt-6">
                 <button
                   type="submit"
                   disabled={loading}
