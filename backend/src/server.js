@@ -5,8 +5,15 @@ const mongoose = require('mongoose');
 const corsMiddleware = require('./middleware/cors-middleware');
 const apiRouter = require('./routes/routes');
 const uploadRoutes = require('./routes/upload');
+const authRoutes = require('./routes/auth');
 
 const app = express();
+
+// Verificar se JWT_SECRET está definido
+if (!process.env.JWT_SECRET) {
+  console.error('JWT_SECRET não está definido no arquivo .env');
+  process.exit(1);
+}
 
 // Conectar ao MongoDB
 mongoose
@@ -28,7 +35,10 @@ mongoose
 app.use(corsMiddleware());
 app.use(express.json());
 
-// Rotas de upload de imagens (antes do roteador geral)
+// Rotas de autenticação
+app.use('/api/auth', authRoutes);
+
+// Rotas de upload de imagens
 app.use('/api/upload', uploadRoutes);
 
 // Roteador principal da API

@@ -1,6 +1,29 @@
+// Função para fazer requisições com autenticação
+const fetchWithAuth = async (url, options = {}) => {
+  const token = localStorage.getItem('token');
+  const headers = {
+    'Content-Type': 'application/json',
+    ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    ...options.headers,
+  };
+
+  const response = await fetch(url, {
+    ...options,
+    headers,
+  });
+
+  if (response.status === 401) {
+    localStorage.removeItem('token');
+    window.location.href = '/login';
+    throw new Error('Sessão expirada. Por favor, faça login novamente.');
+  }
+
+  return response;
+};
+
 export const conectTrips = async () => {
   try {
-    const response = await fetch(
+    const response = await fetchWithAuth(
       'https://elestaoviajando.onrender.com/api/trips',
     );
     if (!response.ok) {
@@ -15,7 +38,7 @@ export const conectTrips = async () => {
 
 export const conectBlogs = async () => {
   try {
-    const response = await fetch(
+    const response = await fetchWithAuth(
       'https://elestaoviajando.onrender.com/api/posts',
     );
     if (!response.ok) {
@@ -31,17 +54,15 @@ export const conectBlogs = async () => {
 export const getBlog = async (id) => {
   try {
     console.log('Buscando post com ID:', id);
-    const response = await fetch(
+    const response = await fetchWithAuth(
       `https://elestaoviajando.onrender.com/api/posts/${id}`,
     );
-
     if (!response.ok) {
-      throw new Error('Post não encontrado');
+      throw new Error('Erro ao buscar post');
     }
-
-    const post = await response.json();
-    console.log('Post encontrado:', post);
-    return post;
+    const data = await response.json();
+    console.log('Dados recebidos:', data);
+    return data;
   } catch (error) {
     console.error('Erro ao buscar post:', error);
     throw error;
@@ -129,7 +150,7 @@ export const getWeather = async (lat, lon) => {
 export async function getTrip(id) {
   try {
     console.log('Buscando viagem com ID:', id);
-    const response = await fetch(
+    const response = await fetchWithAuth(
       `https://elestaoviajando.onrender.com/api/trips/${id}`,
     );
     if (!response.ok) {
