@@ -12,9 +12,9 @@ import { Login } from '@/pages/admin/login/Login';
 import { TripsList } from '@/pages/admin/trips/List';
 import { CreateTrip } from '@/pages/admin/trips/Create';
 import { EditTrip } from '@/pages/admin/trips/Edit';
-import { BlogList } from '@/pages/admin/blog/List';
-import { CreateBlogPost } from '@/pages/admin/blog/Create';
-import { EditBlogPost } from '@/pages/admin/blog/Edit';
+import { BlogsList } from '../pages/admin/blog/List';
+import { CreateBlog } from '../pages/admin/blog/Create';
+import { EditBlog } from '../pages/admin/blog/Edit';
 
 export function Routes() {
   return (
@@ -39,9 +39,9 @@ export function Routes() {
       <Route path="/admin/trips/edit/:id" component={EditTrip} />
 
       {/* Rotas de Blog */}
-      <Route path="/admin/blog" component={BlogList} />
-      <Route path="/admin/blog/create" component={CreateBlogPost} />
-      <Route path="/admin/blog/edit/:id" component={EditBlogPost} />
+      <Route path="/admin/blog" component={BlogsList} />
+      <Route path="/admin/blog/create" component={CreateBlog} />
+      <Route path="/admin/blog/edit/:id" component={EditBlog} />
     </Switch>
   );
 }

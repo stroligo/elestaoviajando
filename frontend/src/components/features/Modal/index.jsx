@@ -31,7 +31,7 @@ export function Modal({ children, isOpen, onClose }) {
             <button className={Style['close-modal']} onClick={onClose}>
               X
             </button>
-            {children}
+            {children || <div>Conteúdo não disponível</div>}
           </div>
         </div>
       )}

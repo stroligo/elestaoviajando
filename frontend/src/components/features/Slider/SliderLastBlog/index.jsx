@@ -3,7 +3,7 @@ import { Splide, SplideSlide } from '@splidejs/react-splide';
 import { Link } from 'wouter';
 import Style from './style.module.css';
 
-import { conectBlog } from '@/services/api';
+import { conectBlogs } from '@/services/api';
 import { IntroSection } from '@/components/features/IntroSection';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
@@ -11,15 +11,24 @@ import { Button } from '@/components/ui/Button';
 export function SliderLastBlog() {
   const [blog, setBlog] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     async function loadViagens() {
-      const data = await conectBlog();
-      const sortedBlog = data.sort(
-        (a, b) => new Date(b.date) - new Date(a.date),
-      );
-      setBlog(sortedBlog);
-      setIsLoading(false);
+      try {
+        const data = await conectBlogs();
+        const sortedBlog = data.sort(
+          (a, b) => new Date(b.date) - new Date(a.date),
+        );
+        setBlog(sortedBlog);
+        setError(null);
+      } catch (error) {
+        console.error('Erro ao carregar blogs:', error);
+        setError('Não foi possível carregar os blogs');
+        setBlog([]);
+      } finally {
+        setIsLoading(false);
+      }
     }
     loadViagens();
   }, []);
@@ -57,11 +66,18 @@ export function SliderLastBlog() {
             <span className="sr-only">Carregando...</span>
           </div>
         </div>
+      ) : error ? (
+        <div className="text-gray">{error}</div>
+      ) : blog.length === 0 ? (
+        <div className="text-gray">Nenhum blog encontrado</div>
       ) : (
         <Splide options={options} className={Style.splide} autoPlay={true}>
           {blog.slice(0, 20).map((location) => (
-            <SplideSlide key={location.id} className={Style.splide__slide}>
-              <Link to={`/blog/${location.id}`}>
+            <SplideSlide
+              key={location._id || location.id}
+              className={Style.splide__slide}
+            >
+              <Link to={`/blog/${location._id || location.id}`}>
                 <div>
                   <Card location={location} />
                 </div>
@@ -73,8 +89,8 @@ export function SliderLastBlog() {
 
       <div className="container mx-auto px-5">
         <div className="flex justify-center">
-          <Link href="/trips">
-            <Button>Ver todas as viagens</Button>
+          <Link href="/blog">
+            <Button>Ver todos os blogs</Button>
           </Link>
         </div>
       </div>

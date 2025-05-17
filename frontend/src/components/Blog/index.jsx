@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { conectBlog } from '@/services/api';
+import { conectBlogs } from '@/services/api';
 import { Slugify } from '@/utils/stringUtils';
 import { Filter } from './Filter';
 import { IntroSection } from '@/components/features/IntroSection';
@@ -12,12 +12,24 @@ export function Blog() {
   const [orderBy, setOrderBy] = useState('desc');
   const [page, setPage] = useState(0);
   const [pageSize] = useState(20);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     async function loadBlog() {
-      const data = await conectBlog();
-      setBlog(data);
-      setDisplayedBlog(data);
+      try {
+        const data = await conectBlogs();
+        setBlog(data);
+        setDisplayedBlog(data);
+        setError(null);
+      } catch (error) {
+        console.error('Erro ao carregar posts:', error);
+        setError('Não foi possível carregar os posts');
+        setBlog([]);
+        setDisplayedBlog([]);
+      } finally {
+        setIsLoading(false);
+      }
     }
     loadBlog();
   }, []);
@@ -74,19 +86,34 @@ export function Blog() {
           onClearFilter={handleClearFilter}
         />
       </div>
-      <BlogList
-        blog={displayedBlog}
-        orderBy={orderBy}
-        page={page}
-        pageSize={pageSize}
-      />
 
-      <Pagination
-        page={page}
-        pageSize={pageSize}
-        totalBlog={displayedBlog.length}
-        onPageChange={handlePageChange}
-      />
+      {isLoading ? (
+        <div className="flex justify-center">
+          <div className="spinner-border" role="status">
+            <span className="sr-only">Carregando...</span>
+          </div>
+        </div>
+      ) : error ? (
+        <div className="text-gray">{error}</div>
+      ) : displayedBlog.length === 0 ? (
+        <div className="text-gray">Nenhum post encontrado</div>
+      ) : (
+        <>
+          <BlogList
+            blog={displayedBlog}
+            orderBy={orderBy}
+            page={page}
+            pageSize={pageSize}
+          />
+
+          <Pagination
+            page={page}
+            pageSize={pageSize}
+            totalBlog={displayedBlog.length}
+            onPageChange={handlePageChange}
+          />
+        </>
+      )}
     </div>
   );
 }

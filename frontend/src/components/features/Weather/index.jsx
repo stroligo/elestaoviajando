@@ -18,17 +18,33 @@ const weatherDescriptions = {
 
 export function Weather({ lat, lon }) {
   const [weatherData, setWeatherData] = useState({});
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     async function loadWeather() {
-      const response = await getWeather(lat, lon);
-      setWeatherData(response);
+      if (!lat || !lon) {
+        setError('Coordenadas não disponíveis');
+        return;
+      }
+
+      try {
+        const response = await getWeather(lat, lon);
+        setWeatherData(response);
+        setError(null);
+      } catch (error) {
+        setError('Não foi possível obter o clima');
+        console.error('Erro ao carregar clima:', error);
+      }
     }
     loadWeather();
   }, [lat, lon]);
 
+  if (error) {
+    return <div className="text-gray">{error}</div>;
+  }
+
   if (!weatherData || !weatherData.weather || !weatherData.weather[0]) {
-    return <div>Não foi possível obter o clima</div>;
+    return <div className="text-gray">Carregando informações do clima...</div>;
   }
 
   const description = weatherData.weather[0].description;

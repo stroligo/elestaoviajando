@@ -6,6 +6,7 @@ import { IntroSection } from '../components/features/IntroSection';
 import { SliderTrip } from '../components/features/Slider/SliderTrip';
 import { DateTrip } from '../components/ui/DateTrip';
 import { Weather } from '@/components/features/Weather';
+import { CLOUDINARY_BASE_URL } from '../utils/cloudinary';
 
 export function TripDetails() {
   const [location, setLocation] = useState({});
@@ -24,7 +25,16 @@ export function TripDetails() {
           console.log('Dados da viagem carregados:', locationData);
 
           if (locationData) {
-            setLocation(locationData);
+            // Garantir que as imagens tenham a URL correta
+            const processedData = {
+              ...locationData,
+              images: locationData.images.map((image) =>
+                image.startsWith('http')
+                  ? image
+                  : `${CLOUDINARY_BASE_URL}${image}`,
+              ),
+            };
+            setLocation(processedData);
           } else {
             console.error('Viagem não encontrada');
           }
@@ -75,22 +85,29 @@ export function TripDetails() {
                   </div>
                 </div>
                 {/* Clima */}
-                <div>
-                  <IntroSection title="Informações" customCss="pb-4" />
-                  <Weather
-                    lat={location.coordinates.lat}
-                    lon={location.coordinates.lng}
-                  />
-                </div>
+                {location.coordinates &&
+                  location.coordinates.lat &&
+                  location.coordinates.lng && (
+                    <div>
+                      <IntroSection title="Informações" customCss="pb-4" />
+                      <Weather
+                        lat={location.coordinates.lat}
+                        lon={location.coordinates.lng}
+                      />
+                    </div>
+                  )}
               </article>
               {/* Mapa */}
-
-              <div className="flex flex-col gap-4">
-                <IntroSection title="Localizacão" customCss="pb-2" />
-                <div>
-                  <MapSingle location={location} />
-                </div>
-              </div>
+              {location.coordinates &&
+                location.coordinates.lat &&
+                location.coordinates.lng && (
+                  <div className="flex flex-col gap-4">
+                    <IntroSection title="Localizacão" customCss="pb-2" />
+                    <div>
+                      <MapSingle location={location} />
+                    </div>
+                  </div>
+                )}
             </div>
           </div>
         </div>

@@ -41,24 +41,31 @@ export function MapGlobal() {
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      {data.map((location) => (
-        <Marker
-          key={location.id}
-          position={[location.coordinates.lat, location.coordinates.lng]}
-          icon={icon}
-        >
-          <Popup>
-            <div className="flex flex-col gap-4 justify-center items-center">
-              <div className="font-extrabold text-blue-dark font-serif text-xl leading-none pb-1   pr-4 border-b-2 border-orange w-fit">
-                {location.city}
+      {data
+        .filter(
+          (location) =>
+            location.coordinates &&
+            location.coordinates.lat &&
+            location.coordinates.lng,
+        )
+        .map((location) => (
+          <Marker
+            key={location._id}
+            position={[location.coordinates.lat, location.coordinates.lng]}
+            icon={icon}
+          >
+            <Popup>
+              <div className="flex flex-col gap-4 justify-center items-center">
+                <div className="font-extrabold text-blue-dark font-serif text-xl leading-none pb-1 pr-4 border-b-2 border-orange w-fit">
+                  {location.city}
+                </div>
+                <Link to={`/trips/${location._id}`}>
+                  <Button> Ver Viagem </Button>
+                </Link>
               </div>
-              <Link to={`/trips/${location.id}`}>
-                <Button> Ver Viagem </Button>
-              </Link>
-            </div>
-          </Popup>
-        </Marker>
-      ))}
+            </Popup>
+          </Marker>
+        ))}
     </MapContainer>
   );
 }

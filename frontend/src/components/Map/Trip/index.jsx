@@ -15,6 +15,14 @@ const icon = L.icon({
 });
 
 export function MapSingle({ location }) {
+  if (!location?.coordinates?.lat || !location?.coordinates?.lng) {
+    return (
+      <div className="min-h-[400px] w-full bg-gray-extralight rounded-2xl flex items-center justify-center">
+        <p className="text-gray">Localização não disponível</p>
+      </div>
+    );
+  }
+
   return (
     <MapContainer
       center={[location.coordinates.lat, location.coordinates.lng]}
@@ -37,8 +45,8 @@ export function MapSingle({ location }) {
 MapSingle.propTypes = {
   location: PropTypes.shape({
     coordinates: PropTypes.shape({
-      lat: PropTypes.number.isRequired,
-      lng: PropTypes.number.isRequired,
-    }).isRequired,
-  }).isRequired,
+      lat: PropTypes.number,
+      lng: PropTypes.number,
+    }),
+  }),
 };

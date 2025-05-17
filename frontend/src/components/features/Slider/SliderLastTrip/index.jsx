@@ -60,8 +60,11 @@ export function SliderLastTrip() {
       ) : (
         <Splide options={options} className={Style.splide} autoPlay={true}>
           {trip.slice(0, 20).map((location) => (
-            <SplideSlide key={location.id} className={Style.splide__slide}>
-              <Link to={`/trips/${location.id}`}>
+            <SplideSlide
+              key={location._id || location.id}
+              className={Style.splide__slide}
+            >
+              <Link to={`/trips/${location._id || location.id}`}>
                 <div>
                   <Card location={location} />
                 </div>

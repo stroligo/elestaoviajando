@@ -23,7 +23,11 @@ export function SliderTrip({ imagens }) {
       <div>
         <figure className=" cursor-pointer">
           <img
-            src={`${CLOUDINARY_BASE_URL}${imagens[0]}`}
+            src={
+              imagens[0].startsWith('http')
+                ? imagens[0]
+                : `${CLOUDINARY_BASE_URL}${imagens[0]}`
+            }
             alt="Imagem"
             style={{ width: '100%', height: '700px', objectFit: 'cover' }}
             onClick={() => handleOpenModal(imagens[0])}
@@ -34,7 +38,11 @@ export function SliderTrip({ imagens }) {
           {imagemSelecionada && (
             <figure className="h-fit max-h-full">
               <img
-                src={`${CLOUDINARY_BASE_URL}${imagemSelecionada}`}
+                src={
+                  imagemSelecionada.startsWith('http')
+                    ? imagemSelecionada
+                    : `${CLOUDINARY_BASE_URL}${imagemSelecionada}`
+                }
                 alt="Imagem selecionada"
                 className="md:max-w-screen-md max-w-sm max-h-[85vh] object-cover"
               />
@@ -76,7 +84,11 @@ export function SliderTrip({ imagens }) {
                 onClick={() => handleOpenModal(imagem)}
               >
                 <img
-                  src={`${CLOUDINARY_BASE_URL}${imagem}`}
+                  src={
+                    imagem.startsWith('http')
+                      ? imagem
+                      : `${CLOUDINARY_BASE_URL}${imagem}`
+                  }
                   alt={`Imagem ${index + 1}`}
                   className="w-full object-cover "
                 />
@@ -89,7 +101,11 @@ export function SliderTrip({ imagens }) {
         {imagemSelecionada && (
           <figure className="h-fit max-h-full">
             <img
-              src={`${CLOUDINARY_BASE_URL}${imagemSelecionada}`}
+              src={
+                imagemSelecionada.startsWith('http')
+                  ? imagemSelecionada
+                  : `${CLOUDINARY_BASE_URL}${imagemSelecionada}`
+              }
               alt="Imagem selecionada"
               className="md:max-w-screen-md max-w-sm max-h-[85vh] object-cover"
             />

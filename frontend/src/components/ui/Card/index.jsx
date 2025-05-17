@@ -3,6 +3,9 @@ import './card.modules.css';
 import { CLOUDINARY_BASE_URL } from '@/utils/cloudinary';
 
 export function Card({ location }) {
+  const thumbnail =
+    location.thumbnail || (location.images && location.images[0]);
+
   /*   const date = new Date(location.date); */
   /*   const formattedDate = date.toLocaleDateString('pt-BR', {
     day: '2-digit',
@@ -15,7 +18,11 @@ export function Card({ location }) {
       <figure>
         {/* IMG REMOTA */}
         <img
-          src={`${CLOUDINARY_BASE_URL}${location.thumbnail}`}
+          src={
+            thumbnail?.startsWith('http')
+              ? thumbnail
+              : `${CLOUDINARY_BASE_URL}${thumbnail}`
+          }
           alt={location.titulo || location.city}
         />
 
@@ -48,7 +55,8 @@ Card.propTypes = {
     titulo: PropTypes.string,
     city: PropTypes.string,
     country: PropTypes.string,
-    thumbnail: PropTypes.string.isRequired,
+    thumbnail: PropTypes.string,
+    images: PropTypes.arrayOf(PropTypes.string),
     date: PropTypes.string.isRequired,
     hashtag: PropTypes.arrayOf(PropTypes.string),
   }).isRequired,
