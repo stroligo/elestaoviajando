@@ -1,10 +1,14 @@
-# El Está Viajando - Projeto FullStack
+# Eles Tão Viajando - Projeto FullStack
 
 ## 📝 Sobre o Projeto
 
-El Está Viajando é uma plataforma completa para compartilhar experiências de viagem, focada especialmente no público feminino. O projeto permite que usuárias compartilhem suas aventuras, dicas e experiências de viagem através de posts e relatos detalhados.
+Eles Tão Viajando é uma plataforma completa para compartilhar experiências de viagem, focada especialmente no público feminino. O projeto permite que usuárias compartilhem suas aventuras, dicas e experiências de viagem através de posts e relatos detalhados.
 
 Este projeto foi desenvolvido como trabalho de conclusão de curso da Turma de FullStack da Flag.PT.
+
+## Hospedagem
+
+O projeto foi hospedado no Vercel, uma plataforma de hospedagem de aplicativos web. O link para o site pode ser encontrado [aqui](https://elestao-viajando.vercel.app/).
 
 ## 🚀 Stack Tecnológica
 
@@ -233,7 +237,7 @@ Este projeto está sob a licença MIT. Veja o arquivo LICENSE para mais detalhes
 - Prof. Helder Pereira
 - Prof. Valério Vaz
 - Equipe da Flag.PT
-- Todos os colegas da Turma do curso
+- Todos os colegas da Turma
 
 ## 📝 Contato
 
