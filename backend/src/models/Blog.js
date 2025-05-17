@@ -34,7 +34,7 @@ const blogSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
-    collection: 'elestaoviajando.blog',
+    collection: 'blog',
   },
 );
 
