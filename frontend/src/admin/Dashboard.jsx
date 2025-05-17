@@ -1,13 +1,12 @@
 import { useState } from 'react';
-import { useLocation } from 'wouter';
 import { useAuth } from '@/contexts/AuthContext';
 import { TripsList } from './trips/List';
 import { BlogsList } from './blog/List';
 import { Profile } from './Profile';
+import { IntroSection } from '@/components/features/IntroSection';
 
 export function Dashboard() {
   const [activeComponent, setActiveComponent] = useState('dashboard');
-  const [, setLocation] = useLocation();
   const { user, logout } = useAuth();
 
   const menuItems = [
@@ -93,13 +92,15 @@ export function Dashboard() {
     switch (activeComponent) {
       case 'dashboard':
         return (
-          <div className="p-12">
-            <div className="bg-white rounded-xl shadow-sm p-8 mb-8">
-              <h1 className="text-3xl font-bold text-gray-dark mb-3">
-                Bem-vindo, {user?.name}! 👋
-              </h1>
-              <p className="text-gray-600 text-lg">
-                Use o menu lateral para gerenciar viagens e posts do blog.
+          <div>
+            <div className="bg-white rounded-xl shadow-sm p-8 mb-8 flex justify-between items-center">
+              <IntroSection title="Bem-vindo ao" subtitle="Painel" />
+
+              <p className="text-gray-600 text-lg flex flex-col text-right">
+                <span className="font-bold text-4xl text-blue">
+                  {user?.name}
+                </span>
+                Use o menu lateral para gerenciar o site
               </p>
             </div>
 
@@ -257,9 +258,6 @@ export function Dashboard() {
         {/* Sidebar */}
         <div className="w-64 bg-white shadow-md sticky top-0 h-screen">
           <div className="p-6">
-            <h2 className="text-xl font-bold text-gray-dark mb-8">
-              El Está Viajando
-            </h2>
             <nav>
               <ul className="space-y-2">
                 {menuItems.map((item, index) => (
@@ -277,13 +275,34 @@ export function Dashboard() {
                     </button>
                   </li>
                 ))}
+                <li className="mt-4">
+                  <button
+                    onClick={logout}
+                    className="w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors text-red-500 hover:bg-red-50"
+                  >
+                    <svg
+                      className="w-5 h-5"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+                      />
+                    </svg>
+                    <span>Sair</span>
+                  </button>
+                </li>
               </ul>
             </nav>
           </div>
         </div>
 
         {/* Main Content */}
-        <div className="flex-1">{renderContent()}</div>
+        <div className="flex-1 px-12">{renderContent()}</div>
       </div>
     </div>
   );

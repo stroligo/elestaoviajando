@@ -2,12 +2,6 @@
 export const fetchWithAuth = async (url, options = {}) => {
   const token = localStorage.getItem('token');
 
-  if (!token) {
-    console.error('Token não encontrado');
-    window.location.href = '/login';
-    throw new Error('Não autorizado. Por favor, faça login.');
-  }
-
   const headers = {
     'Content-Type': 'application/json',
     Authorization: `Bearer ${token}`,

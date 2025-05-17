@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import { useLocation } from 'wouter';
+import PropTypes from 'prop-types';
 
 const AuthContext = createContext({});
 
@@ -9,37 +10,41 @@ export function AuthProvider({ children }) {
   const [, navigate] = useLocation();
 
   useEffect(() => {
-    // Verificar se há um token salvo
-    const token = localStorage.getItem('token');
-    if (token) {
-      // Buscar dados do usuário
-      fetch('https://elestaoviajando.onrender.com/api/auth/me', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-        .then(async (res) => {
-          const data = await res.json();
-          if (res.ok && data.user) {
-            setUser(data.user);
-          } else {
-            console.error('Erro ao validar token:', data);
-            localStorage.removeItem('token');
-            navigate('/login');
-          }
-        })
-        .catch((error) => {
-          console.error('Erro ao validar token:', error);
+    const validateToken = async () => {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const response = await fetch(
+          'https://elestaoviajando.onrender.com/api/auth/me',
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          },
+        );
+
+        const data = await response.json();
+        if (response.ok && data.user) {
+          setUser(data.user);
+        } else {
           localStorage.removeItem('token');
-          navigate('/login');
-        })
-        .finally(() => {
-          setLoading(false);
-        });
-    } else {
-      setLoading(false);
-    }
-  }, [navigate]);
+          setUser(null);
+        }
+      } catch (error) {
+        console.error('Erro ao validar token:', error);
+        localStorage.removeItem('token');
+        setUser(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    validateToken();
+  }, []);
 
   const login = async (email, password) => {
     try {
@@ -76,8 +81,9 @@ export function AuthProvider({ children }) {
 
   const logout = () => {
     localStorage.removeItem('token');
+    sessionStorage.clear();
     setUser(null);
-    navigate('/login');
+    navigate('/');
   };
 
   const isAuthenticated = !!user;
@@ -98,6 +104,10 @@ export function AuthProvider({ children }) {
     </AuthContext.Provider>
   );
 }
+
+AuthProvider.propTypes = {
+  children: PropTypes.node.isRequired,
+};
 
 export function useAuth() {
   const context = useContext(AuthContext);

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'wouter';
+import PropTypes from 'prop-types';
 import { conectTrips, fetchWithAuth } from '@/services/api';
 import { IntroSection } from '@/components/features/IntroSection';
 
@@ -193,9 +194,13 @@ export function TripsList() {
     );
   };
 
+  SortIcon.propTypes = {
+    column: PropTypes.string.isRequired,
+  };
+
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="flex justify-between items-center mb-0">
+    <div className="bg-white rounded-xl shadow-sm p-8 mb-8">
+      <div className=" flex justify-between items-center mb-0">
         <IntroSection subtitle="Viagens" />
 
         <Link href="/admin/trips/create">
