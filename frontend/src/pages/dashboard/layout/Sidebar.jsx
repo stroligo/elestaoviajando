@@ -60,7 +60,7 @@ export function Sidebar({ activeComponent, setActiveComponent }) {
       ),
       value: 'blogs',
     },
-    {
+    /*  {
       label: 'Meu Perfil',
       icon: (
         <svg
@@ -78,7 +78,7 @@ export function Sidebar({ activeComponent, setActiveComponent }) {
         </svg>
       ),
       value: 'profile',
-    },
+    }, */
   ];
 
   const { logout } = useAuth();
