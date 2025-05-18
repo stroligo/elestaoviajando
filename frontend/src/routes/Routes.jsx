@@ -12,13 +12,13 @@ import { About } from '@/pages/About';
 import { Login } from '@/pages/Login';
 
 // Páginas administrativas
-import { Dashboard } from '@/admin/Dashboard';
-import { TripsList } from '@/admin/trips/List';
-import { CreateTrip } from '@/admin/trips/Create';
-import { EditTrip } from '@/admin/trips/Edit';
-import { BlogsList } from '@/admin/blog/List';
-import { CreateBlog } from '@/admin/blog/Create';
-import { EditBlog } from '@/admin/blog/Edit';
+import { Dashboard } from '@/pages/dashboard';
+import { TripsList } from '@/pages/dashboard/trips';
+import { CreateTrip } from '@/pages/dashboard/trips/Create';
+import { EditTrip } from '@/pages/dashboard/trips/Edit';
+import { BlogsList } from '@/pages/dashboard/blog';
+import { CreateBlog } from '@/pages/dashboard/blog/Create';
+import { EditBlog } from '@/pages/dashboard/blog/Edit';
 
 export function Routes() {
   return (
@@ -33,37 +33,37 @@ export function Routes() {
         <Route path="/login" component={Login} />
         <Route path="/about" component={About} />
         {/* Rotas administrativas */}
-        <Route path="/admin">
+        <Route path="/dashboard">
           <ProtectedRoute requireAdmin>
             <Dashboard />
           </ProtectedRoute>
         </Route>
-        <Route path="/admin/trips">
+        <Route path="/dashboard/trips">
           <ProtectedRoute requireAdmin>
             <TripsList />
           </ProtectedRoute>
         </Route>
-        <Route path="/admin/trips/create">
+        <Route path="/dashboard/trips/create">
           <ProtectedRoute requireAdmin>
             <CreateTrip />
           </ProtectedRoute>
         </Route>
-        <Route path="/admin/trips/edit/:id">
+        <Route path="/dashboard/trips/edit/:id">
           <ProtectedRoute requireAdmin>
             <EditTrip />
           </ProtectedRoute>
         </Route>
-        <Route path="/admin/blog">
+        <Route path="/dashboard/blog">
           <ProtectedRoute requireAdmin>
             <BlogsList />
           </ProtectedRoute>
         </Route>
-        <Route path="/admin/blog/create">
+        <Route path="/dashboard/blog/create">
           <ProtectedRoute requireAdmin>
             <CreateBlog />
           </ProtectedRoute>
         </Route>
-        <Route path="/admin/blog/edit/:id">
+        <Route path="/dashboard/blog/edit/:id">
           <ProtectedRoute requireAdmin>
             <EditBlog />
           </ProtectedRoute>

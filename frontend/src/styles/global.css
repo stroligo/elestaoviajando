@@ -67,7 +67,7 @@ table {
 }
 form {
   label {
-    @apply md:w-28 flex items-center font-bold;
+    @apply flex items-center font-bold;
   }
   input,
   textarea {

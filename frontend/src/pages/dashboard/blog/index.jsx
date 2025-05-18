@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'wouter';
 import PropTypes from 'prop-types';
 import { conectBlogs, deleteBlog } from '@/services/api';
 import { IntroSection } from '@/components/features/IntroSection';
 
-export function BlogsList() {
+export function BlogsList({ setActiveComponent, setSelectedBlogId }) {
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
@@ -191,11 +190,12 @@ export function BlogsList() {
     <div className="bg-white rounded-xl shadow-sm p-8 mb-8">
       <div className="flex justify-between items-center mb-0">
         <IntroSection subtitle="Posts" />
-        <Link href="/admin/blog/create">
-          <button className="bg-primary text-white px-4 py-2 rounded hover:bg-blue-dark transition-colors">
-            Novo Post
-          </button>
-        </Link>
+        <button
+          onClick={() => setActiveComponent('blog-create')}
+          className="bg-primary text-white px-4 py-2 rounded hover:bg-blue-dark transition-colors"
+        >
+          Novo Post
+        </button>
       </div>
 
       {/* Barra de busca */}
@@ -253,25 +253,29 @@ export function BlogsList() {
                       {new Date(blog.date).toLocaleDateString('pt-BR')}
                     </td>
                     <td className="w-1/12 px-6 py-4 whitespace-nowrap text-sm font-medium text-right">
-                      <Link href={`/admin/blog/edit/${blog._id}`}>
-                        <button className="inline-flex items-center px-3 py-1.5 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-blue-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="h-4 w-4 mr-1.5"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
-                            />
-                          </svg>
-                          Editar
-                        </button>
-                      </Link>
+                      <button
+                        onClick={() => {
+                          setSelectedBlogId(blog._id);
+                          setActiveComponent('blog-edit');
+                        }}
+                        className="inline-flex items-center px-3 py-1.5 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-blue-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-4 w-4 mr-1.5"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                          />
+                        </svg>
+                        Editar
+                      </button>
                       <button
                         onClick={() => handleDelete(blog._id)}
                         className="inline-flex items-center px-3 py-1.5 border border-transparent text-sm font-medium rounded-md text-white bg-brown hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brown transition-colors ml-2"
@@ -341,3 +345,22 @@ export function BlogsList() {
     </div>
   );
 }
+
+BlogsList.propTypes = {
+  setActiveComponent: PropTypes.func.isRequired,
+  setSelectedBlogId: PropTypes.func.isRequired,
+};
+
+export default function Blog({ setActiveComponent, setSelectedBlogId }) {
+  return (
+    <BlogsList
+      setActiveComponent={setActiveComponent}
+      setSelectedBlogId={setSelectedBlogId}
+    />
+  );
+}
+
+Blog.propTypes = {
+  setActiveComponent: PropTypes.func.isRequired,
+  setSelectedBlogId: PropTypes.func.isRequired,
+};
