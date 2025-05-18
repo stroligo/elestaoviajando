@@ -58,12 +58,14 @@ export function DashboardLayout() {
   };
 
   return (
-    <div className="flex min-h-screen bg-gray-100">
-      <Sidebar
-        activeComponent={activeComponent}
-        setActiveComponent={setActiveComponent}
-      />
-      <main className="flex-1 p-8">{renderContent()}</main>
+    <div className="bg-zinc-50">
+      <div className="flex flex-col md:flex-row min-h-screen bg-gray-100  mx-auto container">
+        <Sidebar
+          activeComponent={activeComponent}
+          setActiveComponent={setActiveComponent}
+        />
+        <main className="flex-1 md:p-8">{renderContent()}</main>
+      </div>
     </div>
   );
 }

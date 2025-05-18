@@ -17,7 +17,7 @@ export function Login() {
 
     const result = await login(email, password);
     if (result.success) {
-      navigate('/admin');
+      navigate('/dashboard');
     } else {
       setError(result.error);
     }
@@ -26,13 +26,13 @@ export function Login() {
   };
 
   return (
-    <div className="flex items-center justify-center bg-gradient-to-br from-green to-beige py-12 px-4 sm:px-6 lg:px-8">
+    <div className="flex items-center justify-center bg-zinc-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full">
         <div className="bg-white rounded-2xl shadow-xl p-8 space-y-2">
           {/* Logo e Título */}
           <div className="text-center">
-            <div className="flex ">
-              <div className="mx-auto h-16 w-16 bg-primary rounded-full flex items-center justify-center mb-4">
+            <div className="flex  justify-between pb-4">
+              <div className="h-16 w-16 bg-primary rounded-full flex items-center justify-center ">
                 <svg
                   className="h-8 w-8 text-white"
                   fill="none"
@@ -48,7 +48,7 @@ export function Login() {
                 </svg>
               </div>
               <div className="text-3xl font-bold text-gray-dark text-right ">
-                Bem-vindo de volta
+                Dashboard
                 <p className="mt-0 text-sm text-gray-light">
                   Acesse o painel administrativo
                 </p>
@@ -128,7 +128,7 @@ export function Login() {
                     Entrando...
                   </div>
                 ) : (
-                  'Entrar'
+                  'Acessar'
                 )}
               </button>
             </div>

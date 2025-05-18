@@ -13,7 +13,7 @@ export function Header() {
   };
 
   return (
-    <header className="bg-blue-white  text-white bg-cover shadow-xl ">
+    <header className="bg-slate-50  text-white bg-cover shadow-xl ">
       <nav className="container mx-auto px-5 md:px-0">
         <div className="flex justify-between py-6 items-center">
           <div className="text-2xl font-bold  p-2">
@@ -71,7 +71,6 @@ export function Header() {
             <Button>
               <Link href="/about">Sobre Nós</Link>
             </Button>
-
             <Button>
               <Link href="/dashboard">Dashboard</Link>
             </Button>
@@ -89,7 +88,7 @@ export function Header() {
                 <Link href="/about">Sobre Nós</Link>
               </Button>
               <Button>
-                <Link href="/newlocation">Novos Locais</Link>
+                <Link href="/dashboard">Dashboard</Link>
               </Button>
             </div>
           )}

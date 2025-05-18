@@ -155,7 +155,7 @@ export function EditTrip({ setActiveComponent, selectedTripId }) {
   }
 
   return (
-    <div className="bg-white rounded-xl shadow-sm p-8 mb-8">
+    <div className="bg-white rounded-xl shadow-sm p-4 md:p-8 mb-8">
       <div className="flex justify-between items-center mb-0">
         <IntroSection title="Editar Viagem" subtitle="" />
 

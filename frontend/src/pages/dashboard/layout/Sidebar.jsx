@@ -84,11 +84,10 @@ export function Sidebar({ activeComponent, setActiveComponent }) {
   const { logout } = useAuth();
 
   return (
-    <div className="w-64 bg-white shadow-md h-screen sticky top-0">
-      <div className="p-6">
-        <div className="mb-8">
-          <h2 className="text-2xl font-bold text-gray-800">El Está Viajando</h2>
-          <p className="text-gray-600">Painel Administrativo</p>
+    <div className="w-full md:w-56 bg-white shadow-md md:h-screen md:sticky top-0">
+      <div className="p-4">
+        <div className="text-sm font-semibold  text-zinc-300 py-2">
+          Menu Administrativo
         </div>
 
         <nav>

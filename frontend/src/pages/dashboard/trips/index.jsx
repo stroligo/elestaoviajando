@@ -112,7 +112,7 @@ export function TripsList({ setActiveComponent, setSelectedTripId }) {
   // Função para gerar os números das páginas
   const getPageNumbers = () => {
     const pageNumbers = [];
-    const maxVisiblePages = 5;
+    const maxVisiblePages = 3;
     const halfVisiblePages = Math.floor(maxVisiblePages / 2);
 
     let startPage = Math.max(1, currentPage - halfVisiblePages);
@@ -198,7 +198,7 @@ export function TripsList({ setActiveComponent, setSelectedTripId }) {
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-sm p-8 mb-8">
+    <div className="bg-white rounded-xl shadow-sm p-4 md:p-8 mb-8">
       <div className="flex justify-between items-center mb-0">
         <IntroSection subtitle="Viagens" />
         <button
@@ -226,99 +226,97 @@ export function TripsList({ setActiveComponent, setSelectedTripId }) {
         </div>
       ) : (
         <>
-          <div className="bg-white shadow-md rounded-lg overflow-hidden">
-            <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-gray-extralight">
-                <thead className="bg-primary">
-                  <tr>
-                    <th
-                      className="w-1/2 px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider cursor-pointer hover:bg-blue-dark transition-colors"
-                      onClick={() => handleSort('city')}
-                    >
-                      Cidade
-                      <SortIcon column="city" />
-                    </th>
-                    <th
-                      className="w-1/4 px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider cursor-pointer hover:bg-blue-dark transition-colors"
-                      onClick={() => handleSort('country')}
-                    >
-                      País
-                      <SortIcon column="country" />
-                    </th>
-                    <th
-                      className="w-1/6 px-6 py-3 text-center text-xs font-medium text-white uppercase tracking-wider cursor-pointer hover:bg-blue-dark transition-colors"
-                      onClick={() => handleSort('date')}
-                    >
-                      Data
-                      <SortIcon column="date" />
-                    </th>
-                    <th className="w-1/12 px-6 py-3 text-center text-xs font-medium text-white uppercase tracking-wider">
-                      Ações
-                    </th>
+          <div className=" max-w-sm md:max-w-full rounded-lg pb-2 overflow-scroll">
+            <table className="min-w-full ">
+              <thead className="bg-primary">
+                <tr>
+                  <th
+                    className="md:w-1/2 md:px-6 px-2 md:py-3 text-left text-xs font-medium text-white uppercase tracking-wider cursor-pointer hover:bg-blue-dark transition-colors"
+                    onClick={() => handleSort('city')}
+                  >
+                    Cidade
+                    <SortIcon column="city" />
+                  </th>
+                  <th
+                    className="md:w-1/4 md:px-6 px-2 md:py-3 text-left text-xs font-medium text-white uppercase tracking-wider cursor-pointer hover:bg-blue-dark transition-colors"
+                    onClick={() => handleSort('country')}
+                  >
+                    País
+                    <SortIcon column="country" />
+                  </th>
+                  <th
+                    className="md:w-1/6 md:px-6 px-2 md:py-3 text-center text-xs font-medium text-white uppercase tracking-wider cursor-pointer hover:bg-blue-dark transition-colors"
+                    onClick={() => handleSort('date')}
+                  >
+                    Data
+                    <SortIcon column="date" />
+                  </th>
+                  <th className="md:w-1/12 md:px-6 px-2 md:py-3 text-center text-xs font-medium text-white uppercase tracking-wider">
+                    Ações
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {currentItems.map((trip) => (
+                  <tr key={trip._id} className="hover:bg-gray-extralight">
+                    <td className="md:w-1/2 md:px-6 px-2 md:py-4 whitespace-nowrap text-sm font-medium text-gray">
+                      {trip.city}
+                    </td>
+                    <td className="md:w-1/4 md:px-6 px-2 md:py-4 whitespace-nowrap text-sm text-gray">
+                      {trip.country}
+                    </td>
+                    <td className="md:w-1/6 md:px-6 px-2 md:py-4 whitespace-nowrap text-sm text-gray text-right">
+                      {new Date(trip.date).toLocaleDateString('pt-BR')}
+                    </td>
+                    <td className="md:w-1/2 md:px-6 px-2 md:py-4  whitespace-nowrap text-sm font-medium text-right">
+                      <button
+                        onClick={() => {
+                          setSelectedTripId(trip._id);
+                          setActiveComponent('trip-edit');
+                        }}
+                        className="inline-flex items-center px-3 py-1.5 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-blue-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-4 w-4 md:mr-1.5"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                          />
+                        </svg>
+                        <span className="hidden md:inline-block">Editar</span>
+                      </button>
+                      <button
+                        onClick={() => handleDelete(trip._id)}
+                        className="inline-flex items-center px-3 py-1.5 border border-transparent text-sm font-medium rounded-md text-white bg-brown hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brown transition-colors ml-2"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-4 w-4 md:mr-1.5"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                          />
+                        </svg>
+                        <span className="hidden md:inline-block">Excluir</span>
+                      </button>
+                    </td>
                   </tr>
-                </thead>
-                <tbody className="bg-white divide-y divide-gray-extralight">
-                  {currentItems.map((trip) => (
-                    <tr key={trip._id} className="hover:bg-gray-extralight">
-                      <td className="w-1/2 px-6 py-4 whitespace-nowrap text-sm font-medium text-gray">
-                        {trip.city}
-                      </td>
-                      <td className="w-1/4 px-6 py-4 whitespace-nowrap text-sm text-gray">
-                        {trip.country}
-                      </td>
-                      <td className="w-1/6 px-6 py-4 whitespace-nowrap text-sm text-gray text-right">
-                        {new Date(trip.date).toLocaleDateString('pt-BR')}
-                      </td>
-                      <td className="w-1/12 px-6 py-4 whitespace-nowrap text-sm font-medium text-right">
-                        <button
-                          onClick={() => {
-                            setSelectedTripId(trip._id);
-                            setActiveComponent('trip-edit');
-                          }}
-                          className="inline-flex items-center px-3 py-1.5 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-blue-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors"
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="h-4 w-4 mr-1.5"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
-                            />
-                          </svg>
-                          Editar
-                        </button>
-                        <button
-                          onClick={() => handleDelete(trip._id)}
-                          className="inline-flex items-center px-3 py-1.5 border border-transparent text-sm font-medium rounded-md text-white bg-brown hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brown transition-colors ml-2"
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="h-4 w-4 mr-1.5"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                            />
-                          </svg>
-                          Excluir
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                ))}
+              </tbody>
+            </table>
           </div>
 
           {/* Paginação */}

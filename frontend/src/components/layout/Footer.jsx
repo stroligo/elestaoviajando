@@ -44,7 +44,7 @@ export function Footer() {
                 <Link href="/about">Sobre Nós</Link>
               </Button>
               <Button>
-                <Link href="/newlocation">Novos Locais</Link>
+                <Link href="/dashboard">Dashboard</Link>
               </Button>
             </ul>
           </div>
