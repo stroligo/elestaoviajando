@@ -8,7 +8,8 @@ Este projeto foi desenvolvido como trabalho de conclusão de curso da Turma de F
 
 ## Hospedagem
 
-O projeto foi hospedado no Vercel, uma plataforma de hospedagem de aplicativos web. O link para o site pode ser encontrado [aqui](https://elestao-viajando.vercel.app/).
+O projeto foi hospedado no Vercel, uma plataforma de hospedagem de aplicativos web. O link para o site pode ser encontrado [aqui](https://elestaoviajando.vercel.app/).
+O backend está hospedado no Render, com o acesso a API sendo feito para [Trips](https://elestaoviajando.onrender.com/api/trips) e para [Posts](https://elestaoviajando.onrender.com/api/posts) 
 
 ## 🚀 Stack Tecnológica
 
